@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  response_reason_id: 1
+  response_status_id: 1
+  event_id: 1
+  user_id: 1
+  details: MyString
+  review_status_id: 1
+  date_reviewed: 2014-05-30 11:26:47
+  reviewed_user_id: 1
+  active: false
+  event_user: MyString
+  updated_by: 1
+
+two:
+  response_reason_id: 1
+  response_status_id: 1
+  event_id: 1
+  user_id: 1
+  details: MyString
+  review_status_id: 1
+  date_reviewed: 2014-05-30 11:26:47
+  reviewed_user_id: 1
+  active: false
+  event_user: MyString
+  updated_by: 1
