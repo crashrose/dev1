@@ -1,4 +1,33 @@
 Rails.application.routes.draw do
+
+  devise_for :users
+  resources :event_types
+  resources :events do
+    resources :resonses
+  end
+  resources :locations
+  resources :people do
+    resources :responses do
+    put :update_responses
+  end
+  end
+  resources :event_groups
+  resources :event_users do
+    resources :responses do
+    put :update_responses
+  end
+  end
+  resources :responses do
+    collection do
+    post :batch_update
+  end
+  end
+  # :update_responses => :put
+
+
+  root :to => "landing#index"
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

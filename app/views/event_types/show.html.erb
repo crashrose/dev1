@@ -1,0 +1,11 @@
+
+<header>
+  <p>Event Type:
+  <%= @event_type.title %>
+</p>
+</header>
+<%= render @event_type %>
+<%= render @event_type.events%>
+
+<%= link_to raw("&larr; Back to Event Types"), event_types_path %>
+

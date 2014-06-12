@@ -1,0 +1,35 @@
+	<%	@response = event_user.active_response %>
+	<%	@response ||= Response.new %>
+	<% @response.event_user = event_user %>
+<div class = "<%= cycle('odd', 'even') %> item">
+	<div class="item-header">
+		<span class="item-header-title">Event: </span>
+		<span class="item-header-val"><%= 
+		# event_user.response.new_record? 
+		%></span>
+	</div>
+	<div datetime="<%= event_user.event.event_dt %>" class="item-attr">
+		<span class="item-attr-title">Date and Time: </span>
+		<span class="event-location item-attr-val"><%= event_user.event.event_dt.to_formatted_s(:short) %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Location: </span>
+		<span class="event-location item-attr-val"><%= event_user.event.location.name %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Owner: </span>
+		<span class="item-attr-val"><%= event_user.active_response %></span>
+	</div>
+	<% if controller.action_name == 'index' %>
+	<div class="item-attr">
+		<span class="item-attr-title">Assigned Groups: </span>
+		<span class="event-location item-attr-val"><%= event_user.event.groups.map { |group| group.name }.to_sentence %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Assigned Users: </span>
+		<span class="event-location item-attr-val"><%= 	event_user.attendee.name %></span>
+	</div>
+	<% end %>
+	<div class="item-attr">
+
+	</div>		

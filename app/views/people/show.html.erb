@@ -1,0 +1,15 @@
+
+<header>
+  <p>Person:
+  <%= @person.name %>
+</p>
+</header>
+<%= render @person %>
+
+Account Details:
+
+<%= render @person.user %>
+
+
+<%= link_to raw("&larr; Back to People"), people_path %>
+

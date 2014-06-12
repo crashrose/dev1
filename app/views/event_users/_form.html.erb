@@ -1,0 +1,9 @@
+<%= semantic_form_for [@event_user.response] do |form| %>
+  <%= form.inputs "Event" do %>
+    <%= form.input :response_status %>
+    <%= form.input :response_reason %>
+    <%= form.input :details %>
+    <%= form.input :location %>
+  <% end %>
+  <%= form.actions %> 
+<% end %>

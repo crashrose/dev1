@@ -1,0 +1,16 @@
+<%= semantic_form_for [@location] do |form| %>
+  <%= form.inputs "Location" do %>
+    <%= form.input :name %>
+    <%= form.input :address1 %>
+    <%= form.input :address2 %>
+    <%= form.input :city %>
+    <%= form.input :state %>
+    <%= form.input :zip %>
+    <%= form.input :country, as: :select, collection: country_options_for_select(@location.country), :priority_countries => "United States" %>
+    <%= form.input :phone, :as => :phone %>
+    <%= form.input :note  %>
+    <%= form.input :website, :as => :url %>
+    <%= form.input :maplink, :as => :url %>
+  <% end %>
+  <%= form.actions %> 
+<% end %>

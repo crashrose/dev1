@@ -1,0 +1,51 @@
+<table>
+    <thead>
+        <tr> 
+            <th colspan="3">Event Details</th>               
+            <th>Attending?</th>
+            <th>RSVP Notes</th>
+        </tr>
+        <tr> 
+            <th>Date Sort</th>               
+            <th>Event Sort</th>    
+            <th>Location Sort</th>
+            <th>Yes to All:</th>
+            <th>Reason and Explanation</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr class="attrow0">
+    <td colspan="3" class="rsvp_head rsvp_top"><h3>
+        <a href="/index.php/attendance/view-update-my-responses?view=ResponseDetails&amp;list_view=user&amp;id=&amp;event_user=47_427">Fri. Jun 13,  7:00pm</a> </h3><p class="atturgent">Respond by: 2/28/2014<!--     RSVP Response Status -->
+    <td rowspan="2" class="rsvp_yn rsvp_top rsvp_bottom">
+        <h3 style="padding-bottom:4px">Response:</h3>
+        <input   disabled name="rsvp_status[0]" type="radio" id="status_47_427_Y" value="1" onclick="$('rsvp_details_47_427' ).hide();$('rsvp_expl_47_427' ).removeClass('required');$('rsvp_reason_47_427' ).removeClass('required');$('response_required' ).removeClass('required');">Yes
+<BR><input   disabled  name="rsvp_status[0]" type="radio" id="status_47_427_N" value="0" onclick="$('rsvp_details_47_427' ).show();$('rsvp_expl_47_427' ).addClass('required');$('rsvp_reason_47_427' ).addClass('required');$('response_required' ).removeClass('required');">No
+<BR><input   disabled  name="rsvp_status[0]" type="radio" id="status_47_427_U" value="-1" onclick="$('rsvp_details_47_427' ).show();$('rsvp_expl_47_427' ).removeClass('required');$('rsvp_reason_47_427' ).removeClass('required');$('response_required' ).removeClass('required');">Unsure
+    <input   disabled  style="display: none;" name="rsvp_status[0]" checked  type="radio" id="status_47_427_X" value="-2" onclick="$('rsvp_details_47_427' ).hide();$('rsvp_expl_47_427' ).removeClass('required');$('rsvp_reason_47_427' ).removeClass('required');$('response_required' ).addClass('required');">
+<BR><input type="hidden" name="rsvp_status[]" default= value="" />
+    </td>
+<!--     RSVP Details (Reason/Explanation) -->
+    <td rowspan="2" class="rsvp_details rsvp_top rsvp_bottom">
+        <div width="100%" id="rsvp_details_47_427"  style="display:none;" ><div class="rsvp_details" style="float: left;"><h3>Select reason:</h3><select  disabled  name="rsvp_reason[]" onchange="$('response_required' ).removeClass('required');" class="att_reason inputbox " id="rsvp_reason_47_427">
+<option value=""> - Reason - </option>
+<option value="4">Doctor Appt</option>
+<option value="3">Family Event</option>
+<option value="6">Not Listed</option>
+<option value="2">Other Sport</option>
+<option value="5">School</option>
+<option value="1">Work</option>
+
+</select><input type="hidden" name="rsvp_reason[]" default= value="" /></div><div class="rsvp_details" style="float: right;"><h3>Explain:</h3><textarea  class="att_details "  disabled  rows="3" cols="18" name="rsvp_details[]" onchange= "$('response_required' ).removeClass('required');" id="rsvp_expl_47_427" /></textarea><input type="hidden" name="rsvp_details[]" default= value="" /></div></div>   </td>
+    <tr class="attrow0">
+<!--    RSVP Event Type -->
+        <td class="rsvp_type rsvp_bottom">
+            <h3>Event:</h3>
+            Practice        </td>
+<!--        RSVP Event Location -->
+        <td colspan="2" class="rsvp_loc rsvp_bottom">
+            <h3>Location:</h3>
+            <span class="hasTip" title="::334 Furman St<BR>Brooklyn, NY 11201<BR><BR>Website: http://www.brooklynbridgepark.org/visit/directions"><a href="https://goo.gl/maps/Zn7u2" target="_blank">Pier 5 @ Brooklyn Bridge Park</a></span>
+        </td>
+    </tr>
+</tr>

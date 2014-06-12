@@ -1,0 +1,5 @@
+
+		<% for attribute in user.attributes.keys %>
+  			<div class = "<%= cycle('odd', 'even') %>"><%= attribute.humanize %>: 
+  			<%= user.attributes[attribute].to_s %></div>
+		<% end %>

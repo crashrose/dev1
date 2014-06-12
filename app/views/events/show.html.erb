@@ -1,0 +1,16 @@
+
+<header>
+  <p>Event:
+  <%= @event.name %>
+</p>
+</header>
+<%= render @event %>
+	<div class="item-subattr">
+		<div class="item-subattr-group">
+			<span class="item-subattr-title">Assigned Groups</span>
+			<%= render @event.event_groups %>
+		</div>
+	</div>
+
+<%= link_to raw("&larr; Back to Events"), events_path %>
+

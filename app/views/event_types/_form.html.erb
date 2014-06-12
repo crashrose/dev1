@@ -1,0 +1,9 @@
+<%= semantic_form_for [@event_type] do |form| %>
+  <%= form.inputs "Event Type" do %>
+    <%= form.input :title %>
+  <% end %>
+
+  <%= f.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true %>
+
+  <%= form.actions %> 
+<% end %>

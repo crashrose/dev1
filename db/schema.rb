@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140530152947) do
+ActiveRecord::Schema.define(version: 20140611230211) do
 
   create_table "event_groups", force: true do |t|
     t.integer  "event_id"
@@ -27,26 +27,32 @@ ActiveRecord::Schema.define(version: 20140530152947) do
     t.datetime "updated_at"
   end
 
+  create_table "event_users", id: false, force: true do |t|
+    t.integer "event_id"
+    t.integer "user_id"
+    t.string  "event_user", limit: 23
+  end
+
   create_table "events", force: true do |t|
     t.string   "name"
     t.datetime "event_dt"
     t.integer  "event_type_id"
     t.integer  "location_id"
-    t.integer  "user_id"
+    t.integer  "owner_id"
     t.datetime "respond_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "group_members", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "groups", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups_users", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -63,6 +69,15 @@ ActiveRecord::Schema.define(version: 20140530152947) do
     t.string   "note"
     t.string   "website"
     t.string   "maplink"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "people", force: true do |t|
+    t.integer  "user_id",    default: 0
+    t.string   "first_name",             null: false
+    t.string   "last_name"
+    t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -92,7 +107,7 @@ ActiveRecord::Schema.define(version: 20140530152947) do
     t.datetime "date_reviewed"
     t.integer  "reviewed_user_id"
     t.boolean  "active"
-    t.string   "event_user"
+    t.string   "event_user_id"
     t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -107,10 +122,22 @@ ActiveRecord::Schema.define(version: 20140530152947) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.integer  "person_id"
   end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

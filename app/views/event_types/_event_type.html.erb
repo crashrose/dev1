@@ -1,0 +1,10 @@
+<div class = "<%= cycle('odd', 'even') %>">
+	<div class="event_type">
+		<ul id="<%= event_type.id %>">
+		<span><%= event_type.position %></span> <span><%= event_type.title %></span><span>
+		<%=
+		list_icons(event_type, [:edit, :delete, :show]) 
+		%></span></ul>
+</div>
+
+</div>

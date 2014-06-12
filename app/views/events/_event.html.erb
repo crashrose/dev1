@@ -1,0 +1,36 @@
+<div class = "<%= cycle('odd', 'even') %> item">
+	<div class="item-header">
+		<span class="item-header-title">Event: </span>
+		<span class="item-header-val"><%= event.name %></span>
+		<span class="item-header-icons"><%= list_icons(event, [:edit, :delete, :show])  %></span>
+	</div>
+	<div datetime="<%= event.event_dt %>" class="item-attr">
+		<span class="item-attr-title">Date and Time: </span>
+		<span class="event-location item-attr-val"><%= event.event_dt.to_formatted_s(:short) %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Location: </span>
+		<span class="event-location item-attr-val"><%= event.location.name %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Owner: </span>
+		<span class="item-attr-val"><%= event.owner.name %></span>
+	</div>
+	<% if controller.action_name == 'index' %>
+	<div class="item-attr">
+		<span class="item-attr-title">Assigned Groups: </span>
+		<span class="event-location item-attr-val"><%= event.groups.map { |group| group.name }.to_sentence %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Assigned Users: </span>
+		<span class="event-location item-attr-val"><%= 
+		event.attendees.map { |attendee| attendee.name }.to_sentence 
+		%></span>
+	</div>
+	<% end %>
+		
+
+
+		
+
+</div>

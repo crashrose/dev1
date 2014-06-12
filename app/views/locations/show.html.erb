@@ -1,0 +1,12 @@
+
+<header>
+  <p>Location:
+  <%= @location.name %>
+</p>
+</header>
+<%= render @location %>
+<%= render @location.events%>
+
+
+<%= link_to raw("&larr; Back to Locations"), locations_path %>
+
