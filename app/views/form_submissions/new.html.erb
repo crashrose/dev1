@@ -1,0 +1,7 @@
+<header>
+<p>Submit Form <%= @form_submission.form.name %></p>
+</header>
+
+<%= render :partial => 'form' %>
+
+<%= link_to raw("&larr; Back to Form"), form_path(@form_submission.form) %>

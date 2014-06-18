@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140611230211) do
+ActiveRecord::Schema.define(version: 20140617203212) do
 
   create_table "event_groups", force: true do |t|
     t.integer  "event_id"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20140611230211) do
   create_table "event_users", id: false, force: true do |t|
     t.integer "event_id"
     t.integer "user_id"
-    t.string  "event_user", limit: 23
+    t.string  "id",       limit: 23
   end
 
   create_table "events", force: true do |t|
@@ -40,6 +40,56 @@ ActiveRecord::Schema.define(version: 20140611230211) do
     t.integer  "location_id"
     t.integer  "owner_id"
     t.datetime "respond_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "file_types", force: true do |t|
+    t.string   "name"
+    t.string   "mime_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "form_fields", force: true do |t|
+    t.string   "name"
+    t.integer  "form_id"
+    t.integer  "max_length"
+    t.integer  "min_length"
+    t.boolean  "required"
+    t.string   "field_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "form_submission_items", force: true do |t|
+    t.integer  "form_submission_id"
+    t.integer  "form_field_id"
+    t.string   "form_field_value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "form_submissions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "form_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "forms", force: true do |t|
+    t.string   "name"
+    t.integer  "organization_id"
+    t.boolean  "publish_results"
+    t.boolean  "email_results"
+    t.string   "email_to_address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "group_permissions", force: true do |t|
+    t.integer  "group_id"
+    t.integer  "permission_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -73,11 +123,36 @@ ActiveRecord::Schema.define(version: 20140611230211) do
     t.datetime "updated_at"
   end
 
+  create_table "org_types", force: true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.integer  "owner_id"
+    t.integer  "org_type_id"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "people", force: true do |t|
     t.integer  "user_id",    default: 0
     t.string   "first_name",             null: false
     t.string   "last_name"
     t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "permissions", force: true do |t|
+    t.string   "action"
+    t.integer  "organization_id"
+    t.string   "subject_class"
+    t.integer  "subject_id"
+    t.string   "action_scope"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -119,6 +194,25 @@ ActiveRecord::Schema.define(version: 20140611230211) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "upload_groups", force: true do |t|
+    t.integer  "upload_id"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "uploads", force: true do |t|
+    t.string   "name"
+    t.integer  "file_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+    t.text     "description"
   end
 
   create_table "users", force: true do |t|

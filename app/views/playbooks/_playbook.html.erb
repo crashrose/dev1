@@ -1,0 +1,8 @@
+<div class = "<%= cycle('odd', 'even') %>">
+	<div class="upload">
+		<ul id="<%= playbook.id %>">
+			<span><%= playbook.name %></span>
+			<span><%= list_icons(playbook, [:edit, :delete, :show]) %></span>
+		</ul>
+	</div>
+</div>

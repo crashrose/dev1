@@ -8,11 +8,14 @@ gem 'mysql2'
 
 gem 'devise'
 
+gem "cancan"
 gem 'formtastic', '~> 2.3.0.rc2'
 
 gem "activerecord-tableless", "~> 1.0"
 
 gem 'country-select'
+
+gem 'paperclip', github: 'thoughtbot/paperclip'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'

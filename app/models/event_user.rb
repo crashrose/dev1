@@ -13,7 +13,7 @@ class EventUser < ActiveRecord::Base
 	# has_many :event_groups, :through => :groups
 	belongs_to :event
 
-	scope :all_events,		-> 		{EventUser.includes(:responses)}
+	scope :all_events,		-> 		{EventUser.includes(:responses, event: [:location, :event_type])}
 	# scope :all_awaiting,		-> 		{ (include: :response).where("responses.id is null or response.")}
 	# scope :all_responded,		-> 		{ (include: :response)}
 	# scope :all_unsure,		-> 		{ (include: :response)}
@@ -26,10 +26,20 @@ self.primary_key = :id
 
 def name
 "#{self.event_id}_#{self.user_id}"
-	end
+end
 
 
+def event_date
+	self.event.event_dt
+end
 
+def event_type
+	self.event.event_type.title
+end
+
+def event_location
+	self.event.location.name
+end
 
 
 

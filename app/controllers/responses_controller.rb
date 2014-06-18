@@ -2,10 +2,14 @@ class ResponsesController < ApplicationController
   before_action :set_response, only: [:show, :edit, :update, :destroy]
   respond_to :html, :xml, :json
 
+  helper_method :sort_direction, :sort_column
+
   # GET /responses
   # GET /responses.json
   def index
-    @event_users = EventUser.all_events
+        sort_vals = {"event_dt" => "events.event_dt", "event_type" => "event_types.title", "event_location" => "locations.name" }
+      # @event_users = EventUser.all_events.order(response_sort)
+      @event_users = EventUser.all_events.order(sort_vals[sort_column] + " " + sort_direction)
     # @responses = @event_users.responses
     respond_with @event_users
   end
@@ -130,6 +134,27 @@ end
 
     def response_batch_params
       params.require(:responses).permit!
+    end
+
+    def sort_column
+      # if params[:sort]
+      #   sort_param = params.require(:sort)
+
+        %w[event_dt event_type event_location].include?(params[:sort]) ? params.require(:sort) : "event_dt"
+        # if ['event_dt', 'event_type', 'event_location'].detect {|n| n == sort_param}
+        #   sort_by = sort_vals[sort_param] + " " + params.require(:dir)
+        # else
+        #   sort_by = "events.event_dt " + params.require(:dir)
+        # end
+      # else
+      #   sort_by = "events.event_dt asc"
+      # end
+
+      # return 
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:dir]) ? params.require(:dir) : "asc"
     end
 
     def batch_update_params(event_user)

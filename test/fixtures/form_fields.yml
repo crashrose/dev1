@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  form_id: 1
+  max_length: 1
+  min_length: 1
+  required: false
+  type: 
+
+two:
+  name: MyString
+  form_id: 1
+  max_length: 1
+  min_length: 1
+  required: false
+  type: 

@@ -9,8 +9,6 @@
     %>
     <%= form.input :respond_by, :as => :datetime_picker %>
   <% end %>
-  <%= 
-  form.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true 
-  %>
+  <%= form.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true %>
   <%= form.actions %> 
 <% end %>

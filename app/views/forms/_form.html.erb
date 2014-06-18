@@ -1,0 +1,30 @@
+<div class = "<%= cycle('odd', 'even') %> item">
+	<div class="item-header">
+		<span class="item-header-title">Form: </span>
+		<span class="item-header-val"><%= form.name %></span>
+		<span class="item-header-icons"><%= list_icons(form, [:edit, :delete, :show])  %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Publish Results? </span>
+		<span class="form-location item-attr-val"><%= form.publish_results %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Email Results? </span>
+		<span class="form-location item-attr-val"><%= form.email_results %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Email Adress for Results: </span>
+		<span class="item-attr-val"><%= form.email_to_address %></span>
+	</div>
+	<%= render form.form_fields %>
+		<table>
+		<tr><th></th>
+	<% form.form_fields.each do |field| %>
+		<th><%= field.name %></th>
+	<% end %>
+</tr>
+	<%= render form.form_submissions %>
+</table>
+	<%= link_to 'Add a new field', new_form_form_field_path(form) %></p>
+	<%= link_to 'Submit Response', new_form_form_submission_path(form) %></p>
+</div>

@@ -1,0 +1,14 @@
+<header>
+  <p>Playbook Files</p>
+</header>
+<p class="addlink">
+<%= link_to 'Upload a new Playbook file', new_playbook_path %>
+</p><ul id = "playbooks">
+
+<%= render partial: "playbook", collection: @playbooks %>
+<%= 
+# render @playbooks 
+%>
+
+</ul>
+

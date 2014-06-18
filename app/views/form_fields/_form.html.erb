@@ -1,0 +1,10 @@
+<%= semantic_form_for [@form_field.form, @form_field] do |f| %>
+	<%= f.inputs "Fields" do %>
+		<%= f.input :name %>
+		<%= f.input :max_length %>
+		<%= f.input :min_length %>
+		<%= f.input :required %>
+		<%= f.input :field_type %>
+	<% end %>
+	<%= f.actions %>	
+<% end %>

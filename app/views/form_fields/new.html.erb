@@ -1,0 +1,7 @@
+<header>
+<p>Create Field for: <%= @form_field.form.name %></p>
+</header>
+
+<%= render :partial => 'form' %>
+
+<%= link_to raw("&larr; Back to Form"), form_path(@form_field.form) %>

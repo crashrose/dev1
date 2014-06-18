@@ -11,7 +11,7 @@ task :populate => :environment do
 	{:first_name   => "Luke", :last_name => "Skywalker"},
 	{:first_name => "Han", :last_name => "Solo"}
 ].each do |attributes|
-	User.where(first_name: attributes[:first_name], last_name: attributes[:last_name]).first_or_create(attributes)
+	Person.where(first_name: attributes[:first_name], last_name: attributes[:last_name]).first_or_create(attributes)
 end
 
 [
@@ -31,8 +31,48 @@ end
 	{:user_id => 4, :group_id => 4},
 	{:user_id => 5, :group_id => 4}
 ].each do |attributes|
-	GroupMember.where(user_id: attributes[:user_id], group_id: attributes[:group_id]).first_or_create(attributes)
+	GroupsUser.where(user_id: attributes[:user_id], group_id: attributes[:group_id]).first_or_create(attributes)
 end
+
+[
+	{:name => "playbook"},
+	{:name => "multimedia"},
+	{:name => "instructional"},
+	{:name => "import"},
+	{:name => "resource"}
+].each do |attributes|
+	FileType.where(name: attributes[:name]).first_or_create(attributes)
+end
+
+[
+	{:title => "global"},
+	{:title => "League"},
+	{:title => "Team"},
+	{:title => "Season"}
+].each do |attributes|
+	OrgType.where(title: attributes[:title]).first_or_create(attributes)
+end
+
+[
+	{:name => "global", :owner_id => 1, :org_type_id => 1, :parent_id => 1},
+	{:name => "Sharks", :owner_id => 2, :org_type_id => 3, :parent_id => 3},
+	{:name => "IWFL", :owner_id => 3, :org_type_id => 2, :parent_id => 1},
+	{:name => "Sharks 2014", :owner_id => 2, :org_type_id => 4, :parent_id => 2},
+	{:name => "Divas", :owner_id => 4, :org_type_id => 3, :parent_id => 1}
+].each do |attributes|
+	Organization.where(name: attributes[:name], org_type_id: attributes[:org_type_id]).first_or_create(attributes)
+end
+
+[
+	{:action => "update", :organization_id => 2, :subject_class => "Event", :action_scope => "all"},
+	{:action => "update", :organization_id => 5, :subject_class => "Response", :action_scope => "own"},
+	{:action => "create", :organization_id => 5, :subject_class => "Response", :action_scope => "own"},
+	{:action => "view", :organization_id => 5, :subject_class => "Event", :action_scope => "all"},
+	{:action => "manage", :organization_id => 1, :subject_class => "Location", :action_scope => "all"}
+].each do |attributes|
+	Permission.where(action: attributes[:action], organization_id: attributes[:organization_id], subject_class: attributes[:subject_class], action_scope: attributes[:action_scope]).first_or_create(attributes)
+end
+
 
 end
 end

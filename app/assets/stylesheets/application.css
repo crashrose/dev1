@@ -1,6 +1,7 @@
 
 body {
-  width: 600px;
+  /*width: 600px;*/
+  width: 80%;
   margin: 20px auto;
   background-color: #333; 
   color: #333;
@@ -15,7 +16,7 @@ body, p, ol, ul, td {
 
 a { 
   color: #ccc;
-  border-bottom: 1px solid #888;
+  /*border-bottom: 1px solid #888;*/
   text-decoration: none;
 }
 a:visited { color: #999; }

@@ -1,0 +1,8 @@
+<header>
+<p>
+<%= "Edit Field: #{@form_field.name} for Form #{@form_field.form.name}" %></p>
+</header>
+
+<%= render :partial => 'form' %>
+
+<%= link_to raw("&larr; Back to Form"), form_path(@form_field.form) %>

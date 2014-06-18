@@ -1,0 +1,12 @@
+
+<tr  class = "<%= cycle('odd', 'even') %> item">
+	<td>
+		<span class="item-header-icons"><%= list_icons([form_submission.form, form_submission], [:edit, :delete, :show])  %></span>
+</td>
+	<% form_submission.form_submission_items.each do |item| %>
+		<td><%= item.form_field_value %></td>
+	<% end %>
+	<%= 
+	# render partial: "form_submissions/form_submission_item_row", collection: form_submission.form_submission_items 
+	%>
+</tr>

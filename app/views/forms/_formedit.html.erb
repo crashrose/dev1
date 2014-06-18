@@ -1,0 +1,9 @@
+<%= semantic_form_for [@form] do |form| %>
+  <%= form.inputs "Form" do %>
+    <%= form.input :name %>
+    <%= form.input :publish_results, :as=> :radio %>
+    <%= form.input :email_results, :as=> :radio %>
+    <%= form.input :email_to_address %>
+  <% end %>
+  <%= form.actions %> 
+<% end %>

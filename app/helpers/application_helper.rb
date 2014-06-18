@@ -16,19 +16,27 @@ module ApplicationHelper
 	end
 
 	def list_icons(item, actions=[:new])
-		
+		if item.kind_of?(Array)
+			url_options = item
+		else
+			url_options = []
+			url_options << item
+		end
+		main_item = url_options.last
 		icon_string = []
 		actions.each do |action| 
 			if action == :delete
 				icon_string << link_to_icon('destroy', item, {data: {
 				:confirm => 'Are you sure?',
 				:method => :delete
-				}, title: "Delete #{item.class.name.titleize}"}) 
+				}, title: "Delete #{main_item.class.name.titleize}"}) 
 			elsif action == :show
-				icon_string << link_to_icon(action.to_s, url_for([item]), title: "#{action.to_s.humanize} #{item.class.name.titleize}") 
+				icon_string << link_to_icon(action.to_s, url_for(url_options), title: "#{action.to_s.humanize} #{main_item.class.name.titleize}") 
 
 			else
-				icon_string << link_to_icon(action.to_s, url_for([action, item]), title: "#{action.to_s.humanize} #{item.class.name.titleize}") 
+				url_options.unshift action
+				icon_string << link_to_icon(action.to_s, url_for(url_options), title: "#{action.to_s.humanize} #{main_item.class.name.titleize}") 
+				url_options.shift
 			end				
 		end
 	return icon_string.join(' ').html_safe
@@ -61,6 +69,14 @@ module ApplicationHelper
 					}, title: 'Delete Event Type'})
 			].join(' ').html_safe
 		end
+	end
+
+	def sortable(column, title = nil)
+		title ||= column.titleize
+		class_name = column == sort_column ? "current #{sort_direction}" : nil
+		direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+ 		link_to title, {:sort => column, :dir => direction}, class: class_name
+
 	end
 
 end

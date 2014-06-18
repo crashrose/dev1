@@ -1,0 +1,8 @@
+<%= semantic_form_for @playbook, :url => playbooks_path, :html => { :multipart => true } do |form| %>
+  <%= form.file_field :document %>
+  <%= form.input :name %>
+  <%= form.input :description %>
+  <%= form.input :file_type_id, :as => :hidden %>
+  <%= form.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true %>
+  <%= submit_tag "Upload Playbook"  %>
+<% end %>

@@ -19,8 +19,18 @@ Rails.application.routes.draw do
   end
   resources :responses do
     collection do
-    post :batch_update
+      post :batch_update
+    end
   end
+  resources :uploads
+  resources :playbooks
+  resources :forms do
+    resources :form_submissions do
+      resources :form_submission_items
+    end
+    resources :form_fields do
+      resources :form_submission_items
+    end
   end
   # :update_responses => :put
 

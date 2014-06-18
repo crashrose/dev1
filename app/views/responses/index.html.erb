@@ -2,62 +2,73 @@
   <p>Scheduled Events</p>
 </header>
 
-<%= form_tag batch_update_responses_path do |f| %>
+    
+<table class="attendance">
+    <thead>
+        <tr> 
+            <th colspan="3">Event Details</th>               
+            <th>Attending?</th>
+            <th>RSVP Notes</th>
+        </tr>
+        <tr> 
+            <th><%= sortable "event_dt", "Date" %></th>               
+            <th><%= sortable "event_type", "Event Type" %></th>    
+            <th><%= sortable "event_location", "Location" %></th>
+            <th>Yes to All:</th>
+            <th>Reason and Explanation</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<%= form_tag batch_update_responses_path do |f| %>
 	<% @event_users.each do |event_user| %>
 		<% @response = event_user.responses.active.find_or_initialize_by(event_user_id: event_user.id) %>
 		<% @response.event_id = event_user.event_id %>
 		<% @response.user_id = event_user.user_id %>
+		
 		<%= semantic_fields_for "responses[#{@response.event_user_id}]", @response do |f| %>
-
-			<div class = "<%= cycle('odd', 'even') %> item">
-				<div class="item-header">
-					<span class="item-header-title">Event: </span>
-					<span class="item-header-val"><%= event_user.event.name %></span>
-				</div>
-				<div datetime="<%= event_user.event.event_dt %>" class="item-attr">
-					<span class="item-attr-title">Date and Time: </span>
-					<span class="event-location item-attr-val"><%= event_user.event.event_dt.to_formatted_s(:short) %></span>
-				</div>
-				<div class="item-attr">
-					<span class="item-attr-title">Location: </span>
-					<span class="event-location item-attr-val"><%= event_user.event.location.name %></span>
-				</div>
-				<div class="item-attr">
-					<span class="item-attr-title">Last Responded: </span>
-					<span class="event-location item-attr-val">
-						<% if @response.id %>
-						<%= @response.updated_at.localtime.strftime("%m/%d/%Y %l:%M %p") %>
-						<% else %>
-						<%= "No Response Yet" %>
-						<% end %>
-					</span>
-				</div>
-				<div class="item-attr">
-					<span class="item-attr-title"></span>					
-					<span class="item-attr-val radio">
-						<%= f.input :active, :as => :hidden  %>
-						<%= f.input :event_id, :as => :hidden  %>
-						<%= f.input :user_id, :as => :hidden  %>
-						<%= f.input :id, :as => :hidden  %>
-						<%= f.input :event_user_id, :as => :hidden %>
-						<%= 
-						f.input :response_status, :as=> :radio, :label => false
-						# f.collection_select(:response_status, ResponseStatus.all, :id, :title) 
-						%>
-					</span>
-				</div>
-				<div class="item-attr">
-					<span class="item-attr-title">Reason: </span>
-					<span class="item-attr-val"><%= f.input :response_reason  %></span>
-				</div>
-				<div class="item-attr">
-					<span class="item-attr-title">Details: </span>
-					<span class="item-attr-val">
-						<%= f.text_area(:details) %>
-					</span>
-				</div>
-			</div>
+		    <% even_odd = cycle('odd', 'even') %>
+		    <tr class="<%= even_odd %> item">
+			    <td colspan="3" class="rsvp_head rsvp_top">
+			        <h3><%= event_user.event.event_dt.strftime("%m/%d/%Y %l:%M %p") %></h3>
+			        <p>Respond by: 
+			        	<%= event_user.event.respond_by.strftime("%m/%d/%Y %l:%M %p") %>
+			            <!--     RSVP Response Status -->
+			    <td rowspan="2" class="rsvp_yn rsvp_top rsvp_bottom">
+			        <h3>Response:</h3>
+					<%= f.input :response_status, :as=> :radio, :label => false %>
+			    </td>
+				<!-- RSVP Details (Reason/Explanation) -->
+			    <td rowspan="2" class="rsvp_details rsvp_top rsvp_bottom">
+			        <div width="100%" id="rsvp_details_47_427"  style="//display:none;" >
+			            <div class="rsvp_details" style="float: left;">
+			            	<h3>Reason:</h3>
+			                <%= f.input :response_reason, :label => false  %>
+			            </div>
+			            <div class="rsvp_details" style="float: right;">
+			                <h3>Explain:</h3> <%= f.text_area(:details) %>
+			            </div>
+			        </div>
+			    </td>
+			    <tr class="<%= even_odd %> item">
+				<!-- RSVP Event Type -->
+			        <td class="rsvp_type rsvp_bottom">
+			            <h3>Event:</h3>
+			            <%= event_user.event.event_type.title %>
+			        </td>
+				<!-- RSVP Event Location -->
+			        <td colspan="2" class="rsvp_loc rsvp_bottom">
+			            <h3>Location:</h3>
+			            <span><%= event_user.event.location.name %></span>
+			        </td>
+			    </tr>
+			</tr>
 		<% end %>
 	<% end %>
+	</tbody>
+</table>
 <%= submit_tag "Update Responses"  %>
 <% end %>
+
+
+
+
