@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   get '/signet/google/auth_callback' => 'google_shared_calendars#oauth2callback'
 
 
-get '/oauth2callback' => 'google_shared_calendars#show'
-get '/oauth2authorize' => 'google_shared_calendars#oauth2authorize'
+# get '/oauth2callback' => 'google_shared_calendars#show'
+# get '/oauth2authorize' => 'google_shared_calendars#oauth2authorize'
 
   devise_for :users
   resources :event_types
