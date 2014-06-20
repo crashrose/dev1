@@ -9,6 +9,7 @@ has_and_belongs_to_many :groups
 has_many :event_groups, :through => :groups
 has_many :event_users
 has_one :person
+has_many :o_auth2_credentials, dependent: :destroy
 
 
 	def name

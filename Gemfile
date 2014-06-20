@@ -15,6 +15,9 @@ gem "activerecord-tableless", "~> 1.0"
 
 gem 'country-select'
 
+gem 'google-api-client', :require => 'google/api_client'
+# gem 'signet-rails', '>= 0.0.6'
+
 gem 'paperclip', github: 'thoughtbot/paperclip'
 
 # Use SCSS for stylesheets

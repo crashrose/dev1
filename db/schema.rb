@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140617203212) do
+ActiveRecord::Schema.define(version: 20140619214900) do
 
   create_table "event_groups", force: true do |t|
     t.integer  "event_id"
@@ -123,6 +123,14 @@ ActiveRecord::Schema.define(version: 20140617203212) do
     t.datetime "updated_at"
   end
 
+  create_table "o_auth2_credentials", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.string   "signet"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "org_types", force: true do |t|
     t.string   "title"
     t.datetime "created_at"
@@ -229,6 +237,7 @@ ActiveRecord::Schema.define(version: 20140617203212) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.integer  "person_id"
+    t.string   "uid"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

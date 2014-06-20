@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  get "home/index"
+
+  get '/signout' => 'sessions#destroy', as: :signout
+
+  get '/signet/google/auth_callback' => 'google_shared_calendars#oauth2callback'
+
+
+get '/oauth2callback' => 'google_shared_calendars#show'
+get '/oauth2authorize' => 'google_shared_calendars#oauth2authorize'
+
   devise_for :users
   resources :event_types
   resources :events do
@@ -17,6 +27,8 @@ Rails.application.routes.draw do
     put :update_responses
   end
   end
+  resources :g_shared_calendars
+  resources :google_shared_calendars
   resources :responses do
     collection do
       post :batch_update
