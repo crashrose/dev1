@@ -12,15 +12,16 @@
 //
 
 //= require jquery
-//= require turbolinks
-//= require jquery_ujs
 
-//= require jquery.ui.draggable
-//= require jquery.ui.droppable
-//= require jquery.ui.resizable
-//= require jquery.ui.selectable
+//= require jquery-ui
+
+
+//= require bootstrap-sprockets
 
 //= require moment
+
+//= require turbolinks
+//= require jquery_ujs
 
 //= require jquery.rest
 //= require fullcalendar
