@@ -1,0 +1,81 @@
+{
+    "etag": "\"BZUCgRsJHN1b3Y4VmmLXiJzEzGI/sEQd12YVhBna3RrIhVR9RistvF8\"", 
+    "items": [
+        {
+            "accessRole": "owner", 
+            "backgroundColor": "#d06b64", 
+            "colorId": "2", 
+            "defaultReminders": [
+                {
+                    "method": "popup", 
+                    "minutes": 10
+                }
+            ], 
+            "etag": "\"BZUCgRsJHN1b3Y4VmmLXiJzEzGI/MTM4OTgyOTA2NzAxNzAwMA\"", 
+            "foregroundColor": "#000000", 
+            "id": "crashrose@gmail.com", 
+            "kind": "calendar#calendarListEntry", 
+            "notificationSettings": {
+                "notifications": [
+                    {
+                        "method": "email", 
+                        "type": "eventCreation"
+                    }, 
+                    {
+                        "method": "email", 
+                        "type": "eventChange"
+                    }, 
+                    {
+                        "method": "email", 
+                        "type": "eventCancellation"
+                    }
+                ]
+            }, 
+            "primary": true, 
+            "selected": true, 
+            "summary": "Katie Rose", 
+            "timeZone": "America/New_York"
+        }, 
+        {
+            "accessRole": "owner", 
+            "backgroundColor": "#7bd148", 
+            "colorId": "9", 
+            "description": "Our Family Calendar", 
+            "etag": "\"BZUCgRsJHN1b3Y4VmmLXiJzEzGI/MTM4OTgyOTA3MDY1NzAwMA\"", 
+            "foregroundColor": "#000000", 
+            "id": "oq7drsn9217joc7o2jkijoqe4s@group.calendar.google.com", 
+            "kind": "calendar#calendarListEntry", 
+            "location": "NYC", 
+            "selected": true, 
+            "summary": "Katie & Pickett", 
+            "timeZone": "America/New_York"
+        }, 
+        {
+            "accessRole": "writer", 
+            "backgroundColor": "#9fc6e7", 
+            "colorId": "15", 
+            "etag": "\"BZUCgRsJHN1b3Y4VmmLXiJzEzGI/MTM4OTgyOTA2Nzk0NDAwMA\"", 
+            "foregroundColor": "#000000", 
+            "id": "outcastimprov@gmail.com", 
+            "kind": "calendar#calendarListEntry", 
+            "summary": "outcastimprov@gmail.com", 
+            "timeZone": "America/New_York"
+        }, 
+        {
+            "accessRole": "owner", 
+            "backgroundColor": "#b99aff", 
+            "colorId": "18", 
+            "description": "Various Appt's To-Do's, etc for our wedding planning.", 
+            "etag": "\"BZUCgRsJHN1b3Y4VmmLXiJzEzGI/MTM4OTgyOTA3MTUxMzAwMA\"", 
+            "foregroundColor": "#000000", 
+            "id": "6cvvqvscutpcome5f6j58v5rqs@group.calendar.google.com", 
+            "kind": "calendar#calendarListEntry", 
+            "location": "NYC", 
+            "selected": true, 
+            "summary": "Wedding Stuff", 
+            "timeZone": "America/New_York"
+        }
+    ], 
+    "kind": "calendar#calendarList", 
+    "nextSyncToken": "00001403093950699000"
+}

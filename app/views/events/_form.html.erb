@@ -1,13 +1,18 @@
 <%= semantic_form_for [@event] do |form| %>
   <%= form.inputs "Event" do %>
     <%= form.input :name %>
-    <%= form.input :event_dt, :as => :datetime_picker %>
+    <%= form.input :starts_at, :as => :datetime_picker %>
+    <%= form.input :ends_at, :as => :datetime_picker %>
+    <%= form.input :all_day %>
     <%= form.input :event_type %>
     <%= form.input :location %>
-    <%= 
-    form.input :owner 
-    %>
+    <%= form.input :organization_id, :as => :hidden %>
+    <%= form.input :owner %>
     <%= form.input :respond_by, :as => :datetime_picker %>
+  <% end %>
+  <% if !!@event.g_cal_event_id %>
+    <%= form.input :g_cal_event_id, :as => :hidden %>
+    <%= form.input :g_cal_id, :as => :hidden %>
   <% end %>
   <%= form.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true %>
   <%= form.actions %> 

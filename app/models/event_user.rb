@@ -30,7 +30,7 @@ end
 
 
 def event_date
-	self.event.event_dt
+	self.event.starts_at
 end
 
 def event_type

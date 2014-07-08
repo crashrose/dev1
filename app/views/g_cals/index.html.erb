@@ -1,0 +1,23 @@
+
+<% gg_selected = @gg_cal_list.select {|gg_cal| gg_cal[:selected] == true} %>
+<% gg_not_selected = @gg_cal_list.select {|gg_cal| gg_cal[:selected] == false} %>
+<h2>
+<%= gg_selected[0][:name] %>
+</h2>
+<% gg_not_selected.each do |gg_cal| %>
+<% g_cal_hash = {:g_cal_id => gg_cal[:g_cal_id],
+				:timezone => gg_cal[:tz],
+				:active => true}
+%>
+<%= gg_cal[:name] %> -- 
+<%= 
+link_to raw("Select"), new_g_cal_path(:g_cal => g_cal_hash)
+
+ # :timezone => gg_cal.[:tz], :active => true}) 
+ %>
+<BR>
+<% end %>
+
+
+
+

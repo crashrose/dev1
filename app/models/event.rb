@@ -13,13 +13,19 @@ class Event < ActiveRecord::Base
 	has_many :users, :through => :event_users
 	has_many :responses, :dependent => :destroy
 
-	# validates :name,			:presence =>true
- #    validates :event_dt,		:presence =>true
- #    validates :event_type_id,	:presence =>true
- #    validates :location_id,		:presence =>true
 
-  # scope :all_event_users,  { where("created_at < ?") }
-  # Client.joins('LEFT OUTER JOIN addresses ON addresses.client_id = clients.id')
+  # has_one :g_cal_event
+
+	  scope :between, lambda {|start_time, end_time|
+    {:conditions => ["? < starts_at < ?", Event.format_date(start_time), Event.format_date(end_time)] }
+  }
+
+
+  scope :shared_g_cal_events, ->(g_cal_event_ids) { where(g_cal_event_id: g_cal_event_id)}
+  scope :all_org_events,->(org_id)  {where(organization_id: org_id)}
+  scope :all_org_gshared_events,->(org_id)  {where(organization_id: org_id).where.not(g_cal_event_id: nil)}
+  scope :all_org_nativeonly_events,->(org_id)  {where(organization_id: org_id, g_cal_event_id: nil)}
+  scope :by_g_cal_event,->(g_cal_event_id) {where(g_cal_event_id: g_cal_event_id)}
 
 
 def self.awaiting_response
@@ -28,6 +34,58 @@ def self.awaiting_response
 	return @event_users
 
 end
+
+def self.find_shared_by_g_cal(g_cal_event_id)
+  self.by_g_cal_event(g_cal_event_id).pluck(:id)
+end
+
+  def self.google_to_native_id_hash(org_id)
+   hash = Hash[*self.all_org_gshared_events(org_id).pluck(:g_cal_event_id).zip(self.all_org_gshared_events(org_id).pluck(:id)).flatten]
+  end
+
+def self.new_from_g_cal_event(g_cal_event, organization_id)
+  new_event_hash     = {
+    :name            => g_cal_event['title'],
+    :starts_at       => g_cal_event['start'],
+    :event_type_id   => nil,
+    :location_id     => nil,
+    :owner_id        => nil,
+    :respond_by      => nil,
+    :g_cal_id        => g_cal_event['g_cal_id'],
+    :g_cal_event_id  => g_cal_event['g_cal_event_id'],
+    :ends_at         => g_cal_event['end'],
+    :all_day         => g_cal_event['allDay'],
+    :description     => g_cal_event['description'],
+    :title           => g_cal_event['title'],
+    :organization_id => organization_id,
+    :visibility      => nil
+  }
+  @event             = Event.new(new_event_hash)
+end
+
+
+
+
+  # need to override the json view to return what full_calendar is expecting.
+  # http://arshaw.com/fullcalendar/docs/event_data/Event_Object/
+  def as_json(options = {})
+    {
+      :id => self.id,
+      :title => self.name,
+      :description => self.description || "",
+      :start => starts_at.rfc822,
+      :end => ends_at.rfc822,
+      :allDay => self.all_day,
+      :recurring => false,
+      :url => Rails.application.routes.url_helpers.event_path(id),
+      #:color => "red"
+    }
+
+  end
+
+  def self.format_date(date_time)
+    Time.at(date_time.to_i).to_formatted_s(:db)
+  end
 
 
 end

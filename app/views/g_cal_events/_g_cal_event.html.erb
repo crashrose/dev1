@@ -1,0 +1,34 @@
+<div class = "<%= cycle('odd', 'even') %> item">
+	<div class="item-header">
+		<span class="item-header-title">Event: </span>
+		<span class="item-header-val"><%= g_cal_event.title %></span>
+	</div>
+
+	<div class="item-attr">
+		<span class="item-attr-title">All Day: </span>
+		<span class="event-location item-attr-val"><%= g_cal_event.allDay %></span>
+	</div>
+	<% if g_cal_event.allDay == false %>
+	<div datetime="<%= g_cal_event.start %>" class="item-attr">
+		<span class="item-attr-title">Start: </span>
+		<span class="event-location item-attr-val"><%= g_cal_event.start.to_formatted_s(:short) %></span>
+	</div>
+	<div datetime="<%= g_cal_event.end %>" class="item-attr">
+		<span class="item-attr-title">End: </span>
+		<span class="event-location item-attr-val"><%= g_cal_event.end.to_formatted_s(:short) %></span>
+	</div>	
+	<% else %>
+	<div datetime="<%= g_cal_event.start.strftime('%m/%d/%Y')   %>" class="item-attr">
+		<span class="item-attr-title">Start: </span>
+		<span class="event-location item-attr-val"><%= g_cal_event.start.strftime("%m/%d/%Y")   %></span>
+	</div>
+	<div datetime="<%= g_cal_event.end.strftime('%m/%d/%Y')   %>" class="item-attr">
+		<span class="item-attr-title">End: </span>
+		<span class="event-location item-attr-val"><%= g_cal_event.end.strftime("%m/%d/%Y")   %></span>
+	</div>	
+	<% end %>
+	<div class="item-attr">
+		<span class="item-attr-title">Location: </span>
+		<span class="event-location item-attr-val"><%= g_cal_event.location %></span>
+	</div>
+</div>

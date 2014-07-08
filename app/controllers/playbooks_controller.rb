@@ -135,20 +135,7 @@ end
     end
 
     def sort_column
-      # if params[:sort]
-      #   sort_param = params.require(:sort)
-
-        %w[event_dt event_type event_location].include?(params[:sort]) ? params.require(:sort) : "event_dt"
-        # if ['event_dt', 'event_type', 'event_location'].detect {|n| n == sort_param}
-        #   sort_by = sort_vals[sort_param] + " " + params.require(:dir)
-        # else
-        #   sort_by = "events.event_dt " + params.require(:dir)
-        # end
-      # else
-      #   sort_by = "events.event_dt asc"
-      # end
-
-      # return 
+        %w[event_starts_at event_type event_location].include?(params[:sort]) ? params.require(:sort) : "event_starts_at"
     end
 
     def sort_direction

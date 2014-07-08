@@ -15,12 +15,12 @@
 end
 
 [
-	{:title => "Work",	:position => 1},
-	{:title => "Family Event",	:position => 2},
-	{:title => "Doctor Appointment",	:position => 3},
-	{:title => "School",	:position => 4},
-	{:title => "Other Sport",	:position => 5},
-	{:title => "Not Listed",	:position => 6}
+	{:title => "Work",	:position => 1, :organization_id => 2},
+	{:title => "Family Event",	:position => 2, :organization_id => 2},
+	{:title => "Doctor Appointment",	:position => 3, :organization_id => 2},
+	{:title => "School",	:position => 4, :organization_id => 2},
+	{:title => "Other Sport",	:position => 5, :organization_id => 2},
+	{:title => "Not Listed",	:position => 6, :organization_id => 2}
 ].each do |attributes|
 	ResponseReason.where(title: attributes[:title]).first_or_create(attributes)
 end

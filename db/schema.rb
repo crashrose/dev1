@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140619214900) do
+ActiveRecord::Schema.define(version: 20140707173751) do
 
   create_table "event_groups", force: true do |t|
     t.integer  "event_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140619214900) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
   end
 
   create_table "event_users", id: false, force: true do |t|
@@ -35,13 +36,21 @@ ActiveRecord::Schema.define(version: 20140619214900) do
 
   create_table "events", force: true do |t|
     t.string   "name"
-    t.datetime "event_dt"
+    t.datetime "starts_at"
     t.integer  "event_type_id"
     t.integer  "location_id"
     t.integer  "owner_id"
     t.datetime "respond_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "g_cal_id"
+    t.string   "g_cal_event_id"
+    t.datetime "ends_at"
+    t.boolean  "all_day"
+    t.text     "description"
+    t.string   "title"
+    t.integer  "organization_id"
+    t.string   "visibility"
   end
 
   create_table "file_types", force: true do |t|
@@ -87,6 +96,47 @@ ActiveRecord::Schema.define(version: 20140619214900) do
     t.datetime "updated_at"
   end
 
+  create_table "fullcalendar_engine_event_series", force: true do |t|
+    t.integer  "frequency",  default: 1
+    t.string   "period",     default: "monthly"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.boolean  "all_day",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fullcalendar_engine_events", force: true do |t|
+    t.string   "title"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.boolean  "all_day",         default: false
+    t.text     "description"
+    t.integer  "event_series_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fullcalendar_engine_events", ["event_series_id"], name: "index_fullcalendar_engine_events_on_event_series_id", using: :btree
+
+  create_table "g_cals", force: true do |t|
+    t.integer  "organization_id"
+    t.string   "g_cal_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "timezone_id"
+    t.boolean  "active"
+    t.string   "timezone"
+  end
+
+  create_table "g_events", force: true do |t|
+    t.string   "name"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "group_permissions", force: true do |t|
     t.integer  "group_id"
     t.integer  "permission_id"
@@ -98,6 +148,7 @@ ActiveRecord::Schema.define(version: 20140619214900) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
   end
 
   create_table "groups_users", force: true do |t|
@@ -121,6 +172,8 @@ ActiveRecord::Schema.define(version: 20140619214900) do
     t.string   "maplink"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
+    t.string   "visibility"
   end
 
   create_table "o_auth2_credentials", force: true do |t|
@@ -170,6 +223,7 @@ ActiveRecord::Schema.define(version: 20140619214900) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
   end
 
   create_table "response_statuses", force: true do |t|
@@ -204,6 +258,17 @@ ActiveRecord::Schema.define(version: 20140619214900) do
     t.datetime "updated_at"
   end
 
+  create_table "tzones", force: true do |t|
+    t.string   "name"
+    t.string   "tz_info"
+    t.integer  "offset_sec"
+    t.integer  "offset_min"
+    t.decimal  "offset_hour",           precision: 4, scale: 2
+    t.string   "sign",        limit: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "upload_groups", force: true do |t|
     t.integer  "upload_id"
     t.integer  "group_id"
@@ -221,6 +286,8 @@ ActiveRecord::Schema.define(version: 20140619214900) do
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.text     "description"
+    t.integer  "organization_id"
+    t.string   "visibility"
   end
 
   create_table "users", force: true do |t|

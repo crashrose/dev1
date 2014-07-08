@@ -10,7 +10,19 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
 //= require jquery
-//= require jquery_ujs
 //= require turbolinks
+//= require jquery_ujs
+
+//= require jquery.ui.draggable
+//= require jquery.ui.droppable
+//= require jquery.ui.resizable
+//= require jquery.ui.selectable
+
+//= require moment
+
+//= require jquery.rest
+//= require fullcalendar
+//= require gcal
 //= require_tree .

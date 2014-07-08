@@ -4,9 +4,9 @@
 		<span class="item-header-title">Event: </span>
 		<span class="item-header-val"><%= event_user.event.name %></span>
 	</div>
-	<div datetime="<%= event_user.event.event_dt %>" class="item-attr">
+	<div datetime="<%= event_user.event.starts_at %>" class="item-attr">
 		<span class="item-attr-title">Date and Time: </span>
-		<span class="event-location item-attr-val"><%= event_user.event.event_dt.to_formatted_s(:short) %></span>
+		<span class="event-location item-attr-val"><%= event_user.event.starts_at.to_formatted_s(:short) %></span>
 	</div>
 	<div class="item-attr">
 		<span class="item-attr-title">Location: </span>

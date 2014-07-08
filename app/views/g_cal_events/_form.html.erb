@@ -1,0 +1,40 @@
+<%= semantic_form_for [@g_cal_event], :url => gmod_g_cal_events_path do |form| %>
+  <%= form.inputs "Event" do %>
+    <%= form.label :title, "Title:" %>
+    <%= form.input :title, :as => :string, :label => false %>
+    <%= form.label :description, "Description:" %>
+    <%= form.input :description, :as => :string, :label => false  %>
+    <%= form.label :allDay, "All Day event?" %>
+    <%= form.input :allDay, :as => :boolean, :checked_value => 'true', :label => false %>
+        <% if form.object.allDay %>
+        <%= form.label :start, "Start Date:" %>
+        <%= form.input :start, :as => :date_picker, :label => false %>
+        <%= form.label :end, "End Date (inclusive):" %>
+        <%= form.input :end, :as => :date_picker, :label => false  %>
+    <% else %>
+        <%= form.label :start, "Start Date & Time:" %>
+        <%= form.input :start, :as => :datetime_picker %>
+        <% if form.object.start_tz != "" %>
+            <%= form.label :start_tz, "Starting Timezone:" %>
+            <%= form.input :start_tz, :as => :time_zone %>
+        <% end %>
+        <%= form.label :end, "End Date & Time:" %>
+        <%= form.input :end, :as => :datetime_picker %>
+        <% if form.object.end_tz != "" %>
+            <%= form.label :end, "Ending Timezone:" %>
+            <%= form.input :end_tz, :as => :time_zone %>
+        <% end %>
+    <% end %>
+    <%= form.label :location, "Location:" %>
+    <%= form.input :location, :as => :string, :label => false %>
+    <%= form.input :id, :as => :hidden %>
+    <%= form.input :g_cal_id, :as => :hidden %>
+    <%= form.input :g_cal_event_id, :as => :hidden %>
+    <%= form.input :native_event_id, :as => :hidden %>
+    <%= form.input :url, :as => :hidden %>
+    <%= form.input :is_shared, :as => :hidden %>
+    <%= form.input :g_cal_id, :as => :hidden %>
+  <% end %>
+  <%= form.actions %> 
+<% end %>
+<%= @g_cal_event.inspect %>

@@ -26,6 +26,12 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
+config.reload_plugins = true
+ActiveSupport::Dependencies.autoload_paths << File::join( Rails.root, 'lib')
+ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Apis'
+
+  # Dependencies.explicitly_unloadable_constants = 'Apis'
+
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.

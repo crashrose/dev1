@@ -1,16 +1,22 @@
 
 <header>
   <p>Event:
-  <%= @event.name %>
+
 </p>
 </header>
-<%= render @event %>
-	<div class="item-subattr">
-		<div class="item-subattr-group">
-			<span class="item-subattr-title">Assigned Groups</span>
-			<%= render @event.event_groups %>
+<% if @event %>
+	<%= render @event %>
+		<div class="item-subattr">
+			<div class="item-subattr-group">
+				<span class="item-subattr-title">Assigned Groups</span>
+				<%= render @event.event_groups %>
+			</div>
 		</div>
-	</div>
+<% else %>
+	<%= render @g_cal_event %>
+	<% g_cal_event_hash = @g_cal_event.serializable_hash %>
+	<%= link_to raw("Edit Google Calendar Event"), edit_g_cal_event_path(:g_cal_event => g_cal_event_hash) 	%>
+	<%= link_to raw("Add Attendance"), new_event_path(:g_cal_event => g_cal_event_hash) %>
+<% end %>
 
 <%= link_to raw("&larr; Back to Events"), events_path %>
-

@@ -11,7 +11,7 @@
             <th>RSVP Notes</th>
         </tr>
         <tr> 
-            <th><%= sortable "event_dt", "Date" %></th>               
+            <th><%= sortable "starts", "Date" %></th>               
             <th><%= sortable "event_type", "Event Type" %></th>    
             <th><%= sortable "event_location", "Location" %></th>
             <th>Yes to All:</th>
@@ -29,7 +29,7 @@
 		    <% even_odd = cycle('odd', 'even') %>
 		    <tr class="<%= even_odd %> item">
 			    <td colspan="3" class="rsvp_head rsvp_top">
-			        <h3><%= event_user.event.event_dt.strftime("%m/%d/%Y %l:%M %p") %></h3>
+			        <h3><%= event_user.event.starts_at.strftime("%m/%d/%Y %l:%M %p") %></h3>
 			        <p>Respond by: 
 			        	<%= event_user.event.respond_by.strftime("%m/%d/%Y %l:%M %p") %>
 			            <!--     RSVP Response Status -->

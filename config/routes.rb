@@ -1,16 +1,28 @@
 Rails.application.routes.draw do
 
-  get "home/index"
+  # get '/g_calendar(/:year(/:month))' => 'g_calendar#index', :as => :g_calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
+  # get "home/index"
 
-  get '/signout' => 'sessions#destroy', as: :signout
+  # get '/signout' => 'sessions#destroy', as: :signout
 
-  get '/signet/google/auth_callback' => 'google_shared_calendars#oauth2callback'
+  get '/signet/google/auth_callback' => 'g_cal_events#oauth2callback'
 
 
 # get '/oauth2callback' => 'google_shared_calendars#show'
 # get '/oauth2authorize' => 'google_shared_calendars#oauth2authorize'
 
   devise_for :users
+
+# mount FullcalendarEngine::Engine => "/fullcalendar_engine"
+  # resources :g_calendar
+  #  # get '/g_calendar(/:year(/:month))' => 'g_calendar#index', :as => :g_calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
+  
+  resource :calendar, :only => [:show]
+  resources :g_cal_events do
+    collection do
+      post :gmod
+    end
+  end
   resources :event_types
   resources :events do
     resources :resonses
@@ -27,7 +39,12 @@ Rails.application.routes.draw do
     put :update_responses
   end
   end
-  resources :g_shared_calendars
+  resources :g_cals do
+    collection do
+      get 'select'
+    end
+  end
+
   resources :google_shared_calendars
   resources :responses do
     collection do
