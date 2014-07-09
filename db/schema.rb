@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707173751) do
+ActiveRecord::Schema.define(version: 20140708201110) do
 
   create_table "event_groups", force: true do |t|
     t.integer  "event_id"
@@ -28,12 +28,14 @@ ActiveRecord::Schema.define(version: 20140707173751) do
     t.integer  "organization_id"
   end
 
-  create_table "event_users", id: false, force: true do |t|
-    t.integer "event_id"
-    t.integer "user_id"
-    t.string  "id",       limit: 23
+  create_table "groups_users", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
+  create_view "event_users", "select distinct `event_groups`.`event_id` AS `event_id`,`groups_users`.`user_id` AS `user_id`,concat(`event_groups`.`event_id`,'_',`groups_users`.`user_id`) AS `id` from (`event_groups` join `groups_users` on((`groups_users`.`group_id` = `event_groups`.`group_id`)))", :force => true
   create_table "events", force: true do |t|
     t.string   "name"
     t.datetime "starts_at"
@@ -115,9 +117,8 @@ ActiveRecord::Schema.define(version: 20140707173751) do
     t.integer  "event_series_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["event_series_id"], :name => "index_fullcalendar_engine_events_on_event_series_id"
   end
-
-  add_index "fullcalendar_engine_events", ["event_series_id"], name: "index_fullcalendar_engine_events_on_event_series_id", using: :btree
 
   create_table "g_cals", force: true do |t|
     t.integer  "organization_id"
@@ -151,11 +152,9 @@ ActiveRecord::Schema.define(version: 20140707173751) do
     t.integer  "organization_id"
   end
 
-  create_table "groups_users", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "group_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "groups_payments", force: true do |t|
+    t.integer "group_id"
+    t.integer "payment_id"
   end
 
   create_table "locations", force: true do |t|
@@ -197,8 +196,32 @@ ActiveRecord::Schema.define(version: 20140707173751) do
     t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "paypal_seller_id"
   end
 
+  create_table "payment_notifications", force: true do |t|
+    t.text     "params"
+    t.string   "status"
+    t.string   "transaction_id"
+    t.integer  "user_id"
+    t.integer  "payment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "payments", force: true do |t|
+    t.string   "name"
+    t.integer  "owner_id"
+    t.decimal  "amount",          precision: 10, scale: 2
+    t.integer  "organization_id"
+    t.text     "description"
+    t.integer  "position"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_view "payments_users", "select distinct `groups_payments`.`payment_id` AS `payment_id`,`groups_users`.`user_id` AS `user_id`,concat(`groups_payments`.`payment_id`,'_',`groups_users`.`user_id`) AS `id` from (`groups_payments` join `groups_users` on((`groups_users`.`group_id` = `groups_payments`.`group_id`)))", :force => true
   create_table "people", force: true do |t|
     t.integer  "user_id",    default: 0
     t.string   "first_name",             null: false
@@ -305,9 +328,8 @@ ActiveRecord::Schema.define(version: 20140707173751) do
     t.string   "last_sign_in_ip"
     t.integer  "person_id"
     t.string   "uid"
+    t.index ["email"], :name => "index_users_on_email", :unique => true
+    t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

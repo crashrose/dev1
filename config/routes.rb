@@ -24,6 +24,11 @@ Rails.application.routes.draw do
     end
   end
   resources :event_types
+  resources :payment_notifications
+  resources :payments do
+    # get '/:id/make_payment' => :make_payment,  :as => 'make_payment'
+    get :make_payment, :key => :id
+  end
   resources :events do
     resources :resonses
   end

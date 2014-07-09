@@ -65,6 +65,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     end
     primary.item :playbooks, 'Playbooks', playbooks_path
+    primary.item :payments, 'Payments', payments_path
     primary.item :cal, 'Calendar', calendar_path
     primary.item :media, 'Multimedia', uploads_path
     # primary.item :administration, 'Administration', users_path

@@ -1,0 +1,12 @@
+<%= semantic_form_for [@payment] do |form| %>
+  <%= form.inputs "Payment" do %>
+    <%= form.input :name %>
+    <%= form.input :description %>
+    <%= form.input :amount %>
+    <%= form.input :status %>
+    <%= form.input :organization_id, :as => :hidden %>
+    <%= form.input :owner %>
+  <% end %>
+  <%= form.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true %>
+  <%= form.actions %> 
+<% end %>

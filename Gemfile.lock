@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/thoughtbot/paperclip.git
-  revision: a424b82daed0247d5926ddbff14dffb8553b1695
+  revision: f1feed0c30443f15abb490667d1920d2648fe00e
   specs:
     paperclip (4.1.1)
       activemodel (>= 3.0.0)
@@ -118,7 +118,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    minitest (5.3.5)
+    minitest (5.4.0)
     momentjs-rails (2.7.0)
       railties (>= 3.1)
     multi_json (1.10.1)
@@ -154,6 +154,9 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
+    schema_plus (1.5.3)
+      activerecord (>= 3.2)
+      valuable
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
@@ -194,6 +197,7 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     uuidtools (2.1.4)
+    valuable (0.9.8)
     warden (1.2.3)
       rack (>= 1.0)
 
@@ -223,6 +227,7 @@ DEPENDENCIES
   paperclip!
   rails (= 4.1.1)
   sass-rails (~> 4.0.3)
+  schema_plus
   sdoc (~> 0.4.0)
   sextant
   simple-navigation

@@ -16,6 +16,7 @@ gem "simple-navigation"
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'simple-navigation-bootstrap'
+gem "schema_plus"
 # gem 'therubyracer'
 # gem 'libv8', '~> 3.11.8.3'
 # gem 'therubyracer', :require => 'v8'
@@ -46,6 +47,8 @@ gem "activerecord-tableless", "~> 1.0"
 gem 'country-select'
 
 gem 'google-api-client', :require => 'google/api_client'
+
+# gem 'paypal-sdk-rest'
 # gem 'signet-rails', '>= 0.0.6'
 gem 'certified', '~> 0.1.2'
 
