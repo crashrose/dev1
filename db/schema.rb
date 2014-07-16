@@ -11,13 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140708201110) do
+ActiveRecord::Schema.define(version: 20140716184356) do
 
   create_table "event_groups", force: true do |t|
     t.integer  "event_id"
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["event_id"], :name => "index_event_groups_on_event_id"
+    t.index ["group_id"], :name => "index_event_groups_on_group_id"
+    t.index ["id"], :name => "index_event_groups_on_id"
   end
 
   create_table "event_types", force: true do |t|
@@ -26,6 +29,7 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
+    t.index ["id"], :name => "index_event_types_on_id"
   end
 
   create_table "groups_users", force: true do |t|
@@ -33,6 +37,9 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["group_id"], :name => "index_groups_users_on_group_id"
+    t.index ["id"], :name => "index_groups_users_on_id"
+    t.index ["user_id"], :name => "index_groups_users_on_user_id"
   end
 
   create_view "event_users", "select distinct `event_groups`.`event_id` AS `event_id`,`groups_users`.`user_id` AS `user_id`,concat(`event_groups`.`event_id`,'_',`groups_users`.`user_id`) AS `id` from (`event_groups` join `groups_users` on((`groups_users`.`group_id` = `event_groups`.`group_id`)))", :force => true
@@ -53,6 +60,13 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.string   "title"
     t.integer  "organization_id"
     t.string   "visibility"
+    t.index ["event_type_id"], :name => "index_events_on_event_type_id"
+    t.index ["g_cal_event_id"], :name => "index_events_on_g_cal_event_id"
+    t.index ["g_cal_id"], :name => "index_events_on_g_cal_id"
+    t.index ["id"], :name => "index_events_on_id"
+    t.index ["location_id"], :name => "index_events_on_location_id"
+    t.index ["organization_id"], :name => "index_events_on_organization_id"
+    t.index ["owner_id"], :name => "index_events_on_owner_id"
   end
 
   create_table "file_types", force: true do |t|
@@ -60,6 +74,7 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.string   "mime_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["id"], :name => "index_file_types_on_id"
   end
 
   create_table "form_fields", force: true do |t|
@@ -71,6 +86,8 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.string   "field_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["form_id"], :name => "index_form_fields_on_form_id"
+    t.index ["id"], :name => "index_form_fields_on_id"
   end
 
   create_table "form_submission_items", force: true do |t|
@@ -79,6 +96,9 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.string   "form_field_value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["form_field_id"], :name => "index_form_submission_items_on_form_field_id"
+    t.index ["form_submission_id"], :name => "index_form_submission_items_on_form_submission_id"
+    t.index ["id"], :name => "index_form_submission_items_on_id"
   end
 
   create_table "form_submissions", force: true do |t|
@@ -86,6 +106,9 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.integer  "form_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["form_id"], :name => "index_form_submissions_on_form_id"
+    t.index ["id"], :name => "index_form_submissions_on_id"
+    t.index ["user_id"], :name => "index_form_submissions_on_user_id"
   end
 
   create_table "forms", force: true do |t|
@@ -96,28 +119,8 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.string   "email_to_address"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "fullcalendar_engine_event_series", force: true do |t|
-    t.integer  "frequency",  default: 1
-    t.string   "period",     default: "monthly"
-    t.datetime "starttime"
-    t.datetime "endtime"
-    t.boolean  "all_day",    default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "fullcalendar_engine_events", force: true do |t|
-    t.string   "title"
-    t.datetime "starttime"
-    t.datetime "endtime"
-    t.boolean  "all_day",         default: false
-    t.text     "description"
-    t.integer  "event_series_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["event_series_id"], :name => "index_fullcalendar_engine_events_on_event_series_id"
+    t.index ["id"], :name => "index_forms_on_id"
+    t.index ["organization_id"], :name => "index_forms_on_organization_id"
   end
 
   create_table "g_cals", force: true do |t|
@@ -128,14 +131,9 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.integer  "timezone_id"
     t.boolean  "active"
     t.string   "timezone"
-  end
-
-  create_table "g_events", force: true do |t|
-    t.string   "name"
-    t.datetime "start_at"
-    t.datetime "end_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.index ["g_cal_id"], :name => "index_g_cals_on_g_cal_id"
+    t.index ["id"], :name => "index_g_cals_on_id"
+    t.index ["organization_id"], :name => "index_g_cals_on_organization_id"
   end
 
   create_table "group_permissions", force: true do |t|
@@ -143,6 +141,9 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.integer  "permission_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["group_id"], :name => "index_group_permissions_on_group_id"
+    t.index ["id"], :name => "index_group_permissions_on_id"
+    t.index ["permission_id"], :name => "index_group_permissions_on_permission_id"
   end
 
   create_table "groups", force: true do |t|
@@ -150,11 +151,16 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
+    t.index ["id"], :name => "index_groups_on_id"
+    t.index ["organization_id"], :name => "index_groups_on_organization_id"
   end
 
   create_table "groups_payments", force: true do |t|
     t.integer "group_id"
     t.integer "payment_id"
+    t.index ["group_id"], :name => "index_groups_payments_on_group_id"
+    t.index ["id"], :name => "index_groups_payments_on_id"
+    t.index ["payment_id"], :name => "index_groups_payments_on_payment_id"
   end
 
   create_table "locations", force: true do |t|
@@ -173,20 +179,15 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.datetime "updated_at"
     t.integer  "organization_id"
     t.string   "visibility"
-  end
-
-  create_table "o_auth2_credentials", force: true do |t|
-    t.string   "name"
-    t.integer  "user_id"
-    t.string   "signet"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.index ["id"], :name => "index_locations_on_id"
+    t.index ["organization_id"], :name => "index_locations_on_organization_id"
   end
 
   create_table "org_types", force: true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["id"], :name => "index_org_types_on_id"
   end
 
   create_table "organizations", force: true do |t|
@@ -197,6 +198,11 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "paypal_seller_id"
+    t.index ["id"], :name => "index_organizations_on_id"
+    t.index ["org_type_id"], :name => "index_organizations_on_org_type_id"
+    t.index ["owner_id"], :name => "index_organizations_on_owner_id"
+    t.index ["parent_id"], :name => "index_organizations_on_parent_id"
+    t.index ["paypal_seller_id"], :name => "index_organizations_on_paypal_seller_id"
   end
 
   create_table "payment_notifications", force: true do |t|
@@ -207,6 +213,10 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.integer  "payment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["id"], :name => "index_payment_notifications_on_id"
+    t.index ["payment_id"], :name => "index_payment_notifications_on_payment_id"
+    t.index ["transaction_id"], :name => "index_payment_notifications_on_transaction_id"
+    t.index ["user_id"], :name => "index_payment_notifications_on_user_id"
   end
 
   create_table "payments", force: true do |t|
@@ -219,6 +229,9 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["id"], :name => "index_payments_on_id"
+    t.index ["organization_id"], :name => "index_payments_on_organization_id"
+    t.index ["owner_id"], :name => "index_payments_on_owner_id"
   end
 
   create_view "payments_users", "select distinct `groups_payments`.`payment_id` AS `payment_id`,`groups_users`.`user_id` AS `user_id`,concat(`groups_payments`.`payment_id`,'_',`groups_users`.`user_id`) AS `id` from (`groups_payments` join `groups_users` on((`groups_users`.`group_id` = `groups_payments`.`group_id`)))", :force => true
@@ -229,6 +242,8 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["id"], :name => "index_people_on_id"
+    t.index ["user_id"], :name => "index_people_on_user_id"
   end
 
   create_table "permissions", force: true do |t|
@@ -239,6 +254,11 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.string   "action_scope"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["action"], :name => "index_permissions_on_action"
+    t.index ["action_scope"], :name => "index_permissions_on_action_scope"
+    t.index ["id"], :name => "index_permissions_on_id"
+    t.index ["organization_id"], :name => "index_permissions_on_organization_id"
+    t.index ["subject_class"], :name => "index_permissions_on_subject_class"
   end
 
   create_table "response_reasons", force: true do |t|
@@ -247,6 +267,8 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
+    t.index ["id"], :name => "index_response_reasons_on_id"
+    t.index ["organization_id"], :name => "index_response_reasons_on_organization_id"
   end
 
   create_table "response_statuses", force: true do |t|
@@ -255,6 +277,7 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["id"], :name => "index_response_statuses_on_id"
   end
 
   create_table "responses", force: true do |t|
@@ -271,6 +294,13 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["event_id"], :name => "index_responses_on_event_id"
+    t.index ["id"], :name => "index_responses_on_id"
+    t.index ["response_reason_id"], :name => "index_responses_on_response_reason_id"
+    t.index ["response_status_id"], :name => "index_responses_on_response_status_id"
+    t.index ["review_status_id"], :name => "index_responses_on_review_status_id"
+    t.index ["reviewed_user_id"], :name => "index_responses_on_reviewed_user_id"
+    t.index ["user_id"], :name => "index_responses_on_user_id"
   end
 
   create_table "review_statuses", force: true do |t|
@@ -279,17 +309,7 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "tzones", force: true do |t|
-    t.string   "name"
-    t.string   "tz_info"
-    t.integer  "offset_sec"
-    t.integer  "offset_min"
-    t.decimal  "offset_hour",           precision: 4, scale: 2
-    t.string   "sign",        limit: 1
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.index ["id"], :name => "index_review_statuses_on_id"
   end
 
   create_table "upload_groups", force: true do |t|
@@ -297,6 +317,9 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["group_id"], :name => "index_upload_groups_on_group_id"
+    t.index ["id"], :name => "index_upload_groups_on_id"
+    t.index ["upload_id"], :name => "index_upload_groups_on_upload_id"
   end
 
   create_table "uploads", force: true do |t|
@@ -311,6 +334,9 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.text     "description"
     t.integer  "organization_id"
     t.string   "visibility"
+    t.index ["file_type_id"], :name => "index_uploads_on_file_type_id"
+    t.index ["id"], :name => "index_uploads_on_id"
+    t.index ["organization_id"], :name => "index_uploads_on_organization_id"
   end
 
   create_table "users", force: true do |t|
@@ -328,8 +354,20 @@ ActiveRecord::Schema.define(version: 20140708201110) do
     t.string   "last_sign_in_ip"
     t.integer  "person_id"
     t.string   "uid"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.index ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
     t.index ["email"], :name => "index_users_on_email", :unique => true
+    t.index ["id"], :name => "index_users_on_id"
+    t.index ["person_id"], :name => "index_users_on_person_id"
     t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+    t.index ["uid"], :name => "index_users_on_uid"
+    t.index ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
   end
 
 end

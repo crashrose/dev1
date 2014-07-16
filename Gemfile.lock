@@ -1,8 +1,20 @@
 GIT
-  remote: git://github.com/thoughtbot/paperclip.git
-  revision: f1feed0c30443f15abb490667d1920d2648fe00e
+  remote: git://github.com/plataformatec/devise.git
+  revision: 526cc2cf745164805e20412971b65e3b6f70d437
+  branch: lm-timeoutable-fix
   specs:
-    paperclip (4.1.1)
+    devise (3.2.4)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
+
+GIT
+  remote: git://github.com/thoughtbot/paperclip.git
+  revision: dca87ec5d8038b2d436a75ad6119c8eb67b73e70
+  specs:
+    paperclip (4.2.0)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
@@ -45,40 +57,39 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
-    autoprefixer-rails (2.1.0.20140628)
-      execjs
     bcrypt (3.1.7-x86-mingw32)
+    better_errors (1.1.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     bootstrap-sass (3.2.0.0)
       sass (~> 3.2)
     builder (3.2.2)
+    callsite (0.0.11)
     cancan (1.6.10)
-    certified (0.1.2)
-    chunky_png (1.3.1)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.4)
       climate_control (>= 0.0.3, < 1.0)
+    coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
-    coffee-script (2.2.0)
+    coffee-script (2.3.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.7.0)
-    compass (0.12.6)
-      chunky_png (~> 1.2)
-      fssm (>= 0.2.7)
-      sass (~> 3.2.19)
-    compass-rails (1.1.7)
-      compass (>= 0.12.2)
-      sprockets (<= 2.11.0)
+    coffee-script-source (1.7.1)
+    colored (1.2)
+    columnize (0.8.9)
     country-select (1.1.1)
-    devise (3.2.4)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
-      thread_safe (~> 0.1)
-      warden (~> 1.2.3)
+    debug_inspector (0.0.2)
+    debugger (1.6.8)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.3.5)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.3.5)
     erubis (2.7.0)
     execjs (2.2.1)
     extlib (0.9.16)
@@ -86,7 +97,6 @@ GEM
       multipart-post (>= 1.2, < 3)
     formtastic (2.3.0.rc3)
       actionpack (>= 3.0)
-    fssm (0.2.10)
     fullcalendar-rails (1.6.4.0)
     google-api-client (0.7.1)
       addressable (>= 2.3.2)
@@ -100,8 +110,8 @@ GEM
       signet (>= 0.5.0)
       uuidtools (>= 2.1.0)
     hike (1.2.3)
-    i18n (0.6.9)
-    jbuilder (2.1.2)
+    i18n (0.6.11)
+    jbuilder (2.1.3)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     jquery-rails (3.1.1)
@@ -117,6 +127,10 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta_request (0.3.3)
+      callsite (~> 0.0, >= 0.0.11)
+      rack-contrib (~> 1.1)
+      railties (>= 3.0.0, < 5.0.0)
     mime-types (1.25.1)
     minitest (5.4.0)
     momentjs-rails (2.7.0)
@@ -127,6 +141,8 @@ GEM
     orm_adapter (0.5.0)
     polyglot (0.3.5)
     rack (1.5.2)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.1)
@@ -167,11 +183,6 @@ GEM
       faraday (>= 0.9.0.rc5)
       jwt (>= 0.1.5)
       multi_json (>= 1.0.0)
-    simple-navigation (3.13.0)
-      activesupport (>= 2.3.2)
-    simple-navigation-bootstrap (1.0.0)
-      railties (>= 3.1)
-      simple-navigation (>= 3.7.0)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -181,6 +192,9 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    tabulous (2.1.1)
+      colored (~> 1.2.0)
+      rails (>= 3.0, < 4.2.0)
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
@@ -206,14 +220,14 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-tableless (~> 1.0)
-  autoprefixer-rails
-  bootstrap-sass (~> 3.2.0)
+  better_errors
+  binding_of_caller
+  bootstrap-sass
   cancan
-  certified (~> 0.1.2)
   coffee-rails (~> 4.0.0)
-  compass-rails
   country-select
-  devise
+  debugger
+  devise!
   formtastic (~> 2.3.0.rc2)
   fullcalendar-rails (~> 1.6.4.0)
   google-api-client
@@ -222,6 +236,7 @@ DEPENDENCIES
   jquery-rest-rails
   jquery-ui-rails
   json
+  meta_request
   momentjs-rails (~> 2.7.0)
   mysql2
   paperclip!
@@ -230,8 +245,7 @@ DEPENDENCIES
   schema_plus
   sdoc (~> 0.4.0)
   sextant
-  simple-navigation
-  simple-navigation-bootstrap
+  tabulous
   turbolinks
   tzinfo-data
   uglifier (>= 1.3.0)

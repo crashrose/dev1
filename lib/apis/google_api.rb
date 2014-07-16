@@ -17,8 +17,18 @@ module Apis
                         :g_cal => self.g_cal}
 
       @g_cal_api = GCalApi::new(options)
+
+
+      if (@g_cal_api.user_credentials.refresh_token == "") || (!@g_cal_api.user_credentials.refresh_token)
+        redirect_to(@g_cal_api.user_credentials.authorization_uri({:access_type => "offline", :approval_prompt => "force"}).to_s)
+      elsif !@g_cal_api.user_credentials.issued_at 
+        @g_cal_api.user_credentials.grant_type = 'refresh_token'
+        @g_cal_api.user_credentials.fetch_access_token!
+        # self.serialize_token
+      end
+
       serialize_token
-      @g_cal_api
+      return @g_cal_api
     end
 
     def g_cal
@@ -32,7 +42,10 @@ module Apis
       new_auth.code = params[:code] if params[:code]
       new_auth.fetch_access_token!
       @user_credentials = new_auth
-      self.serialize_token
+      # self.serialize_token
+      session[:access_token] = @user_credentials.access_token
+      session[:refresh_token] = @user_credentials.refresh_token
+      session[:code] = @user_credentials.code
       session[:refresh_attempt_count] = 0
       redirect_to(g_cal_events_path)
     end

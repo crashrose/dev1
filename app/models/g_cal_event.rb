@@ -25,6 +25,12 @@ class GCalEvent < ActiveRecord::Base
   column :is_shared, :boolean
 
 
+#### TO DO ####
+# Build method for stripped-down list of events that gets fed to Java for calendar
+# display since the calendar display doesn't use all of the  model data.
+
+
+
   def self.build_events(data, g_cal_id, org_id)
     @events = []
     g_cal_tz = data.timeZone

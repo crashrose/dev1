@@ -9,6 +9,8 @@ class GCalEventsController < ApplicationController
 
   include Apis::GoogleApi
 
+helper_method :redirect_to
+
   before_action :user_credentials, only: [:index, :gmod ]
 
   CREDENTIAL_STORE_FILE = "#{$0}-oauth2.json"
@@ -26,7 +28,7 @@ class GCalEventsController < ApplicationController
       format.json { render :json => @results }
     end
 
-
+# @results = @g_cal_api.user_credentials
   end
 
   def edit
@@ -63,9 +65,9 @@ class GCalEventsController < ApplicationController
 
 
   #Set authorization codes and go to index
-  def oauth2callback
-    @g_cal_api.oauth2callback
-  end
+  # def oauth2callback
+  #   GCalApi::oauth2callback
+  # end
 
   def error_handling(e)
     session[:refresh_attempt_count] += 1

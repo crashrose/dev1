@@ -25,41 +25,4 @@ class Payment < ActiveRecord::Base
 							}
 	end
 
-	# def paypal_custom_code=(paypal_custom_code)
-	# 	@paypal_custom_code
-	# end
-
-	# def paypal_seller_id=(paypal_seller_id)
-	# 	@paypal_seller_id = paypal_seller_id
-	# end
-
-
-# 	 def paypal_url(org_id, return_url, notify_url)
-#     values = {
-#       :business => Organization.get_seller_id(org_id),
-#       :cmd => 'upload',
-#       :upload => 1,
-#       :custom => {:user_id => 4, :payment_id => id},
-#       :return => return_url,
-#       :amount => amount,
-#       :item_name => "Payment through TeamRockett: #{name}",
-#       :item_number => "tr_payment_#{id}",
-#       :shopping_url => return_url,
-#       :notify_url => notify_url
-# }
-    # line_items.each_with_index do |item, index|
-    #   values.merge!({
-    #     "amount_#{index+1}" => item.unit_price,
-    #     "item_name_#{index+1}" => item.product.name,
-    #     "item_number_#{index+1}" => item.id,
-    #     "quantity_#{index+1}" => item.quantity
-    #   })
-    # end
-  #   "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
-  # end
-
-
-
-
-
 end

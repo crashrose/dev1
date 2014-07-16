@@ -13,10 +13,6 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-# mount FullcalendarEngine::Engine => "/fullcalendar_engine"
-  # resources :g_calendar
-  #  # get '/g_calendar(/:year(/:month))' => 'g_calendar#index', :as => :g_calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
-  
   resource :calendar, :only => [:show]
   resources :g_cal_events do
     collection do
@@ -30,7 +26,7 @@ Rails.application.routes.draw do
     get :make_payment, :key => :id
   end
   resources :events do
-    resources :resonses
+    resources :responses
   end
   resources :locations
   resources :people do
@@ -50,7 +46,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :google_shared_calendars
+  # resources :google_shared_calendars
   resources :responses do
     collection do
       post :batch_update
@@ -65,6 +61,9 @@ Rails.application.routes.draw do
     resources :form_fields do
       resources :form_submission_items
     end
+  end
+  resources :form_submissions do
+    resources :form_submission_items
   end
   # :update_responses => :put
 
