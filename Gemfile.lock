@@ -1,4 +1,21 @@
 GIT
+  remote: git://github.com/gregbell/active_admin.git
+  revision: 9cfc45330e5ad31977b3ac7b2ccc1f8d6146c73f
+  specs:
+    activeadmin (1.0.0.pre)
+      arbre (~> 1.0)
+      bourbon
+      coffee-rails
+      formtastic (~> 2.3.0.rc3)
+      inherited_resources (~> 1.4.1)
+      jquery-rails
+      jquery-ui-rails (~> 5.0)
+      kaminari (~> 0.15)
+      rails (>= 3.2, < 4.2)
+      ransack (~> 1.0)
+      sass-rails
+
+GIT
   remote: git://github.com/plataformatec/devise.git
   revision: 526cc2cf745164805e20412971b65e3b6f70d437
   branch: lm-timeoutable-fix
@@ -52,6 +69,8 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.6)
+    arbre (1.0.1)
+      activesupport (>= 3.0.0)
     arel (5.0.1.20140414130214)
     autoparse (0.3.3)
       addressable (>= 2.3.1)
@@ -65,6 +84,9 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.2.0.0)
       sass (~> 3.2)
+    bourbon (3.2.3)
+      sass (~> 3.2)
+      thor
     builder (3.2.2)
     callsite (0.0.11)
     cancan (1.6.10)
@@ -90,6 +112,7 @@ GEM
       debugger-ruby_core_source (~> 1.3.5)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.3.5)
+    elif (0.1.0)
     erubis (2.7.0)
     execjs (2.2.1)
     extlib (0.9.16)
@@ -109,8 +132,14 @@ GEM
       retriable (>= 1.4)
       signet (>= 0.5.0)
       uuidtools (>= 2.1.0)
+    has_scope (0.6.0.rc)
+      actionpack (>= 3.2, < 5)
+      activesupport (>= 3.2, < 5)
     hike (1.2.3)
     i18n (0.6.11)
+    inherited_resources (1.4.1)
+      has_scope (~> 0.6.0.rc)
+      responders (~> 1.0.0.rc)
     jbuilder (2.1.3)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -122,6 +151,9 @@ GEM
       railties (>= 3.2.16)
     json (1.8.1)
     jwt (1.0.0)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     launchy (2.4.2)
       addressable (~> 2.3)
     mail (2.5.4)
@@ -139,6 +171,8 @@ GEM
     multipart-post (2.0.0)
     mysql2 (0.3.16)
     orm_adapter (0.5.0)
+    polyamorous (1.0.0)
+      activerecord (>= 3.0)
     polyglot (0.3.5)
     rack (1.5.2)
     rack-contrib (1.1.0)
@@ -161,8 +195,17 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
+    ransack (1.2.3)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      i18n
+      polyamorous (~> 1.0.0)
     rdoc (4.1.1)
       json (~> 1.4)
+    request-log-analyzer (1.13.0)
+    responders (1.0.0)
+      railties (>= 3.2, < 5)
     retriable (1.4.1)
     sass (3.2.19)
     sass-rails (4.0.3)
@@ -219,6 +262,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  activeadmin!
   activerecord-tableless (~> 1.0)
   better_errors
   binding_of_caller
@@ -228,6 +272,7 @@ DEPENDENCIES
   country-select
   debugger
   devise!
+  elif (~> 0.1.0)
   formtastic (~> 2.3.0.rc2)
   fullcalendar-rails (~> 1.6.4.0)
   google-api-client
@@ -241,6 +286,7 @@ DEPENDENCIES
   mysql2
   paperclip!
   rails (= 4.1.1)
+  request-log-analyzer
   sass-rails (~> 4.0.3)
   schema_plus
   sdoc (~> 0.4.0)

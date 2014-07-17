@@ -189,6 +189,29 @@ Tabulous.setup do
     #   active_when   { in_action('any').of_controller('form_fields') }
     # end
 
+# admin_routes = Rails.application.routes.routes.to_a
+# admin_routes = admin_routes.collect { |admin_route| {name: admin_route.name, method: route.verb} }
+# admin_routes = routes.select { |route| route[:method] == /^GET$/ }
+
+
+    routes = Rails.application.routes.routes.select{
+                          |route| route.defaults[:controller].to_s.first(5) == 'admin'
+                          }.collect {
+                          |route| {
+                            controller: route.defaults[:controller]
+                            } 
+                          }
+
+    admin_tab do
+      text          { 'Administration' }
+      link_path     { admin_root_path }
+      visible_when  { true }
+      enabled_when  { true }
+      routes.each do |route|    
+        active_when   { in_action('any').of_controller(route[:controller].to_s) }
+      end
+      active_when   { a_subtab_is_active }#in_action('any').of_controller('forms') }
+    end
 
 
 

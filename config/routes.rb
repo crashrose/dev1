@@ -10,8 +10,8 @@ Rails.application.routes.draw do
 
 # get '/oauth2callback' => 'google_shared_calendars#show'
 # get '/oauth2authorize' => 'google_shared_calendars#oauth2authorize'
-
-  devise_for :users
+  ActiveAdmin.routes(self)
+  devise_for :users, ActiveAdmin::Devise.config
 
   resource :calendar, :only => [:show]
   resources :g_cal_events do

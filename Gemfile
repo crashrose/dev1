@@ -13,7 +13,7 @@ gem "schema_plus"
 
 
 #### Administration
-# gem 'activeadmin', github: 'gregbell/active_admin'  ## Will reinstall
+gem 'activeadmin', github: 'gregbell/active_admin'  ## Will reinstall
 
 
 #### Authentication
@@ -84,7 +84,9 @@ gem 'uglifier', '>= 1.3.0'
 
 ### Web Server Tools
 # gem 'unicorn' ## Linux only -- sticking with WEBrick, at least for current dev on Windows
-
+# Required for Scout's "Ruby on Rails Monitoring" tool
+gem 'elif', '~> 0.1.0'
+gem 'request-log-analyzer'
 
 #### Deployment Tools
 # Use Capistrano for deployment
