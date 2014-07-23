@@ -1,69 +1,70 @@
 <header>
-  <p>Scheduled Events</p>
+<p>Scheduled Events</p>
 </header>
 
-    
+
 <table class="attendance">
-    <thead>
-        <tr> 
-            <th colspan="3">Event Details</th>               
-            <th>Attending?</th>
-            <th>RSVP Notes</th>
-        </tr>
-        <tr> 
-            <th><%= sortable "starts", "Date" %></th>               
-            <th><%= sortable "event_type", "Event Type" %></th>    
-            <th><%= sortable "event_location", "Location" %></th>
-            <th>Yes to All:</th>
-            <th>Reason and Explanation</th>
-        </tr>
-    </thead>
-    <tbody>
-    	<%= form_tag batch_update_responses_path do |f| %>
+	<thead>
+		<tr>
+			<th colspan="3">Event Details</th>
+			<th>Attending?</th>
+		<th>RSVP Notes</th>
+		</tr>
+		<tr>
+			<th><%= sortable "starts", "Date" %></th>
+			<th><%= sortable "event_type", "Event Type" %></th>
+			<th><%= sortable "event_location", "Location" %></th>
+			<th>Yes to All:</th>
+			<th>Reason and Explanation</th>
+		</tr>
+	</thead>
+<tbody>
+<%= form_tag batch_update_responses_path do |f| %>
 	<% @event_users.each do |event_user| %>
 		<% @response = event_user.responses.active.find_or_initialize_by(event_user_id: event_user.id) %>
 		<% @response.event_id = event_user.event_id %>
 		<% @response.user_id = event_user.user_id %>
-		
+
 		<%= semantic_fields_for "responses[#{@response.event_user_id}]", @response do |f| %>
-		    <% even_odd = cycle('odd', 'even') %>
-		    <tr class="<%= even_odd %> item">
-			    <td colspan="3" class="rsvp_head rsvp_top">
-			        <h3><%= event_user.event.starts_at.strftime("%m/%d/%Y %l:%M %p") %></h3>
-			        <p>Respond by: 
-			        	<%= event_user.event.respond_by.strftime("%m/%d/%Y %l:%M %p") %>
-			            <!--     RSVP Response Status -->
-			    <td rowspan="2" class="rsvp_yn rsvp_top rsvp_bottom">
-			        <h3>Response:</h3>
-					<%= f.input :response_status, :as=> :radio, :label => false %>
-			    </td>
-				<!-- RSVP Details (Reason/Explanation) -->
-			    <td rowspan="2" class="rsvp_details rsvp_top rsvp_bottom">
-			        <div width="100%" id="rsvp_details_47_427"  style="//display:none;" >
-			            <div class="rsvp_details" style="float: left;">
-			            	<h3>Reason:</h3>
-			                <%= f.input :response_reason, :label => false  %>
-			            </div>
-			            <div class="rsvp_details" style="float: right;">
-			                <h3>Explain:</h3> <%= f.text_area(:details) %>
-			            </div>
-			        </div>
-			    </td>
-			    <tr class="<%= even_odd %> item">
-				<!-- RSVP Event Type -->
-			        <td class="rsvp_type rsvp_bottom">
-			            <h3>Event:</h3>
-			            <%= event_user.event.event_type.title %>
-			        </td>
-				<!-- RSVP Event Location -->
-			        <td colspan="2" class="rsvp_loc rsvp_bottom">
-			            <h3>Location:</h3>
-			            <span><%= event_user.event.location.name %></span>
-			        </td>
-			    </tr>
+			<% even_odd = cycle('odd', 'even') %>
+			<tr class="<%= even_odd %> item">
+				<td colspan="3" class="rsvp_head rsvp_top">
+					<h3><%= event_user.event.starts_at.strftime("%m/%d/%Y %l:%M %p") %></h3>
+					<p>Respond by:</p>
+					<%= event_user.event.respond_by.strftime("%m/%d/%Y %l:%M %p") %>
+					<!--     RSVP Response Status -->
+					<td rowspan="2" class="rsvp_yn rsvp_top rsvp_bottom">
+						<h3>Response:</h3>
+						<%= f.input :response_status, :as=> :radio, :label => false %>
+					</td>
+					<!-- RSVP Details (Reason/Explanation) -->
+					<td rowspan="2" class="rsvp_details rsvp_top rsvp_bottom">
+						<div width="100%" id="rsvp_details_47_427"  style="//display:none;" >
+							<div class="rsvp_details" style="float: left;">
+								<h3>Reason:</h3>
+								<%= f.input :response_reason, :label => false  %>
+							</div>
+							<div class="rsvp_details" style="float: right;">
+								<h3>Explain:</h3> <%= f.text_area(:details) %>
+							</div>
+						</div>
+					</td>
+					<tr class="<%= even_odd %> item">
+						<!-- RSVP Event Type -->
+						<td class="rsvp_type rsvp_bottom">
+							<h3>Event:</h3>
+							<%= event_user.event.event_type.title %>
+						</td>
+						<!-- RSVP Event Location -->
+						<td colspan="2" class="rsvp_loc rsvp_bottom">
+							<h3>Location:</h3>
+							<span><%= event_user.event.location.name %></span>
+						</td>
+					</tr>
+				</td>
 			</tr>
+			<% end %>
 		<% end %>
-	<% end %>
 	</tbody>
 </table>
 <%= submit_tag "Update Responses"  %>
