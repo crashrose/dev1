@@ -7,7 +7,8 @@ gem 'rails', '4.1.1'
 
 #### Database Tools
 # Use mysql as the database for Active Record
-gem 'mysql2'
+# gem 'mysql2'
+gem 'pg'
 gem "activerecord-tableless", "~> 1.0"
 gem "schema_plus"
 

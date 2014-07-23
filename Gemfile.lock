@@ -169,8 +169,8 @@ GEM
       railties (>= 3.1)
     multi_json (1.10.1)
     multipart-post (2.0.0)
-    mysql2 (0.3.16)
     orm_adapter (0.5.0)
+    pg (0.17.1-x86-mingw32)
     polyamorous (1.0.0)
       activerecord (>= 3.0)
     polyglot (0.3.5)
@@ -283,8 +283,8 @@ DEPENDENCIES
   json
   meta_request
   momentjs-rails (~> 2.7.0)
-  mysql2
   paperclip!
+  pg
   rails (= 4.1.1)
   request-log-analyzer
   sass-rails (~> 4.0.3)
