@@ -25,9 +25,10 @@
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
-config.reload_plugins = true
-ActiveSupport::Dependencies.autoload_paths << File::join( Rails.root, 'lib')
-ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Apis'
+####### THESE ARE THE LINES THAT CAUSED THE SERVER TO HANG
+# config.reload_plugins = true
+# ActiveSupport::Dependencies.autoload_paths << File::join( Rails.root, 'lib')
+# ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Apis'
 
   # Dependencies.explicitly_unloadable_constants = 'Apis'
 

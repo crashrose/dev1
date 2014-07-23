@@ -5,9 +5,9 @@ require 'google/api_client/auth/file_storage'
 
 
 client = Google::APIClient.new(
-    :application_name => 'TeamRockett Google Calendar Integration',
-    :application_version => '1.0.0')
-# if File.exist?(CREDENTIAL_STORE_FILE) 
+    :application_name => 'TeamRockett',
+    :application_version => '0.0.1')
+# if File.exist?(CREDENTIAL_STORE_FILE)
 # 	file_storage = Google::APIClient::FileStorage.new(CREDENTIAL_STORE_FILE)
 # 	if !file_storage.authorization.nil?
 # 		client.authorization = file_storage.authorization
@@ -15,7 +15,7 @@ client = Google::APIClient.new(
 # 		client_secrets = Google::APIClient::ClientSecrets.load
 # 		client.authorization = client_secrets.to_authorization
 # 		client.authorization.scope = 'https://www.googleapis.com/auth/calendar'
-# 	end	
+# 	end
 # else
 	client_secrets = Google::APIClient::ClientSecrets.load
 	client.authorization = client_secrets.to_authorization
@@ -25,7 +25,7 @@ client = Google::APIClient.new(
 	# 	:approval_prompt => "force",
 	# 	:redirect_uri => "http://localhost:3000/signet/google/auth_callback"
 	# }
-	# client.authorization.authorization_uri = 
+	# client.authorization.authorization_uri =
 # end
 
 
