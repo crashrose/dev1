@@ -9,11 +9,11 @@
 				:timezone => gg_cal[:tz],
 				:active => true}
 %>
-<%= gg_cal[:name] %> -- 
-<%= 
+<%= gg_cal[:name] %> --
+<%=
 link_to raw("Select"), new_g_cal_path(:g_cal => g_cal_hash)
 
- # :timezone => gg_cal.[:tz], :active => true}) 
+ # :timezone => gg_cal.[:tz], :active => true})
  %>
 <BR>
 <% end %>

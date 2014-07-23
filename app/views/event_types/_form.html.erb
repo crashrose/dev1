@@ -5,5 +5,5 @@
 
   <%= f.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true %>
 
-  <%= form.actions %> 
+  <%= form.actions %>
 <% end %>

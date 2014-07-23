@@ -15,7 +15,7 @@ ActiveAdmin.register Event do
   config.sort_order = "starts_at_asc"
 
   menu :parent => "Scheduling"
-  
+
   index do
     column :name
     column :starts_at, :as => :date_range
@@ -28,7 +28,7 @@ ActiveAdmin.register Event do
     actions
   end
 
-  
+
   # See permitted parameters documentation:
   # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
@@ -41,5 +41,4 @@ ActiveAdmin.register Event do
   #  permitted << :other if resource.something?
   #  permitted
   # end
-  
 end

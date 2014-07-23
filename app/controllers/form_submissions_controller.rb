@@ -8,8 +8,7 @@ class FormSubmissionsController < ApplicationController
     @form_submission.form.form_fields.each do |field|
       form_submission_item = @form_submission.form_submission_items.build(form_field_id: field.id)
     end
-    
-    respond_with [form, @form_submission]
+       respond_with [form, @form_submission]
   end
 
   def edit

@@ -4,6 +4,6 @@ class FormSubmissionItem < ActiveRecord::Base
 	has_one :form, :through => :form_submission
 	belongs_to :form_field
 
-	scope :fields, -> {FormSubmissionItem.includes(form_submission.fields)} 
+	scope :fields, -> {FormSubmissionItem.includes(form_submission.fields)}
 	
 end

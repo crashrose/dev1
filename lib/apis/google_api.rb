@@ -13,7 +13,7 @@ module Apis
       options = {:access_token => session[:access_token].to_s,
                         :refresh_token => session[:refresh_token].to_s,
                         :code => session[:code].to_s,
-                        :organization_id => session[:organization_id].to_s, 
+                        :organization_id => session[:organization_id].to_s,
                         :g_cal => self.g_cal}
 
       @g_cal_api = GCalApi::new(options)
@@ -21,7 +21,7 @@ module Apis
 
       if (@g_cal_api.user_credentials.refresh_token == "") || (!@g_cal_api.user_credentials.refresh_token)
         redirect_to(@g_cal_api.user_credentials.authorization_uri({:access_type => "offline", :approval_prompt => "force"}).to_s)
-      elsif !@g_cal_api.user_credentials.issued_at 
+      elsif !@g_cal_api.user_credentials.issued_at
         @g_cal_api.user_credentials.grant_type = 'refresh_token'
         @g_cal_api.user_credentials.fetch_access_token!
         # self.serialize_token

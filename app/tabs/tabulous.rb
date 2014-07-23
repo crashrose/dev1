@@ -199,7 +199,7 @@ Tabulous.setup do
                           }.collect {
                           |route| {
                             controller: route.defaults[:controller]
-                            } 
+                            }
                           }
 
     admin_tab do
@@ -207,7 +207,7 @@ Tabulous.setup do
       link_path     { admin_root_path }
       visible_when  { true }
       enabled_when  { true }
-      routes.each do |route|    
+      routes.each do |route|
         active_when   { in_action('any').of_controller(route[:controller].to_s) }
       end
       active_when   { a_subtab_is_active }#in_action('any').of_controller('forms') }
@@ -265,7 +265,7 @@ Tabulous.setup do
   #
   # This scaffolding should be turned off and replaced by your own custom
   # CSS before using tabulous in production.
-  # use_css_scaffolding 
+  # use_css_scaffolding
   # do
   #     # background_color '#ccc'
   #     # text_color '#444'

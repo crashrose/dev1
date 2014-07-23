@@ -1,11 +1,11 @@
 class GCalEvent < ActiveRecord::Base
-	require 'activerecord-tableless'
+  require 'activerecord-tableless'
   require 'tzinfo'
   require 'active_support/time_with_zone'
   require 'active_support'
   require 'rubygems'
 
- 	has_no_table
+  has_no_table
 
   column :id, :string
   column :g_cal_event_id, :string
@@ -19,7 +19,7 @@ class GCalEvent < ActiveRecord::Base
   column :end_tz
   column :allDay, :boolean
   column :url, :string
-  column :location 
+  column :location
   column :g_cal_id
   column :g_cal_tz
   column :is_shared, :boolean
@@ -43,12 +43,12 @@ class GCalEvent < ActiveRecord::Base
       item['g_cal_tz'] = g_cal_tz
       item['g_cal_event_id'] = item['id']
       if native_event_ids.has_key?(item['id'])
-        is_shared =  true 
+        is_shared =  true
         item['id'] = native_event_ids[item['id']].to_s
         item['native_event_id'] = native_event_ids[item['id']]
         item['is_shared'] = true
       else
-        is_shared =  false 
+        is_shared =  false
         item['is_shared'] = false
         item['id'] = "g_cal_#{item['id']}"
         item['native_event_id'] = nil
@@ -66,95 +66,94 @@ class GCalEvent < ActiveRecord::Base
     return @events
   end
 
-def self.google_build(item, is_shared=nil)
+  def self.google_build(item, is_shared=nil)
 
-  if is_shared == nil
-    item['g_cal_event_id'] = item['id'] 
-    native_event = Event.find_shared_by_g_cal(item['g_cal_event_id'])
+    if is_shared == nil
+      item['g_cal_event_id'] = item['id']
+      native_event = Event.find_shared_by_g_cal(item['g_cal_event_id'])
 
-    if !(native_event.blank?)
-      item['id'] = native_event
-      item['is_shared'] = true
-      item['native_event_id'] = native_event
-    else
-      item['id'] = "g_cal_#{item['id']}"
-      item['is_shared'] = false
-      item['native_event_id'] = nil
+      if !(native_event.blank?)
+        item['id'] = native_event
+        item['is_shared'] = true
+        item['native_event_id'] = native_event
+      else
+        item['id'] = "g_cal_#{item['id']}"
+        item['is_shared'] = false
+        item['native_event_id'] = nil
+      end
     end
+
+    if !!item['start']['date']
+      all_day = true
+      startdate = item['start']['date'].to_date.beginning_of_day
+      enddate = item['end']['date'].to_date.beginning_of_day - 1
+      start_tz = nil #ActiveSupport::TimeZone.find_tzinfo(item['g_cal_tz']).name
+      end_tz = nil #ActiveSupport::TimeZone.find_tzinfo(item['g_cal_tz']).name
+    else
+      all_day = false
+      startdate = item['start']['dateTime'].utc
+      enddate = item['end']['dateTime'].utc
+      start_tz = !!item['start']['timeZone'] ? ActiveSupport::TimeZone::MAPPING.key(item['start']['timeZone']) : nil
+      end_tz = !!item['end']['timeZone'] ? ActiveSupport::TimeZone::MAPPING.key(item['end']['timeZone']) : nil
+    end
+    cal_tz = item['g_cal_tz']
+
+    @event = GCalEvent.new({
+      :id                 =>  item['id'],
+      :title              =>  item['summary'],
+      :description        =>  item['description'],
+      :start              =>  startdate,
+      :end                =>  enddate,
+      :start_tz           =>  start_tz,
+      :end_tz             =>  end_tz,
+      :allDay             =>  all_day,
+      :url                =>  item['htmlLink'],
+      :location           =>  item['location'],
+      :native_event_id    =>  item['native_event_id'],
+      :g_cal_event_id     =>  item['g_cal_event_id'],
+      :g_iCal_uid         =>  item['iCalUID'],
+      :g_cal_id           =>  item['g_cal_id'],
+      :g_cal_tz           =>  cal_tz,
+      :is_shared          =>  item['is_shared']
+      })
+  	return @event
   end
 
-  if !!item['start']['date']
-    all_day = true
-    startdate = item['start']['date'].to_date.beginning_of_day
-    enddate = item['end']['date'].to_date.beginning_of_day - 1
-    start_tz = nil #ActiveSupport::TimeZone.find_tzinfo(item['g_cal_tz']).name
-    end_tz = nil #ActiveSupport::TimeZone.find_tzinfo(item['g_cal_tz']).name
-    
-  else
-    all_day = false
-    startdate = item['start']['dateTime'].utc
-    enddate = item['end']['dateTime'].utc
-    start_tz = !!item['start']['timeZone'] ? ActiveSupport::TimeZone::MAPPING.key(item['start']['timeZone']) : nil
-    end_tz = !!item['end']['timeZone'] ? ActiveSupport::TimeZone::MAPPING.key(item['end']['timeZone']) : nil
+  def self.native_build(item)
+
+    @event = GCalEvent.new({
+        :id                 =>  item.id,
+        :title              =>  item.name,
+        :description        =>  item.description,
+        :start              =>  item.starts_at,
+        :end                =>  item.ends_at,
+        :start_tz           =>  nil,
+        :end_tz             =>  nil,
+        # :start_tz           =>  item.starts_at.zone,
+        # :end_tz             =>  item.ends_at.zone,
+        :allDay             =>  item.all_day,
+        :url                =>  nil,
+        :location           =>  item.location.name,
+        :native_event_id    =>  item.id,
+        :g_cal_event_id     =>  nil,
+        :g_iCal_uid         =>  nil,
+        :g_cal_id           =>  nil,
+        :g_cal_tz           =>  nil,
+        :is_shared          =>  false
+
+  }
+      )
+  	return @event
   end
-  cal_tz = item['g_cal_tz']
-
-  @event = GCalEvent.new({
-    :id                 =>  item['id'],
-    :title              =>  item['summary'],   
-    :description        =>  item['description'],     
-    :start              =>  startdate,
-    :end                =>  enddate,
-    :start_tz           =>  start_tz,
-    :end_tz             =>  end_tz,
-    :allDay             =>  all_day, 
-    :url                =>  item['htmlLink'],
-    :location           =>  item['location'],
-    :native_event_id    =>  item['native_event_id'],
-    :g_cal_event_id     =>  item['g_cal_event_id'],
-    :g_iCal_uid         =>  item['iCalUID'],
-    :g_cal_id           =>  item['g_cal_id'],
-    :g_cal_tz           =>  cal_tz,
-    :is_shared          =>  item['is_shared']
-    })
-	return @event
-end
-
-def self.native_build(item)
-
-  @event = GCalEvent.new({
-      :id                 =>  item.id,
-      :title              =>  item.name,   
-      :description        =>  item.description,     
-      :start              =>  item.starts_at,
-      :end                =>  item.ends_at,
-      :start_tz           =>  nil,
-      :end_tz             =>  nil,
-      # :start_tz           =>  item.starts_at.zone,
-      # :end_tz             =>  item.ends_at.zone,
-      :allDay             =>  item.all_day, 
-      :url                =>  nil,
-      :location           =>  item.location.name,
-      :native_event_id    =>  item.id,
-      :g_cal_event_id     =>  nil,
-      :g_iCal_uid         =>  nil,
-      :g_cal_id           =>  nil, 
-      :g_cal_tz           =>  nil,
-      :is_shared          =>  false
-
-}
-    )
-	return @event
-end
 
 
-# def title
-# 	@title = self.summary
-# end
+  # def title
+  # 	@title = self.summary
+  # end
 
-# def title=(title)
-# 	@title = self.summary
-# end
+  # def title=(title)
+  # 	@title = self.summary
+  # end
 
   def as_json(options = {})
     {
@@ -256,9 +255,9 @@ end
 #     if !session_data[:access_token]
 #       redirect_to(@user_credentials.authorization_uri({:access_type => "offline", :approval_prompt => "force"}).to_s)
 #     else
-#       @user_credentials.access_token = session_data[:access_token] 
-#       @user_credentials.refresh_token = session_data[:refresh_token] 
-#       @user_credentials.code = session_data[:code] 
+#       @user_credentials.access_token = session_data[:access_token]
+#       @user_credentials.refresh_token = session_data[:refresh_token]
+#       @user_credentials.code = session_data[:code]
 #       @user_credentials.update_token!
 #     end
 # end

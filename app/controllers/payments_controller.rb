@@ -19,7 +19,7 @@ class PaymentsController < ApplicationController
   def show
 
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render :json => @payment }
     end
   end
@@ -27,17 +27,16 @@ class PaymentsController < ApplicationController
   def make_payment
 @payment = Payment.find(params[:payment_id])
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render :json => @payment }
     end
   end
 
   # GET /payments/new
   def new
-  
-     @payment = Payment.new
+    @payment = Payment.new
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render :json => @payment }
     end
   end

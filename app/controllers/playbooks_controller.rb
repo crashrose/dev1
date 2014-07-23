@@ -8,7 +8,7 @@ class PlaybooksController < ApplicationController
   # GET /playbooks.json
   def index
 
-      @playbooks = Upload.playbooks
+    @playbooks = Upload.playbooks
     # @playbooks = @event_users.playbooks
     respond_with @playbooks
   end
@@ -61,10 +61,9 @@ class PlaybooksController < ApplicationController
     @playbooks = []
     playbook_batch_params.values.each do |playbook|
     @event_user = EventUser.find_or_initialize_by(id: playbook[:event_user_id])
-    # @event_user.playbooks.new(playbook) 
+    # @event_user.playbooks.new(playbook)
     @playbook = @event_user.playbooks.active.find_or_initialize_by(event_user: @event_user)
-    
-      if @playbook.id 
+      if @playbook.id
         @old_playbook = @playbook
         @playbook = Playbook.new(playbook)
         @playbook.attributes = playbook
@@ -84,15 +83,15 @@ class PlaybooksController < ApplicationController
   end
 
 
-def batch_update
-  # multi_update
-        if multi_update
-            redirect_to(playbooks_path, :notice => 'The Playbook was created')
-        else
-          redirect_to(playbooks_path, :notice => 'Some input was not valid.')
-        end
+  def batch_update
+    # multi_update
+          if multi_update
+              redirect_to(playbooks_path, :notice => 'The Playbook was created')
+          else
+            redirect_to(playbooks_path, :notice => 'Some input was not valid.')
+          end
 
-end
+  end
 
 
   # # PATCH/PUT /playbooks/1
@@ -120,39 +119,39 @@ end
   # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_playbook
-      @playbook = Playbook.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_playbook
+    @playbook = Playbook.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def playbook_params
-      params.require(:upload).permit(:name, :file_type_id, :document, :description, group_ids: [], upload_groups_attributes: [ :upload_id, :group_id ])
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def playbook_params
+    params.require(:upload).permit(:name, :file_type_id, :document, :description, group_ids: [], upload_groups_attributes: [ :upload_id, :group_id ])
+  end
 
-    def playbook_batch_params
-      params.require(:playbooks).permit!
-    end
+  def playbook_batch_params
+    params.require(:playbooks).permit!
+  end
 
-    def sort_column
-        %w[event_starts_at event_type event_location].include?(params[:sort]) ? params.require(:sort) : "event_starts_at"
-    end
+  def sort_column
+      %w[event_starts_at event_type event_location].include?(params[:sort]) ? params.require(:sort) : "event_starts_at"
+  end
 
-    def sort_direction
-      %w[asc desc].include?(params[:dir]) ? params.require(:dir) : "asc"
-    end
+  def sort_direction
+    %w[asc desc].include?(params[:dir]) ? params.require(:dir) : "asc"
+  end
 
-    def batch_update_params(event_user)
-      single_params = ActionController::Parameters.new(
-        single_playbook: {
-        event_id: event_user[:event_id],
-        user_id: event_user[:user_id],
-        event_user: event_user[:event_user],
-        playbook_status_id: event_user[:playbook_status_id],
-        playbook_reason_id: event_user[:playbook_reason_id],
-        details: event_user[:details]
-        })
-      permitted = params.require(:single_playbook).permit(:event_user, :user_id, :event_id, :playbook_reason_id, :playbook_status_id, :details)
-      return permitted
-    end      
+  def batch_update_params(event_user)
+    single_params = ActionController::Parameters.new(
+      single_playbook: {
+      event_id: event_user[:event_id],
+      user_id: event_user[:user_id],
+      event_user: event_user[:event_user],
+      playbook_status_id: event_user[:playbook_status_id],
+      playbook_reason_id: event_user[:playbook_reason_id],
+      details: event_user[:details]
+      })
+    permitted = params.require(:single_playbook).permit(:event_user, :user_id, :event_id, :playbook_reason_id, :playbook_status_id, :details)
+    return permitted
+  end
 end

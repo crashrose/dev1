@@ -1,8 +1,6 @@
 class FixFromToColNames < ActiveRecord::Migration
   def change
   	  	  	    change_table :events do |t|
-
-      
       t.text :description
       t.string :title
   end

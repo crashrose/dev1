@@ -29,14 +29,13 @@ class EventsController < ApplicationController
     # @event = Event.find(params[:id])
     # respond_with @event
     respond_to do |format|
-      format.html 
-      format.json { render :json => @event }
+      format.html
+          format.json { render :json => @event }
     end
   end
 
   # GET /events/new
   def new
-  
     if params[:g_cal_event] then
       @event = Event.new_from_g_cal_event(g_cal_event_params, session[:organization_id])
 
@@ -47,7 +46,7 @@ class EventsController < ApplicationController
       @event = Event.new
     end
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render :json => @event }
     end
   end

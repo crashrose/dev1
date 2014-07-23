@@ -15,15 +15,15 @@ module Apis
    #    @user_credentials = @api_client.authorization.dup
 
    #    if !!opts[:access_token]
-   #      @user_credentials.access_token = opts[:access_token] 
-   #      @user_credentials.refresh_token = opts[:refresh_token] 
-   #      @user_credentials.code = opts[:code] 
-   #      @user_credentials.update_token!   
+   #      @user_credentials.access_token = opts[:access_token]
+   #      @user_credentials.refresh_token = opts[:refresh_token]
+   #      @user_credentials.code = opts[:code]
+   #      @user_credentials.update_token!
    #    end
 
-   #    if !@user_credentials.refresh_token 
+   #    if !@user_credentials.refresh_token
    #      redirect_to(@user_credentials.authorization_uri({:access_type => "offline", :approval_prompt => "force"}).to_s)
-   #    elsif !@user_credentials.issued_at 
+   #    elsif !@user_credentials.issued_at
    #      @user_credentials.grant_type = 'refresh_token'
    #      @user_credentials.fetch_access_token!
    #      # self.serialize_token
@@ -117,14 +117,14 @@ module Apis
    #      end
    #    end
 
-   #    event.summary        =  g_cal_event_hash['title'] 
-   #    event.description  =  g_cal_event_hash['description']     
+   #    event.summary        =  g_cal_event_hash['title']
+   #    event.description  =  g_cal_event_hash['description']
    #    event.location     =  g_cal_event_hash['location']
 
    #    result = @api_client.execute(:api_method => @calendar_api.events.update,
    #                                          :parameters => {'eventId' => id, 'calendarId' => @g_cal.g_cal_id},
    #                                          :body_object => event,
-   #                                          :authorization => @user_credentials 
+   #                                          :authorization => @user_credentials
    #                                          )
    #    return result.status
    #  end

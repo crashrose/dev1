@@ -1,7 +1,7 @@
 class AddEventUserViewToSchema < ActiveRecord::Migration
     def up
-      self.connection.execute %Q( CREATE OR REPLACE VIEW event_users AS    
-          SELECT DISTINCT
+      self.connection.execute %Q( CREATE OR REPLACE VIEW event_users AS
+      SELECT DISTINCT
                  event_groups.event_id AS event_id,
                  groups_users.user_id AS user_id,
                  CONCAT(event_groups.event_id, '_', groups_users.user_id) AS event_user

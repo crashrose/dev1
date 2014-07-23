@@ -24,18 +24,18 @@ module ApplicationHelper
 		end
 		main_item = url_options.last
 		icon_string = []
-		actions.each do |action| 
+		actions.each do |action|
 			if action == :delete
 				icon_string << link_to_icon('destroy', item, {data: {
 				:confirm => 'Are you sure?',
 				:method => :delete
-				}, title: "Delete #{main_item.class.name.titleize}"}) 
+				}, title: "Delete #{main_item.class.name.titleize}"})
 			elsif action == :show
-				icon_string << link_to_icon(action.to_s, url_for(url_options), title: "#{action.to_s.humanize} #{main_item.class.name.titleize}") 
+				icon_string << link_to_icon(action.to_s, url_for(url_options), title: "#{action.to_s.humanize} #{main_item.class.name.titleize}")
 
 			else
 				url_options.unshift action
-				icon_string << link_to_icon(action.to_s, url_for(url_options), title: "#{action.to_s.humanize} #{main_item.class.name.titleize}") 
+				icon_string << link_to_icon(action.to_s, url_for(url_options), title: "#{action.to_s.humanize} #{main_item.class.name.titleize}")
 				url_options.shift
 			end				
 		end

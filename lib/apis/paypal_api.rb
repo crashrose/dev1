@@ -24,7 +24,7 @@ module Apis
   #     options = {:access_token => session[:access_token].to_s,
   #                       :refresh_token => session[:refresh_token].to_s,
   #                       :code => session[:code].to_s,
-  #                       :organization_id => session[:organization_id].to_s, 
+  #                       :organization_id => session[:organization_id].to_s,
   #                       :g_cal => self.g_cal}
 
   #     @g_cal_api = GCalApi::new(options)

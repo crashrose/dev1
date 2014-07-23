@@ -15,5 +15,5 @@
     <%= form.input :g_cal_id, :as => :hidden %>
   <% end %>
   <%= form.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true %>
-  <%= form.actions %> 
+  <%= form.actions %>
 <% end %>

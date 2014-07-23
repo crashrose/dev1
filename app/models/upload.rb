@@ -4,17 +4,17 @@ class Upload < ActiveRecord::Base
 	# , :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
 	# validates_attachment_content_type :document, :content_type => /\Aimage\/.*\Z/
 	validates_attachment :document, :presence => true,
-  :content_type => { 
-  	:content_type => 
-  	%w[application/pdf image/jpeg image/gif image/png audio/mpeg 
-  		audio/mpeg text/csv text/plain text/rtf video/mp4 video/ogg 
-  		video/mpeg video/avi video/quicktime video/x-flv video/x-ms-wmv 
-  		application/msword 
-  		application/vnd.openxmlformats-officedocument.wordprocessingml.document 
-  		application/vnd.ms-excel 
-  		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet 
-  		application/vnd.ms-powerpoint 
-  		application/vnd.openxmlformats-officedocument.presentationml.presentation] 
+  :content_type => {
+  	:content_type =>
+  	%w[application/pdf image/jpeg image/gif image/png audio/mpeg
+  		audio/mpeg text/csv text/plain text/rtf video/mp4 video/ogg
+  		video/mpeg video/avi video/quicktime video/x-flv video/x-ms-wmv
+  		application/msword
+  		application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  		application/vnd.ms-excel
+  		application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+  		application/vnd.ms-powerpoint
+  		application/vnd.openxmlformats-officedocument.presentationml.presentation]
   		},
   :size => { :in => 0..2000.kilobytes }
 

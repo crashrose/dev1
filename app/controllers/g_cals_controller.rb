@@ -32,7 +32,7 @@ CREDENTIAL_STORE_FILE = "#{$0}-oauth2.json"
     # @timezone = ActiveSupport::TimeZone.zones_map()
     # @timezones2 = TZInfo::Timezone.us_zone_identifiers
     
-    # @g_cals = JSON.parse(@data)
+       # @g_cals = JSON.parse(@data)
     # @results = event_list.data.items
     # @results = GCalEvent.build_events(event_list.data.items, g_cal_id, session[:organization_id])
     # @results = @user_credentials
@@ -74,7 +74,6 @@ CREDENTIAL_STORE_FILE = "#{$0}-oauth2.json"
   def user_credentials
     @g_cal_api = create_api
     serialize_token
- 
   end
 
 
@@ -193,8 +192,7 @@ CREDENTIAL_STORE_FILE = "#{$0}-oauth2.json"
 # #     #initialize user credentials and route to oauth method if no token
 # #     if !session['google_credentials']
 # #         @api_client = Rails.application.config.google_api_client
-   
-# #     # if !@user_credentials.access_token && !(request.path_info =~ /\A\/oauth2/)
+  # #     # if !@user_credentials.access_token && !(request.path_info =~ /\A\/oauth2/)
 # #       redirect_to(@api_client.authorization.authorization_uri.to_s)
 # #       # self.oauth2authorize
 # #     end
@@ -289,8 +287,7 @@ CREDENTIAL_STORE_FILE = "#{$0}-oauth2.json"
 #       @results = self.build_events(event_list.data.items)
 
 
-          
-#       respond_to do |format|
+         #       respond_to do |format|
 #         format.html # index.html.erb
 #         format.json { render :json => @results }
 
