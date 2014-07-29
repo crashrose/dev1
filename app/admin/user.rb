@@ -1,4 +1,6 @@
-ActiveAdmin.register User do
+ActiveAdmin.register User  do
+
+navigation_menu :configure
 
   permit_params :email, :password, :password_confirmation
 

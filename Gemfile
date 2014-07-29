@@ -34,6 +34,7 @@ gem 'bootstrap-sass'#, '~> 3.2.0'
 gem 'sass-rails', '~> 4.0.3'
 # gem 'formtastic-bootstrap' ### Not sure if needed
 # gem 'compass-rails' ### Not sure if needed
+gem 'purecss'
 
 
 #### JavaScript tools

@@ -61,23 +61,33 @@ class ResponsesController < ApplicationController
 
   def multi_update
     @responses = []
-    response_batch_params.values.each do |response|
-      @event_user = EventUser.find_or_initialize_by(id: response[:event_user_id])
+    response_batch_params.each do |key, val|
+      @event_user = EventUser.find_or_initialize_by(id: key)
       # @event_user.responses.new(response)
       @response = @event_user.responses.active.find_or_initialize_by(event_user: @event_user)
-
       if @response.id
-        @old_response = @response
-        @response = Response.new(response)
-        @response.attributes = response
+        @old_response = @response.dup
+        # @response = Response.new#(val)
+        @response.attributes = val
+        # @response.event_user_id = key
+        # @response.attendee = @event_user.attendee
+        # @response.event = @event_user.event
         if @response.response_status_id != @old_response.response_status_id || @response.response_reason_id != @old_response.response_reason_id || @response.details != @old_response.details
-          @response.id = :nil
-          @old_response.active = :false
+          # @response.id = :nil
+          @response.active = true
+          @response.review_status_id = 1
+          @old_response.active = false
+
+# tempss.each
           @old_response.save
           @response.save
         end
       else
-        @response.attributes = response
+        @response.attributes = val
+        @response.event_user_id = key
+        @response.attendee = @event_user.attendee
+        @response.event = @event_user.event
+        @response.review_status_id = 1
         if @response.response_status_id != nil
           @response.save
         end

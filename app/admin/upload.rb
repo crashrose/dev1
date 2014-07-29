@@ -1,4 +1,6 @@
-ActiveAdmin.register Upload do
+ActiveAdmin.register Upload  do
+
+navigation_menu :approve
 
   # See permitted parameters documentation:
   # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

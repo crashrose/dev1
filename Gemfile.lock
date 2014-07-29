@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/gregbell/active_admin.git
-  revision: 27360996837146ebbbf3b3597049b1586542fbeb
+  revision: a8ae008ec9632110bf33443ce7090dfef9cca480
   specs:
     activeadmin (1.0.0.pre)
       arbre (~> 1.0)
@@ -174,6 +174,8 @@ GEM
     polyamorous (1.0.0)
       activerecord (>= 3.0)
     polyglot (0.3.5)
+    purecss (0.5.0.1)
+      rails (>= 3.1)
     rack (1.5.2)
     rack-contrib (1.1.0)
       rack (>= 0.9.1)
@@ -285,6 +287,7 @@ DEPENDENCIES
   momentjs-rails (~> 2.7.0)
   paperclip!
   pg
+  purecss
   rails (= 4.1.1)
   request-log-analyzer
   sass-rails (~> 4.0.3)

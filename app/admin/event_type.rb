@@ -1,4 +1,11 @@
-ActiveAdmin.register EventType do
+ActiveAdmin.register EventType  do
+
+menu_options = {
+  :parent =>  :sched
+}
+menu menu_options
+
+navigation_menu :configure
 
   index :as => :block do |event_type|
     div :for => event_type do
@@ -9,7 +16,7 @@ ActiveAdmin.register EventType do
     end
   end
 
-  menu :parent => "Scheduling"
+
   # See permitted parameters documentation:
   # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #

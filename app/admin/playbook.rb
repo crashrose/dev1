@@ -1,4 +1,6 @@
-ActiveAdmin.register_page "Playbook" do
+ActiveAdmin.register_page "Playbook"  do
+
+navigation_menu :configure
 
     # controller do
     #   def scoped_collection

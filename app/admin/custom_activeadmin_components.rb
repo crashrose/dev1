@@ -2,169 +2,143 @@ module ActiveAdmin
   module Views
     class Header < Component
 
-      def build(namespace, menu)
+      def build(namespace, menu, function=nil)
         super(:id => "nav_header")
 
         @namespace = namespace
         @menu = menu
         @utility_menu = @namespace.fetch_menu(:utility_navigation)
 
-        build_site_title
-        build_global_navigation
-        build_utility_navigation
+        if function != nil
+          send(function)
+        else
+          build_site_title
+          build_global_navigation
+          build_utility_navigation
+        end
         # you can add any other component here in header section 
+      end # end build method
+
+
+      def build_global_navigation
+        insert_tag view_factory.global_navigation, @menu, class: 'header-item tabs nav nav-pills nav-stacked'
       end
-    end
+
+    end # end Header class
 
 
     module Pages
       class Base < Arbre::HTML::Document
+
         def build_page
           within @body do
-
-
-            # div id: "wrapper" do
-            #   div id: "header_nav" do
-            #     build_header
-            #   end
-            #   div id: "content_pane" do
-            #     div id: "title_bar_header" do
-            #       build_title_bar
-            #     end
-            #     div id: "main_content" do
-            #       build_page_content
-            #     end
-            #   end
-            #   # div id: "footer_"
-            #   # build_footer
-            # end
-          
-            div id: "wrapper" do
-              div class: "content" do
-                div class: "aa_background aa_left_nav" do
+            div class: "content" do
+              div class: "background wrapper" do
+                div class: "background aa_left_nav" do
                 end
-                div class: "left_block aa_left_nav" do
-                  div class: "content" do
-                    build_header
+                div class: "background content_wrapper" do
+                  div class: "background aa_main_content" do
                   end
                 end
-                div class: "aa_background main_content" do
-                end
-                div class: "center_block main_content" do
-                  div class: "content" do
-                    build_title_bar
-                    build_page_content
-                    div class: "top_block aa_title_bar" do
+              end
+              div class: "center_block wrapper" do
+                div class: "content" do
+                  div class: "top_block top_header" do
+                    div class: "content" do
+                      build_top_header
+                    end
+                  end
+                  div class: "left_block aa_left_nav" do
+                    div class: "content" do
+                    # div class: "content pure-menu pure-menu-open" do
+                      h4 text_node "Approve"
+                      # text_node link_to "Approve".html_safe, '#', class: "pure-menu-heading"
+                      # span class: "label label-default" do 
+                      #   "Approve"
+                      # end
                       div class: "content" do
-                        
+                        build_left_nav(:approve)
+                      end
+                      h4 text_node "Configure"
+                      div class: "content" do
+                        build_left_nav(:configure)
+                      end
+                      h4 text_node "Report"
+                      div class: "content" do
+                        build_left_nav(:reporting)
+                      end
+                    end
+                  end
+                  div class: "center_block content_wrapper" do
+                    div class: "content" do
+                      div class: "top_block aa_page_title_bar" do
+                        div class: "content" do
+                          build_title_bar
+                        end
+                      end
+                      div class: "center_block aa_main_content" do
+                        div class: "content" do
+                          build_page_content
+                        end
                       end
                     end
                   end
                 end
               end
-            end
-          end
+            end # FIRST div class: "content" do ~~~ Starts Layout divs
+
+          end # end within @body do
+        end # end method build_page
+
+        def build_left_nav(menu_name)
+          menu = active_admin_namespace.menus.menu(menu_name)
+          # text_node active_admin_namespace.menus.inspect.html_safe
+          
+          # active_admin_namespace.menus.ids.each do |menu|
+          #   text_node menu.to_s.html_safe
+          # end
+          insert_tag view_factory.header, active_admin_namespace, menu, 'build_global_navigation'
         end
-      end
-    end
+
+        def build_top_header
+          insert_tag view_factory.header, active_admin_namespace, current_menu, 'build_site_title'
+        end
+
+      end # end Base class
+    end # end Pages module
 
 
 
-    # Renders an ActiveAdmin::Menu as a set of unordered list items.
-    #
-    # This component takes cares of deciding which items should be
-    # displayed given the current context and renders them appropriately.
-    #
-    # The entire component is rendered within one ul element.
     class TabbedNavigation < Component
 
-      # attr_reader :menu
-
-      # Build a new tabbed navigation component.
-      #
-      # @param [ActiveAdmin::Menu] menu the Menu to render
-      # @param [Hash] options the options as passed to the underlying ul element.
-      #
-      # def build(menu, options = {})
-      #   @menu = menu
-      #   super(default_options.merge(options))
-      #   build_menu
-      # end
-
-      # # The top-level menu items that should be displayed.
-      # def menu_items
-      #   menu.items(self)
-      # end
-
-      # def tag_name
-      #   'ul'
-      # end
-
-      # private
-
-      # def build_menu
-      #   menu_items.each do |item|
-      #     build_menu_item(item)
-      #   end
-      # end
-
       def build_menu_item(item)
+        
         li id: item.id do |li|
-          li.add_class "current" if item.current? assigns[:current_tab]
-          open_span = "<span>".html_safe
-          close_span = "</span>".html_safe
-          text_node link_to open_span+item.label(self)+close_span, item.url(self), item.html_options
-          # text_node "</span>".html_safe
+          li.add_class "active" if item.current? assigns[:current_tab]
+          # open_span = "<span>".html_safe
+          # close_span = "</span>".html_safe
+          # text_node link_to open_span+item.label(self)+close_span, item.url(self), item.html_options
+
+          text_node link_to "<span>".html_safe+item.label(self)+"</span>".html_safe, item.url(self), item.html_options
+          
+
           if children = item.items(self).presence
             li.add_class "has_nested"
-            ul do
+            ul class: 'nav nav-pills nav-stacked' do
               children.each{ |child| build_menu_item child }
-            end
-          end
-        end
-      end
+            end # ul do
+          end # if children
+        end # li id: item.id do |li|
 
-      # def default_options
-      #   { id: "tabs" }
-      # end
-    end
+        # text_node item.items(self).inspect.html_safe
+      end # end method build_menu_item
 
+    end # end class TabbedNavigation
 
 
 
+  end # end module Views
 
 
+end # end module ActiveAdmin
 
-  end
-end
-
-
-#   end
-# end
-
-  # def build_site_title
-  #   render "admin/parts/logo"
-  # end
-
-  # def build_global_navigation
-  #   render "admin/parts/main_nav"
-  # end
-
-  # def build_utility_navigation
-  #   render 'admin/parts/language_options'
-  #   insert_tag view_factory.global_navigation, @utility_menu, :id => "utility_nav", :class => 'header-item tabs'
-  #   render 'admin/parts/branch_in_header'
-  # end
- # end
- # module Pages
- #  class Base
- #    def build_page_content
- #      build_flash_messages
- #      div :id => :wizard_progress_bar do
- #        render 'admin/parts/wizard_progress_bar'
- #      end
- #      div :id => "active_admin_content", :class => (skip_sidebar? ? "without_sidebar" : "with_sidebar") do
- #        build_main_content_wrapper
- #        build_sidebar unless skip_sidebar?
- #      end
- #    end

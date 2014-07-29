@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
 has_and_belongs_to_many :groups
 has_many :event_groups, :through => :groups
-has_many :event_users
+has_many :event_users, inverse_of: :user
 has_one :person
 # has_many :o_auth2_credentials, dependent: :destroy
 

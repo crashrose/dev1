@@ -1,12 +1,20 @@
 ActiveAdmin.setup do |config|
 
+
+
+  config.load_paths = [File.expand_path('app/admin', Rails.root)]
+   #  ,
+   #   File.expand_path('app/admin/approve', Rails.root),
+   #   File.expand_path('app/admin/configure', Rails.root)
+   # ]
+
   # == Site Title
   #
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
   # config.site_title = "Dev1"
-  ActiveAdmin.application.site_title = proc { "Hello #{try(Organization.find(session[:organization_id]).name) || 'you!'}" }
+  ActiveAdmin.application.site_title = proc { "Hello #{session[:organization_id] || 'you!'}" }
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
@@ -172,9 +180,10 @@ ActiveAdmin.setup do |config|
   #   config.register_javascript 'my_javascript.js'
 
     config.register_stylesheet 'aa_menu.css', :media =>  :screen
+    config.register_stylesheet 'application.css', :media =>  :screen
   #
   # To load a javascript file:
-    config.register_javascript 'aa_menu.js'
+    # config.register_javascript 'aa_menu.js'
 
 
 
@@ -208,6 +217,16 @@ ActiveAdmin.setup do |config|
   #     #   menus.id =  'admin_menu'
   #     # end
   #   end
+
+  config.namespace :admin do |admin|
+  admin.build_menu :configure do |menu|
+    menu.add label: 'Schedule', id: 'sched'
+  end
+end
+
+ActiveAdmin.setup do |config|
+  config.allow_comments = false
+end
 
   # ActiveAdmin.view_factory.tabbed_navigation.build(:global_navigation, {id: 'admin_menu'})
 

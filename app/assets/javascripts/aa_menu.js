@@ -1,11 +1,11 @@
 ( function( $ ) {
 $( document ).ready(function() {
 $('#nav_header > ul > li > a').click(function() {
-  $('#nav_header li').removeClass('current');
-  $(this).closest('li').addClass('current');	
+  $('#nav_header li').removeClass('active');
+  $(this).closest('li').addClass('active');	
   var checkElement = $(this).next();
   if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-    $(this).closest('li').removeClass('current');
+    $(this).closest('li').removeClass('active');
     checkElement.slideUp('normal');
   }
   if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {

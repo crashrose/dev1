@@ -1,4 +1,7 @@
-ActiveAdmin.register Form do
+ActiveAdmin.register Form, menu_name: :configure  do
+
+navigation_menu :configure
+
 
   filter :name
   filter :form_fields

@@ -1,5 +1,13 @@
 ActiveAdmin.register Event do
 
+menu_options = {
+  :label => 'Event List',
+  :parent =>  :sched
+}
+menu menu_options
+
+navigation_menu :configure
+
   filter :name
   filter :starts_at, :as => :date_range
   filter :ends_at, :as => :date_range
@@ -14,7 +22,6 @@ ActiveAdmin.register Event do
 
   config.sort_order = "starts_at_asc"
 
-  menu :parent => "Scheduling"
 
   index do
     column :name
