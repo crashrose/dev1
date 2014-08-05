@@ -5,6 +5,8 @@ class EventType < ActiveRecord::Base
 	validates :title,		:presence =>true
 	# validates :position,	:presence =>true
 
+	acts_as_list
+
 	before_create :default_values
 
 	private

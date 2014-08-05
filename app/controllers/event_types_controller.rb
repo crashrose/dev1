@@ -64,7 +64,11 @@ class EventTypesController < ApplicationController
   def destroy
     @event_type.destroy
     respond_to do |format|
-      format.html { redirect_to event_types_url, notice: "#{@event_type.title} was successfully destroyed." }
+      # if params[:source] == 'dashboard'
+        format.html { redirect_to admin_schedule_path, notice: "#{@event_type.title} was successfully destroyed." }
+      # else  
+      #   format.html { redirect_to event_types_url, notice: "#{@event_type.title} was successfully destroyed." }
+      # end
       format.json { head :no_content }
     end
   end
@@ -77,6 +81,6 @@ class EventTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_type_params
-      params.require(:event_type).permit(:title)
+      params.require(:event_type).permit(:title, :position)
     end
 end

@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716235031) do
+ActiveRecord::Schema.define(version: 20140804201640) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -22,20 +25,22 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.string   "author_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["author_type", "author_id"], :name => "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], :name => "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], :name => "index_active_admin_comments_on_resource_type_and_resource_id"
   end
+
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "event_groups", force: true do |t|
     t.integer  "event_id"
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["event_id"], :name => "index_event_groups_on_event_id"
-    t.index ["group_id"], :name => "index_event_groups_on_group_id"
-    t.index ["id"], :name => "index_event_groups_on_id"
   end
+
+  add_index "event_groups", ["event_id"], name: "index_event_groups_on_event_id", using: :btree
+  add_index "event_groups", ["group_id"], name: "index_event_groups_on_group_id", using: :btree
+  add_index "event_groups", ["id"], name: "index_event_groups_on_id", using: :btree
 
   create_table "event_types", force: true do |t|
     t.string   "title"
@@ -43,20 +48,10 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
-    t.index ["id"], :name => "index_event_types_on_id"
   end
 
-  create_table "groups_users", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "group_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["group_id"], :name => "index_groups_users_on_group_id"
-    t.index ["id"], :name => "index_groups_users_on_id"
-    t.index ["user_id"], :name => "index_groups_users_on_user_id"
-  end
+  add_index "event_types", ["id"], name: "index_event_types_on_id", using: :btree
 
-  create_view "event_users", "select distinct `event_groups`.`event_id` AS `event_id`,`groups_users`.`user_id` AS `user_id`,concat(`event_groups`.`event_id`,'_',`groups_users`.`user_id`) AS `id` from (`event_groups` join `groups_users` on((`groups_users`.`group_id` = `event_groups`.`group_id`)))", :force => true
   create_table "events", force: true do |t|
     t.string   "name"
     t.datetime "starts_at"
@@ -74,22 +69,24 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.string   "title"
     t.integer  "organization_id"
     t.string   "visibility"
-    t.index ["event_type_id"], :name => "index_events_on_event_type_id"
-    t.index ["g_cal_event_id"], :name => "index_events_on_g_cal_event_id"
-    t.index ["g_cal_id"], :name => "index_events_on_g_cal_id"
-    t.index ["id"], :name => "index_events_on_id"
-    t.index ["location_id"], :name => "index_events_on_location_id"
-    t.index ["organization_id"], :name => "index_events_on_organization_id"
-    t.index ["owner_id"], :name => "index_events_on_owner_id"
   end
+
+  add_index "events", ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
+  add_index "events", ["g_cal_event_id"], name: "index_events_on_g_cal_event_id", using: :btree
+  add_index "events", ["g_cal_id"], name: "index_events_on_g_cal_id", using: :btree
+  add_index "events", ["id"], name: "index_events_on_id", using: :btree
+  add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
+  add_index "events", ["organization_id"], name: "index_events_on_organization_id", using: :btree
+  add_index "events", ["owner_id"], name: "index_events_on_owner_id", using: :btree
 
   create_table "file_types", force: true do |t|
     t.string   "name"
     t.string   "mime_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["id"], :name => "index_file_types_on_id"
   end
+
+  add_index "file_types", ["id"], name: "index_file_types_on_id", using: :btree
 
   create_table "form_fields", force: true do |t|
     t.string   "name"
@@ -100,9 +97,11 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.string   "field_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["form_id"], :name => "index_form_fields_on_form_id"
-    t.index ["id"], :name => "index_form_fields_on_id"
+    t.integer  "position"
   end
+
+  add_index "form_fields", ["form_id"], name: "index_form_fields_on_form_id", using: :btree
+  add_index "form_fields", ["id"], name: "index_form_fields_on_id", using: :btree
 
   create_table "form_submission_items", force: true do |t|
     t.integer  "form_submission_id"
@@ -110,20 +109,22 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.string   "form_field_value"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["form_field_id"], :name => "index_form_submission_items_on_form_field_id"
-    t.index ["form_submission_id"], :name => "index_form_submission_items_on_form_submission_id"
-    t.index ["id"], :name => "index_form_submission_items_on_id"
   end
+
+  add_index "form_submission_items", ["form_field_id"], name: "index_form_submission_items_on_form_field_id", using: :btree
+  add_index "form_submission_items", ["form_submission_id"], name: "index_form_submission_items_on_form_submission_id", using: :btree
+  add_index "form_submission_items", ["id"], name: "index_form_submission_items_on_id", using: :btree
 
   create_table "form_submissions", force: true do |t|
     t.integer  "user_id"
     t.integer  "form_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["form_id"], :name => "index_form_submissions_on_form_id"
-    t.index ["id"], :name => "index_form_submissions_on_id"
-    t.index ["user_id"], :name => "index_form_submissions_on_user_id"
   end
+
+  add_index "form_submissions", ["form_id"], name: "index_form_submissions_on_form_id", using: :btree
+  add_index "form_submissions", ["id"], name: "index_form_submissions_on_id", using: :btree
+  add_index "form_submissions", ["user_id"], name: "index_form_submissions_on_user_id", using: :btree
 
   create_table "forms", force: true do |t|
     t.string   "name"
@@ -133,9 +134,11 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.string   "email_to_address"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["id"], :name => "index_forms_on_id"
-    t.index ["organization_id"], :name => "index_forms_on_organization_id"
+    t.integer  "position"
   end
+
+  add_index "forms", ["id"], name: "index_forms_on_id", using: :btree
+  add_index "forms", ["organization_id"], name: "index_forms_on_organization_id", using: :btree
 
   create_table "g_cals", force: true do |t|
     t.integer  "organization_id"
@@ -145,37 +148,52 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.integer  "timezone_id"
     t.boolean  "active"
     t.string   "timezone"
-    t.index ["g_cal_id"], :name => "index_g_cals_on_g_cal_id"
-    t.index ["id"], :name => "index_g_cals_on_id"
-    t.index ["organization_id"], :name => "index_g_cals_on_organization_id"
   end
+
+  add_index "g_cals", ["g_cal_id"], name: "index_g_cals_on_g_cal_id", using: :btree
+  add_index "g_cals", ["id"], name: "index_g_cals_on_id", using: :btree
+  add_index "g_cals", ["organization_id"], name: "index_g_cals_on_organization_id", using: :btree
 
   create_table "group_permissions", force: true do |t|
     t.integer  "group_id"
     t.integer  "permission_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["group_id"], :name => "index_group_permissions_on_group_id"
-    t.index ["id"], :name => "index_group_permissions_on_id"
-    t.index ["permission_id"], :name => "index_group_permissions_on_permission_id"
   end
+
+  add_index "group_permissions", ["group_id"], name: "index_group_permissions_on_group_id", using: :btree
+  add_index "group_permissions", ["id"], name: "index_group_permissions_on_id", using: :btree
+  add_index "group_permissions", ["permission_id"], name: "index_group_permissions_on_permission_id", using: :btree
 
   create_table "groups", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
-    t.index ["id"], :name => "index_groups_on_id"
-    t.index ["organization_id"], :name => "index_groups_on_organization_id"
   end
+
+  add_index "groups", ["id"], name: "index_groups_on_id", using: :btree
+  add_index "groups", ["organization_id"], name: "index_groups_on_organization_id", using: :btree
 
   create_table "groups_payments", force: true do |t|
     t.integer "group_id"
     t.integer "payment_id"
-    t.index ["group_id"], :name => "index_groups_payments_on_group_id"
-    t.index ["id"], :name => "index_groups_payments_on_id"
-    t.index ["payment_id"], :name => "index_groups_payments_on_payment_id"
   end
+
+  add_index "groups_payments", ["group_id"], name: "index_groups_payments_on_group_id", using: :btree
+  add_index "groups_payments", ["id"], name: "index_groups_payments_on_id", using: :btree
+  add_index "groups_payments", ["payment_id"], name: "index_groups_payments_on_payment_id", using: :btree
+
+  create_table "groups_users", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "groups_users", ["group_id"], name: "index_groups_users_on_group_id", using: :btree
+  add_index "groups_users", ["id"], name: "index_groups_users_on_id", using: :btree
+  add_index "groups_users", ["user_id"], name: "index_groups_users_on_user_id", using: :btree
 
   create_table "locations", force: true do |t|
     t.string   "name"
@@ -193,16 +211,18 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.datetime "updated_at"
     t.integer  "organization_id"
     t.string   "visibility"
-    t.index ["id"], :name => "index_locations_on_id"
-    t.index ["organization_id"], :name => "index_locations_on_organization_id"
   end
+
+  add_index "locations", ["id"], name: "index_locations_on_id", using: :btree
+  add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree
 
   create_table "org_types", force: true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["id"], :name => "index_org_types_on_id"
   end
+
+  add_index "org_types", ["id"], name: "index_org_types_on_id", using: :btree
 
   create_table "organizations", force: true do |t|
     t.string   "name"
@@ -212,12 +232,13 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "paypal_seller_id"
-    t.index ["id"], :name => "index_organizations_on_id"
-    t.index ["org_type_id"], :name => "index_organizations_on_org_type_id"
-    t.index ["owner_id"], :name => "index_organizations_on_owner_id"
-    t.index ["parent_id"], :name => "index_organizations_on_parent_id"
-    t.index ["paypal_seller_id"], :name => "index_organizations_on_paypal_seller_id"
   end
+
+  add_index "organizations", ["id"], name: "index_organizations_on_id", using: :btree
+  add_index "organizations", ["org_type_id"], name: "index_organizations_on_org_type_id", using: :btree
+  add_index "organizations", ["owner_id"], name: "index_organizations_on_owner_id", using: :btree
+  add_index "organizations", ["parent_id"], name: "index_organizations_on_parent_id", using: :btree
+  add_index "organizations", ["paypal_seller_id"], name: "index_organizations_on_paypal_seller_id", using: :btree
 
   create_table "payment_notifications", force: true do |t|
     t.text     "params"
@@ -227,11 +248,12 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.integer  "payment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["id"], :name => "index_payment_notifications_on_id"
-    t.index ["payment_id"], :name => "index_payment_notifications_on_payment_id"
-    t.index ["transaction_id"], :name => "index_payment_notifications_on_transaction_id"
-    t.index ["user_id"], :name => "index_payment_notifications_on_user_id"
   end
+
+  add_index "payment_notifications", ["id"], name: "index_payment_notifications_on_id", using: :btree
+  add_index "payment_notifications", ["payment_id"], name: "index_payment_notifications_on_payment_id", using: :btree
+  add_index "payment_notifications", ["transaction_id"], name: "index_payment_notifications_on_transaction_id", using: :btree
+  add_index "payment_notifications", ["user_id"], name: "index_payment_notifications_on_user_id", using: :btree
 
   create_table "payments", force: true do |t|
     t.string   "name"
@@ -243,12 +265,12 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["id"], :name => "index_payments_on_id"
-    t.index ["organization_id"], :name => "index_payments_on_organization_id"
-    t.index ["owner_id"], :name => "index_payments_on_owner_id"
   end
 
-  create_view "payments_users", "select distinct `groups_payments`.`payment_id` AS `payment_id`,`groups_users`.`user_id` AS `user_id`,concat(`groups_payments`.`payment_id`,'_',`groups_users`.`user_id`) AS `id` from (`groups_payments` join `groups_users` on((`groups_users`.`group_id` = `groups_payments`.`group_id`)))", :force => true
+  add_index "payments", ["id"], name: "index_payments_on_id", using: :btree
+  add_index "payments", ["organization_id"], name: "index_payments_on_organization_id", using: :btree
+  add_index "payments", ["owner_id"], name: "index_payments_on_owner_id", using: :btree
+
   create_table "people", force: true do |t|
     t.integer  "user_id",    default: 0
     t.string   "first_name",             null: false
@@ -256,9 +278,10 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["id"], :name => "index_people_on_id"
-    t.index ["user_id"], :name => "index_people_on_user_id"
   end
+
+  add_index "people", ["id"], name: "index_people_on_id", using: :btree
+  add_index "people", ["user_id"], name: "index_people_on_user_id", using: :btree
 
   create_table "permissions", force: true do |t|
     t.string   "action"
@@ -268,11 +291,19 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.string   "action_scope"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["action"], :name => "index_permissions_on_action"
-    t.index ["action_scope"], :name => "index_permissions_on_action_scope"
-    t.index ["id"], :name => "index_permissions_on_id"
-    t.index ["organization_id"], :name => "index_permissions_on_organization_id"
-    t.index ["subject_class"], :name => "index_permissions_on_subject_class"
+  end
+
+  add_index "permissions", ["action"], name: "index_permissions_on_action", using: :btree
+  add_index "permissions", ["action_scope"], name: "index_permissions_on_action_scope", using: :btree
+  add_index "permissions", ["id"], name: "index_permissions_on_id", using: :btree
+  add_index "permissions", ["organization_id"], name: "index_permissions_on_organization_id", using: :btree
+  add_index "permissions", ["subject_class"], name: "index_permissions_on_subject_class", using: :btree
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "response_reasons", force: true do |t|
@@ -281,9 +312,10 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
-    t.index ["id"], :name => "index_response_reasons_on_id"
-    t.index ["organization_id"], :name => "index_response_reasons_on_organization_id"
   end
+
+  add_index "response_reasons", ["id"], name: "index_response_reasons_on_id", using: :btree
+  add_index "response_reasons", ["organization_id"], name: "index_response_reasons_on_organization_id", using: :btree
 
   create_table "response_statuses", force: true do |t|
     t.string   "title"
@@ -291,8 +323,9 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["id"], :name => "index_response_statuses_on_id"
   end
+
+  add_index "response_statuses", ["id"], name: "index_response_statuses_on_id", using: :btree
 
   create_table "responses", force: true do |t|
     t.integer  "response_reason_id"
@@ -308,14 +341,15 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["event_id"], :name => "index_responses_on_event_id"
-    t.index ["id"], :name => "index_responses_on_id"
-    t.index ["response_reason_id"], :name => "index_responses_on_response_reason_id"
-    t.index ["response_status_id"], :name => "index_responses_on_response_status_id"
-    t.index ["review_status_id"], :name => "index_responses_on_review_status_id"
-    t.index ["reviewed_user_id"], :name => "index_responses_on_reviewed_user_id"
-    t.index ["user_id"], :name => "index_responses_on_user_id"
   end
+
+  add_index "responses", ["event_id"], name: "index_responses_on_event_id", using: :btree
+  add_index "responses", ["id"], name: "index_responses_on_id", using: :btree
+  add_index "responses", ["response_reason_id"], name: "index_responses_on_response_reason_id", using: :btree
+  add_index "responses", ["response_status_id"], name: "index_responses_on_response_status_id", using: :btree
+  add_index "responses", ["review_status_id"], name: "index_responses_on_review_status_id", using: :btree
+  add_index "responses", ["reviewed_user_id"], name: "index_responses_on_reviewed_user_id", using: :btree
+  add_index "responses", ["user_id"], name: "index_responses_on_user_id", using: :btree
 
   create_table "review_statuses", force: true do |t|
     t.string   "title"
@@ -323,18 +357,20 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["id"], :name => "index_review_statuses_on_id"
   end
+
+  add_index "review_statuses", ["id"], name: "index_review_statuses_on_id", using: :btree
 
   create_table "upload_groups", force: true do |t|
     t.integer  "upload_id"
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["group_id"], :name => "index_upload_groups_on_group_id"
-    t.index ["id"], :name => "index_upload_groups_on_id"
-    t.index ["upload_id"], :name => "index_upload_groups_on_upload_id"
   end
+
+  add_index "upload_groups", ["group_id"], name: "index_upload_groups_on_group_id", using: :btree
+  add_index "upload_groups", ["id"], name: "index_upload_groups_on_id", using: :btree
+  add_index "upload_groups", ["upload_id"], name: "index_upload_groups_on_upload_id", using: :btree
 
   create_table "uploads", force: true do |t|
     t.string   "name"
@@ -348,10 +384,11 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.text     "description"
     t.integer  "organization_id"
     t.string   "visibility"
-    t.index ["file_type_id"], :name => "index_uploads_on_file_type_id"
-    t.index ["id"], :name => "index_uploads_on_id"
-    t.index ["organization_id"], :name => "index_uploads_on_organization_id"
   end
+
+  add_index "uploads", ["file_type_id"], name: "index_uploads_on_file_type_id", using: :btree
+  add_index "uploads", ["id"], name: "index_uploads_on_id", using: :btree
+  add_index "uploads", ["organization_id"], name: "index_uploads_on_organization_id", using: :btree
 
   create_table "users", force: true do |t|
     t.datetime "created_at"
@@ -375,13 +412,14 @@ ActiveRecord::Schema.define(version: 20140716235031) do
     t.integer  "failed_attempts",        default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.index ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
-    t.index ["email"], :name => "index_users_on_email", :unique => true
-    t.index ["id"], :name => "index_users_on_id"
-    t.index ["person_id"], :name => "index_users_on_person_id"
-    t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-    t.index ["uid"], :name => "index_users_on_uid"
-    t.index ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
   end
+
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["id"], name: "index_users_on_id", using: :btree
+  add_index "users", ["person_id"], name: "index_users_on_person_id", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["uid"], name: "index_users_on_uid", using: :btree
+  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
 end

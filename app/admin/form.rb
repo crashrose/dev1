@@ -28,16 +28,29 @@ navigation_menu :configure
   end
 
 index do
+  sortable_handle_column
   column :name
   column :publish_results
   column :email_results
   column :email_to_address
-  column :created_at
-  column :updated_at
     actions do |form|
       link_to "Submissions", view_submissions_admin_form_path(form)#, :class => "member_link"
     end
 end
+
+
+
+ form do |f|
+    f.inputs 'Details'
+    f.inputs 'Fields' do
+      f.has_many :form_fields, sortable: :position, allow_destroy: true, new_record: true do |a|
+        a.input :name
+        a.input :field_type
+      end
+    end
+
+    f.actions
+  end
   # See permitted parameters documentation:
   # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
