@@ -2,6 +2,8 @@ ActiveAdmin.register Group, menu_name: :configure  do
 
 navigation_menu :configure
 
+permit_params :name, :description, user_ids: [], group_users_attributes: [ :user_id, :group_id ]
+
   # See permitted parameters documentation:
   # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
@@ -14,4 +16,21 @@ navigation_menu :configure
   #  permitted << :other if resource.something?
   #  permitted
   # end
+
+
+    form do |f|
+
+    f.inputs "Details" do
+      f.input :name
+      f.input :description
+    end
+
+
+    f.inputs 'Members' do
+      f.select :user_ids, User.all_people.collect {|x| [x.name, x.id]}, {}, :multiple => true
+    end
+    f.actions
+  end
+
+
 end

@@ -180,6 +180,7 @@ ActiveAdmin.setup do |config|
   #   config.register_javascript 'my_javascript.js'
 
     config.register_stylesheet 'aa_menu.css', :media =>  :screen
+    config.register_stylesheet 'aa_formtastic.css', :media =>  :screen
     config.register_stylesheet 'application.css', :media =>  :screen
   #
   # To load a javascript file:

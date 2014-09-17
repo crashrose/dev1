@@ -1,8 +1,8 @@
 <%= semantic_form_for [@location] do |form| %>
   <%= form.inputs "Location" do %>
     <%= form.input :name %>
-    <%= form.input :address1 %>
-    <%= form.input :address2 %>
+    <%= form.input :address, placeholder: 'find address' %>
+    
     <%= form.input :city %>
     <%= form.input :state %>
     <%= form.input :zip %>

@@ -37,7 +37,7 @@ class LocationsController < ApplicationController
     respond_with [@location] do |format|
       format.html{
         if new_was_successful
-            redirect_to(locations_path, :notice => 'The Location was created')
+            redirect_to(admin_locations_path, :notice => "The Location was created #{location_params}")
         else
           render 'new', :notice => 'Some input was not valid.'
         end
@@ -50,7 +50,7 @@ class LocationsController < ApplicationController
   def update
     respond_to do |format|
       if @location.update(location_params)
-        format.html { redirect_to @location, notice: 'Location was successfully updated.' }
+        format.html { redirect_to admin_locations_path, notice: "Location was successfully updated. #{location_params}" }
         format.json { render :show, status: :ok, location: @location }
       else
         format.html { render :edit }
@@ -64,7 +64,7 @@ class LocationsController < ApplicationController
   def destroy
     @location.destroy
     respond_to do |format|
-      format.html { redirect_to locations_url, notice: "#{@location.name} was successfully destroyed." }
+      format.html { redirect_to admin_locations_path, notice: "#{@location.name} was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -77,6 +77,6 @@ class LocationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def location_params
-      params.require(:location).permit(:name, :address1, :address2, :city, :state, :zip, :country, :phone, :note, :website, :maplink)
+      params.require(:location).permit(:name, :address, :address2, :city, :state, :zip, :country, :phone, :note, :website, :maplink, :latitude, :longitude)
     end
 end

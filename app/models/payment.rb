@@ -6,6 +6,8 @@ class Payment < ActiveRecord::Base
 
 	attr_accessor :paypal_seller_id
 
+	acts_as_list
+
 	def return_url
 		@return_url = Rails.application.routes.url_helpers.payments_url
 	end
@@ -23,6 +25,12 @@ class Payment < ActiveRecord::Base
 							:org_id => self.organization_id,
 							:payment_id => self.id
 							}
+	end
+
+	private
+	def default_values
+		self.position = EventType.all.maximum(:position) +1
+		self.status = 'open'
 	end
 
 end

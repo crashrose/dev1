@@ -15,12 +15,13 @@ has_many :event_users, inverse_of: :user
 has_one :person
 # has_many :o_auth2_credentials, dependent: :destroy
 
+scope :all_people,->  {where.not(person_id: nil)}
 
 	def name
     if !!self.person
 			"#{self.person.first_name} #{self.person.last_name}"
     else
-      ""
+      nil
     end
 	end
 

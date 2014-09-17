@@ -1,7 +1,8 @@
 module ActiveAdmin
   module Sortable
   	module TableMethods
-  		HANDLE = ActiveAdmin::Iconic.icon(:move_vertical)
+  		# HANDLE = ActiveAdmin::Iconic.icon(:move_vertical)
+  		HANDLE = '<span class="glyphicon glyphicon-move"></span>'.html_safe
 
 		def sortable_handle_column
         	column '', :class => "activeadmin-sortable" do |resource|

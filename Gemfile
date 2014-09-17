@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ### Core Rails Framework
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.1'
+gem 'sprockets-rails', '2.1.3'
 
 
 #### Database Tools
@@ -51,10 +52,12 @@ gem 'coffee-rails', '~> 4.0.0'
 
 
 #### Data/Translation Reference Tools
-gem 'country-select'
+gem 'country_select', '~>2.0.0'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 # gem 'timezone' ## Not sure if needed
+# gem 'geocoder'
+# gem 'gmaps-autocomplete-rails'
 
 
 ### APIs
@@ -70,6 +73,7 @@ gem 'jbuilder', '~> 2.0'
 #### Feature Tools
 # File Management
 gem 'paperclip', github: 'thoughtbot/paperclip'
+gem 'rails-file-icons'
 # Calendar Builder (Java-based)
 gem 'fullcalendar-rails', '~> 1.6.4.0'
 # gem "meta_search" ## Not sure if needed or is best option - maybe Ransack
@@ -100,7 +104,7 @@ gem 'request-log-analyzer'
 #### Development Tools
 group :development do
 	gem 'sextant'
-	gem "better_errors"
+	gem 'better_errors', '~> 1.1.0'
 	gem "binding_of_caller"
 	gem 'meta_request'
 end

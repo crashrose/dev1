@@ -1,0 +1,106 @@
+
+div.gmap-main {
+float: left;
+width: 40%;
+}
+
+.formtastic input {
+   width: inherit; 
+}
+
+ input[type="text"].loc_data {
+   width: inherit; 
+   padding: 4px; 
+   margin-right: 4px;
+}
+
+
+ form textarea.loc_data {
+   width: inherit; 
+   padding: 4px; 
+   margin-right: 4px;
+}
+
+#location_country {
+  border: 1px solid #c9d0d6;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  font-size: 0.95em;
+  font-family: Helvetica, Arial, sans-serif;
+  outline: none;
+  padding: 4px;
+  margin-right: 4px;
+  overflow: hidden;
+}
+
+ .gmap-main input[type="search"] {
+  border: 1px solid #c9d0d6;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  font-size: 0.95em;
+  font-family: Helvetica, Arial, sans-serif;
+  outline: none;
+  padding: 4px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+#new_form label {
+  color: inherit;
+}
+
+.address-results {
+  float:  left;
+  margin-left: 7px;
+}
+#gmap_use_button {
+  display: none;
+}
+
+.panel-body input, select {
+  margin-top: 4px;
+  padding: 1px 1px 1px 1px;
+}
+
+.panel-body select {
+  margin-top: 4px;
+}
+.panel-body textarea {
+  margin-top: 4px;
+}
+
+div.gmap-main > div > .panel-body > div.googlemap {
+  margin-top: 4px;
+}
+
+div.gmap-main > div > .panel-body label {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.section > div, .panel > div {
+   padding: 15px 15px 15px 15px; 
+}
+
+div.panel > div {
+  padding: 6px;
+}
+
+.loc_data input {
+  padding: 4px;
+}
+
+label.first-label{
+  display: block;
+  width: 60px;
+  float: left;
+  text-align: left;
+  margin-right: 4px;
+  padding-top: 7px;
+}
+
+input:read-only { 
+    background-color: orange;
+}
