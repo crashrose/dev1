@@ -4,7 +4,7 @@ navigation_menu :configure
 
     controller do
       def scoped_collection
-        Upload.playbooks
+        Upload.playbooks.includes :mime_type
       end
       # def resource
       #   Playbooks.index
@@ -19,20 +19,47 @@ permit_params :name, :file_type_id, :document, :description, group_ids: [], uplo
   filter :document_file_size
   filter :description
 
+
+index do
+  selectable_column
+  column :name
+  column 'File', :document_file_name
+  column 'File Size', sortable: :document_file_size do |playbook|
+    number_to_human_size(playbook.document_file_size, precision: 2)
+  end
+  column 'File Type', :mime_type, sortable: "mime_types.title" 
+  # do |playbook|
+  #   playbook.mime_type.file_type
+  # end
+  column 'Available To' do |playbook|
+    playbook.groups.map { |group| userlist_popover(group)}.to_sentence.html_safe
+  end
+  # column :email_to_address
+  #   actions do |form|
+  #     link_to "Submissions", view_submissions_admin_form_path(form)#, :class => "member_link"
+  #   end
+end
+
 # index as: :grid do |playbook|
 #   # link_to image_tag(Icon.for_filename(playbook.document_file_name)), edit_admin_playbook_path(playbook)
 #   link_to(image_tag(Icon.for_filename(playbook.document_file_name), :title => playbook.name), edit_admin_playbook_path(playbook))
 # end
-index as: :block, columns: 3 do |playbook|
-  div for: playbook do
-    # resource_selection_cell playbook
-    text_node image_tag(Icon.for_filename(playbook.document_file_name)).html_safe
-    h3 link_to(playbook.name, edit_admin_playbook_path(playbook))
-    div simple_format 'Description: '+playbook.description
-    div simple_format 'File Name: '+playbook.document_file_name
-    div simple_format 'Available to: '+playbook.groups.map { |group| group.name }.to_sentence
-  end
-end
+# index as: :grid, columns: 4 do |playbook|
+#   # div for: playbook do
+#   div :class => 'panel panel-default panel-playbook' do 
+#     div :class => 'panel-heading playbook-heading' do
+#       resource_selection_cell playbook
+#       h3 link_to(playbook.name, edit_admin_playbook_path(playbook)), :class => 'panel-title'
+#     # resource_selection_cell playbook
+#     # text_node image_tag(Icon.for_filename(playbook.document_file_name)).html_safe
+#     end
+#     div :class => 'panel-body' do
+#       div simple_format 'Description: '+playbook.description
+#       div simple_format 'File: '+playbook.document_file_name
+#       div simple_format 'Available to: '+playbook.groups.map { |group| group.name }.to_sentence
+#     end
+#   end
+# end
 
 
   form do |f|

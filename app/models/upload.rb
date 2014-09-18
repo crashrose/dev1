@@ -1,5 +1,6 @@
-class Upload < ActiveRecord::Base
 
+
+class Upload < ActiveRecord::Base
 	has_attached_file :document
 	# , :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
 	# validates_attachment_content_type :document, :content_type => /\Aimage\/.*\Z/
@@ -21,12 +22,12 @@ class Upload < ActiveRecord::Base
   belongs_to :file_type
   has_many :upload_groups, autosave: :true, :dependent => :destroy
   has_many :groups, :through => :upload_groups
+  has_one :mime_type, :primary_key => :document_content_type, :foreign_key => :content_type
 
   scope :playbooks,    ->    {where(:file_type => FileType.find_by_name('playbook'))}
   scope :resources,    ->    {where(:file_type => FileType.find_by_name('resource'))}
   scope :imports,    ->    {where(:file_type => FileType.find_by_name('import'))}
   scope :instructionals,    ->    {where(:file_type => FileType.find_by_name('instructional'))}
-  scope :multimedias,    ->    {where(:file_type => FileType.find_by_name('mutlimeia'))}
-
+  scope :multimedias,    ->    {where(:file_type => FileType.find_by_name('multimedia'))}
 
 end

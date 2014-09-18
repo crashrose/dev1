@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806170637) do
+ActiveRecord::Schema.define(version: 20140918220352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(version: 20140806170637) do
 
   create_table "file_types", force: true do |t|
     t.string   "name"
-    t.string   "mime_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -218,6 +217,13 @@ ActiveRecord::Schema.define(version: 20140806170637) do
 
   add_index "locations", ["id"], name: "index_locations_on_id", using: :btree
   add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree
+
+  create_table "mime_types", force: true do |t|
+    t.string   "content_type"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "org_types", force: true do |t|
     t.string   "title"

@@ -18,15 +18,15 @@ has_one :person
 scope :all_people,->  {where.not(person_id: nil)}
 
 	def name
-    if !!self.person
-			"#{self.person.first_name} #{self.person.last_name}"
+    if !!person
+			"#{person.first_name} #{person.last_name}"
     else
       nil
     end
 	end
 
   def first_name
-      self.person.first_name
+      person.first_name
   end
 
 end
