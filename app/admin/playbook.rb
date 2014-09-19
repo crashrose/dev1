@@ -6,6 +6,7 @@ navigation_menu :configure
       def scoped_collection
         Upload.playbooks.includes :mime_type
       end
+      helper :views
       # def resource
       #   Playbooks.index
       # end
