@@ -1,6 +1,5 @@
-
-
-<%= form_for(@playbook, html: { class: "form-horizontal", role: 'form' }) do |f| %>
+<% action_path = resource.persisted? ? resource_path(resource) : collection_path %>
+<%= form_for [:admin, @playbook], url: action_path, html: { class: "form-horizontal", role: 'form' } do |f| %>
 
   <fieldset>
     <div class="content-container col-md-12 form-group">
@@ -22,7 +21,12 @@
             </div>
             <div>
               <span><%= f.label :tag_list, "Tags", class: "control-label" %></span>
-              <span><%= f.text_field :tag_list, class: "plbk_data form-control", cols: 32 %></span>
+              <span><%= f.text_field :tag_list, class: "plbk_data form-control"
+               f.text_field :tag_list, class: 'plbk_data tagselect form-control', data: {
+                          placeholder: "Enter tags",
+                          saved: f.object.tags.map{|t| {id: t.name, name: t.name}}.to_json,
+                          url: autocomplete_tags_path } 
+                          %></span>
             </div>
             <div>
               <% if (@playbook.id) %>
@@ -93,3 +97,4 @@
 <% end %>
 
 <%= javascript_include_tag 'playbook' %>
+<%= javascript_include_tag 'select2_autocomplete' %>

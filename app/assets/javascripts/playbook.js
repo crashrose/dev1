@@ -13,6 +13,7 @@ jQuery(document).ready(function($) {
     document.getElementById('select-file-btn').style.display="block";
     upload_input.setAttribute('type','text');
     form.reset();
+    $('#upload_tag_list').change();
   })
 
 })

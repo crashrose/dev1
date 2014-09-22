@@ -13,6 +13,15 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :users, ActiveAdmin::Devise.config
 
+
+get '/admin/autocomplete_tags',
+  to: 'admin/playbooks#autocomplete_tags',
+  as: 'autocomplete_tags'
+
+post '/admin/playbooks/show_params',
+  to: 'admin/playbooks#show_params',
+  as: 'show_params'
+
   resource :calendar, :only => [:show]
   resources :g_cal_events do
     collection do

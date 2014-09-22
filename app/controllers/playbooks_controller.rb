@@ -49,7 +49,7 @@ class PlaybooksController < ApplicationController
     respond_with [@playbook] do |format|
       format.html{
         if new_was_successful
-            redirect_to(playbooks_path, :notice => 'The Playbook was added')
+            redirect_to(admin_playbooks_path, :notice => 'The Playbook was added')
         else
           render 'new', :notice => 'Some input was not valid.'
         end
@@ -86,7 +86,7 @@ class PlaybooksController < ApplicationController
   def batch_update
     # multi_update
           if multi_update
-              redirect_to(playbooks_path, :notice => 'The Playbook was created')
+            redirect_to(playbooks_path, :notice => 'The Playbook was created')
           else
             redirect_to(playbooks_path, :notice => 'Some input was not valid.')
           end
@@ -99,7 +99,7 @@ class PlaybooksController < ApplicationController
   def update
     respond_to do |format|
       if @playbook.update(playbook_params)
-        format.html { redirect_to @playbook, notice: 'Playbook was successfully updated.' }
+        format.html { redirect_to admin_playbooks_path, notice: 'Playbook was successfully updated.' }
         format.json { render :show, status: :ok, playbook: @playbook }
       else
         format.html { render :edit }
@@ -151,7 +151,7 @@ class PlaybooksController < ApplicationController
       playbook_reason_id: event_user[:playbook_reason_id],
       details: event_user[:details]
       })
-    permitted = params.require(:single_playbook).permit(:event_user, :user_id, :event_id, :playbook_reason_id, :playbook_status_id, :details)
+    permitted = params.require(:single_playbook).permit(:event_user, :user_id, :event_id, :playbook_reason_id, :playbook_status_id, :details, :tag_list)
     return permitted
   end
 end

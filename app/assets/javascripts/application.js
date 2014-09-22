@@ -22,6 +22,7 @@
 
 //= require turbolinks
 //= require jquery_ujs
+//= require select2
 
 
 //= require jquery.rest

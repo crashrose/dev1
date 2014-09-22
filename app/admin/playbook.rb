@@ -3,6 +3,7 @@ ActiveAdmin.register Upload, as: "Playbook"  do
 navigation_menu :configure
 
     controller do
+
       def scoped_collection
         Upload.playbooks.includes :mime_type
       end
@@ -10,6 +11,20 @@ navigation_menu :configure
       # def resource
       #   Playbooks.index
       # end
+      def autocomplete_tags
+        @tags = ActsAsTaggableOn::Tag.
+        where("name LIKE ?", "#{params[:q]}%").
+        order(:name)
+        respond_to do |format|
+          format.json { render :json => @tags.collect{|t| {:id => t.name, :name => t.name }}}
+        end
+      end
+
+      def show_params
+        respond_to do |format|
+          format.html { render json: params }
+        end
+      end
     end
 
 permit_params :name, :file_type_id, :document, :description, :tag_list, group_ids: [], upload_groups_attributes: [ :upload_id, :group_id ]

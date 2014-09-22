@@ -3,6 +3,8 @@
 
 #= require bootstrap
 
+#= require select2
+
 
 jQuery ->
   $("a[rel=popover]").popover()

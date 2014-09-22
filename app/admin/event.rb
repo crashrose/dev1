@@ -45,6 +45,21 @@ navigation_menu :configure
     actions
   end
 
+  form  do |f|
+
+    f.inputs "Details" do
+      f.input :name, :input_html => {class: 'form-control'}
+      f.input :location, :input_html => {class: 'form-control'}
+      f.input :event_type, :input_html => {class: 'form-control'}
+      f.input :owner, :input_html => {class: 'form-control'}
+      f.input :starts_at, :input_html => {class: 'form-control'}
+      f.input :ends_at, :input_html => {class: 'form-control'}
+      f.input :all_day, :input_html => {class: 'form-control'}
+      f.input :respond_by, :input_html => {class: 'form-control'}
+      f.input :description, :input_html => {class: 'form-control'}
+    end
+  end
+
 
   # See permitted parameters documentation:
   # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

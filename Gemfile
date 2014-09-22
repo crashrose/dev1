@@ -50,6 +50,7 @@ gem 'jquery-rest-rails'
 gem 'momentjs-rails', '~> 2.7.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
+gem "select2-rails"
 
 
 #### Data/Translation Reference Tools
