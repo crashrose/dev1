@@ -1,29 +1,27 @@
 
-
-
-/*div.gmap-main {
+div.gmap-main {
 float: left;
 width: 40%;
-}*/
+}
 
-/*.formtastic input {
+.formtastic input {
    width: inherit; 
 }
-*/
-/* input[type="text"].loc_data {
+
+ input[type="text"].loc_data {
    width: inherit; 
    padding: 4px; 
    margin-right: 4px;
-}*/
+}
 
 
-/* form textarea.loc_data {
+ form textarea.loc_data {
    width: inherit; 
    padding: 4px; 
    margin-right: 4px;
-}*/
+}
 
-/*#location_country {
+#location_country {
   border: 1px solid #c9d0d6;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -34,9 +32,9 @@ width: 40%;
   padding: 4px;
   margin-right: 4px;
   overflow: hidden;
-}*/
+}
 
-/* .gmap-main input[type="search"] {
+ .gmap-main input[type="search"] {
   border: 1px solid #c9d0d6;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -47,13 +45,13 @@ width: 40%;
   padding: 4px;
   margin-right: 4px;
   margin-bottom: 4px;
-}*/
+}
 
-/*#new_form label {
+#new_form label {
   color: inherit;
-}*/
+}
 
-/*.address-results {
+.address-results {
   float:  left;
   margin-left: 7px;
 }
@@ -71,26 +69,26 @@ width: 40%;
 }
 .panel-body textarea {
   margin-top: 4px;
-}*/
+}
 
-/*div.gmap-main > div > .panel-body > div.googlemap {
+div.gmap-main > div > .panel-body > div.googlemap {
   margin-top: 4px;
-}*/
+}
 
-/*div.gmap-main > div > .panel-body label {
+div.gmap-main > div > .panel-body label {
   margin-top: 4px;
   margin-bottom: 4px;
-}*/
+}
 
-/*.section > div, .panel > div {
+.section > div, .panel > div {
    padding: 15px 15px 15px 15px; 
-}*/
+}
 
-/*div.panel > div {
+div.panel > div {
   padding: 6px;
-}*/
+}
 
-/*.loc_data input {
+.loc_data input {
   padding: 4px;
 }
 
@@ -101,13 +99,8 @@ label.first-label{
   text-align: left;
   margin-right: 4px;
   padding-top: 7px;
-}*/
+}
 
-
-/*.active_admin input {
-  width: inherit;
-}*/
-
-/*div.content-container {
-  display: inline-block;
-}*/
+input:read-only { 
+    background-color: orange;
+}

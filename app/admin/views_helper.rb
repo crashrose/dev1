@@ -49,15 +49,4 @@ module ViewsHelper
 		location_text.html_safe
 	end
 
-	def current_auth_userlist_with_groups(playbook)
-		playbook.users.map {|user| "<tr><td>#{user.name}</td><td>#{user.ul_groups(playbook.id)}</td></tr>"}.uniq.join.html_safe
-
-		# playbook.users.distinct.each do |user|
-		# 	"<tr><td>#{user.name}</td><td>#{user.ul_groups(playbook.id)}</td></tr>"
-		# end
-	end
-
-
-
-
 end

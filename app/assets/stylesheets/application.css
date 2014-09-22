@@ -36,11 +36,3 @@
   border: 1px solid #ccc;
   box-shadow: 0px 0px 3px #ccc;
 }
-
-form input[type=text].form-control, form input[type=password].form-control, form input[type=email].form-control, form input[type=number].form-control, form input[type=url].form-control, form input[type=tel].form-control, form textarea.form-control {
-  width:100%;
-}
-
-#upload_document_file_name {
-  margin-bottom: 5px;
-}
