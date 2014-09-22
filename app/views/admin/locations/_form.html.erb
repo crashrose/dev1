@@ -1,10 +1,12 @@
 
 
-<%= form_for(@location, html: { class: "form-horizontal" }) do |f| %>
+<%= form_for(@location, html: { class: "form-horizontal", role: 'form' }) do |f| %>
 
   <fieldset>
-    <div class="content-container">
-      <div class="gmap-main">
+    <div class="content-container col-md-12 form-group">
+
+      <!-- Left Content Column -->
+      <div class="gmap-main col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">Location Search</h3>
@@ -22,116 +24,129 @@
             <% end %>
             <div>
               <span><%= label_tag :search, "Search For Address" %></span>
-              <span><%= text_field_tag :location_search, nil, size: 50, class: "search-query", type: "search" %></span>
+              <span><%= text_field_tag :location_search, nil, class: "search-query  form-control", type: "search" %></span>
             </div>
             <div id="googlemap"></div>
           </div>
         </div>
       </div>
 
+      <!-- Center Content Column-->
+      <div class="loc-middle col-md-4">
 
-      <div class="loc-main row-fluid address-results">
-
-
+        <!-- Details Panel -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">Details</h3>
           </div>
           <div class="panel-body">
             <div>
-              <span><%= f.label :name, class: "first-label" %></span>
-              <span><%= f.text_field :name, class: "loc_data", size: 34 %></span>
+              <span><%= f.label :name, class: "control-label" %></span>
+              <span><%= f.text_field :name, class: "loc_data form-control" %></span>
             </div>
             <div>
-              <span><%= f.label :note, class: "first-label" %></span>
-              <span><%= f.text_area :note, class: "loc_data", cols: 32 %></span>
+              <span><%= f.label :note, class: "control-label" %></span>
+              <span><%= f.text_area :note, class: "loc_data form-control" %></span>
             </div>
           </div>
         </div>
 
+        <!-- Address Panel -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">Address</h3>
           </div>
           <div class="panel-body">
             <div>
-              <span><%= f.label :address, "Line 1", class: "first-label" %></span>
-              <span><%= f.text_field :address, class: "loc_data", size: 34 %></span>
+              <span><%= f.label :address, "Line 1", class: "control-label" %></span>
+              <span><%= f.text_field :address, class: "loc_data form-control" %></span>
             </div>
             <div>
-              <span><%= f.label :address2, "Line 2", class: "first-label" %></span>
-              <span><%= f.text_field :address2, class: "loc_data", size: 34 %></span>
+              <span><%= f.label :address2, "Line 2", class: "control-label" %></span>
+              <span><%= f.text_field :address2, class: "loc_data form-control" %></span>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <span><%= f.label :city, class: "control-label" %></span>
+                <span><%= f.text_field :city, class: "loc_data form-control" %></span>
+              </div>
+              <div class="col-sm-3">
+                <span><%= f.label :state, class: "control-label" %></span>
+                <span><%= f.text_field :state, class: "loc_data form-control" %></span>
+              </div>
+              <div class="col-sm-3">
+                <span><%= f.label :zip, class: "control-label" %></span>
+                <span><%= f.text_field :zip, class: "loc_data form-control" %></span>
+              </div>
             </div>
             <div>
-              <span><%= f.label :city, class: "first-label" %></span>
-              <span><%= f.text_field :city, size: 12, class: "loc_data" %></span>
-              <span><%= f.label :state, class: "control-label" %></span>
-              <span><%= f.text_field :state, size: 3, class: "loc_data" %></span>
-              <span><%= f.label :zip, class: "control-label" %></span>
-              <span><%= f.text_field :zip, size: 5, class: "loc_data" %></span>
-            </div>
-            <div>
-              <span><%= f.label :country, class: "first-label" %></span>
-              <span><%= f.country_select :country, class: "loc_data",  priority_countries: ["US"] , except: ["GS"], size: 33 %></span>
+              <span><%= f.label :country, class: "control-label" %></span>
+              <span><%= f.country_select :country, {priority_countries: ["US"] , except: ["GS"]}, class: "loc_data form-control" %></span>
             </div>
           </div>
         </div>
 
+      </div>
 
+      <!-- Right Content Column -->
+      <div class="loc-right col-md-4">
+
+
+        <!-- Contact Panel -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">Contact</h3>
           </div>
           <div class="panel-body">
             <div>
-              <span><%= f.label :phone, class: "first-label" %></span>
-              <span><%= f.text_field :phone, class: "loc_data" %></span>
+              <span><%= f.label :phone, class: "control-label" %></span>
+              <span><%= f.telephone_field :phone, class: "loc_data form-control" %></span>
             </div>
             <div>
-              <span><%= f.label :website, class: "first-label" %></span>
-              <span><%= f.text_field :website, class: "loc_data", size: 34 %></span>
+              <span><%= f.label :website, class: "control-label" %></span>
+              <span><%= f.url_field :website, class: "loc_data form-control" %></span>
             </div>
             <div>
-              <span><%= f.label :maplink, class: "first-label" %></span>
-              <span><%= f.text_field :maplink, class: "loc_data", size: 34 %></span>
+              <span><%= f.label :maplink, class: "control-label" %></span>
+              <span><%= f.url_field :maplink, class: "loc_data form-control" %></span>
             </div>
-
           </div>
         </div>
 
+        <!-- Geography Panel -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">Geography</h3>
           </div>
           <div class="panel-body">
-            <div>
-              <span><%= f.label :latitude, class: "first-label" %></span>
-              <span><%= f.text_field :latitude, size: 11, class: "loc_data" %></span>
-              <span><%= f.label :longitude, class: "control-label" %></span>
-              <span><%= f.text_field :longitude, size: 11, class: "loc_data" %></span>
+            <div class="row">
+              <div class="col-sm-6">
+                <span><%= f.label :latitude, class: "first-label" %></span>
+                <span><%= f.text_field :latitude, class: "loc_data form-control" %></span>
+              </div>
+              <div class="col-sm-6">
+                <span><%= f.label :longitude, class: "control-label" %></span>
+                <span><%= f.text_field :longitude, class: "loc_data form-control" %></span>
+              </div>
             </div>
           </div>
         </div>
 
-
-
-
-
-      </div>
-    </div>
         <div>
-          <div class="control-group">
-            <%= f.submit "Save Location", class: 'btn submit-btn' %>
-          </div>
-          <% if (@location.id) %>
-            <div class="control-group">
-              <%= button_tag 'Reset', :type => 'reset', class: 'btn reset-btn' %>
-            </div>
-          <% end %>
-          <div class="control-group">
-            <%= button_tag 'Clear', :type => 'button', class: 'btn clear-btn' %>
-          </div>
+          <%= f.submit "Save Location", class: 'btn submit-btn form-control' %>
         </div>
+        <% if (@location.id) %>
+          <div>
+            <%= button_tag 'Reset', :type => 'reset', class: 'btn reset-btn form-control' %>
+          </div>
+        <% end %>
+        <div>
+          <%= button_tag 'Clear', :type => 'button', class: 'btn clear-btn form-control' %>
+        </div>
+      </div>
+
+    </div>
+
 
   </fieldset>
 

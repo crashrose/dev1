@@ -18,6 +18,7 @@ gem "schema_plus"
 gem 'activeadmin', github: 'gregbell/active_admin'  ## Will reinstall
 gem 'activeadmin-sortable'
 gem 'acts_as_list'
+gem 'acts-as-taggable-on'
 
 
 #### Authentication
