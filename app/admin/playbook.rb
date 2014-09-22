@@ -12,13 +12,14 @@ navigation_menu :configure
       # end
     end
 
-permit_params :name, :file_type_id, :document, :description, group_ids: [], upload_groups_attributes: [ :upload_id, :group_id ]
+permit_params :name, :file_type_id, :document, :description, :tag_list, group_ids: [], upload_groups_attributes: [ :upload_id, :group_id ]
 
   filter :name
   filter :groups
   filter :document_file_name
   filter :document_file_size
   filter :description
+  filter :tags
 
 
 index do
@@ -39,6 +40,8 @@ index do
   #   actions do |form|
   #     link_to "Submissions", view_submissions_admin_form_path(form)#, :class => "member_link"
   #   end
+  column :tag_list, sortable: false
+  actions
 end
 
 # index as: :grid do |playbook|
@@ -62,24 +65,25 @@ end
 #   end
 # end
 
+form partial: 'form'
+  # form do |f|
 
-  form do |f|
+  #   f.inputs "Details" do
+  #     f.input :name
+  #     f.input :description
+  #     f.input :tag_list
+  #   end
 
-    f.inputs "Details" do
-      f.input :name
-      f.input :description
-    end
+  #   f.inputs 'File' do
+  #     ## add line for filename if this is a resource edit
+  #     f.file_field :document
+  #   end
 
-    f.inputs 'File' do
-      ## add line for filename if this is a resource edit
-      f.file_field :document
-    end
-
-    f.inputs 'Access' do
-      f.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true
-    end
-    f.actions
-  end
+  #   f.inputs 'Access' do
+  #     f.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true
+  #   end
+  #   f.actions
+  # end
 
 
 

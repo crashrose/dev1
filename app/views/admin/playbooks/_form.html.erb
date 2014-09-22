@@ -1,0 +1,95 @@
+
+
+<%= form_for(@playbook, html: { class: "form-horizontal", role: 'form' }) do |f| %>
+
+  <fieldset>
+    <div class="content-container col-md-12 form-group">
+
+      <div class="plbk-data col-md-4">
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Details</h3>
+          </div>
+          <div class="panel-body">
+            <div>
+              <span><%= f.label :name, 'Playbook Name', class: "control-label" %></span>
+              <span><%= f.text_field :name, class: "plbk_data form-control" %></span>
+            </div>
+            <div>
+              <span><%= f.label :description, class: "control-label" %></span>
+              <span><%= f.text_area :description, class: "plbk_data form-control", cols: 32 %></span>
+            </div>
+            <div>
+              <span><%= f.label :tag_list, "Tags", class: "control-label" %></span>
+              <span><%= f.text_field :tag_list, class: "plbk_data form-control", cols: 32 %></span>
+            </div>
+            <div>
+              <% if (@playbook.id) %>
+                <span><%= f.label :document, "Current File", class: "control-label" %></span>
+                <span><p><%= f.text_field :document_file_name, class: "plbk_data form-control", "readonly" => true %></p></span>
+                <div id="select-file-btn"><%= button_tag 'Select New', :type => 'button', class: 'btn btn-xs btn-primary select-file-btn' %></div>
+              <% else %>
+                <span><%= f.label :document, "Select File", class: "control-label" %></span>
+                <span><%= f.file_field :document, class: "plbk_data form-control", size: 34 %></span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="control-group">
+            <%= f.submit "Save Playbook", class: 'btn submit-btn' %>
+          </div>
+          <% if (@playbook.id) %>
+            <div class="control-group">
+              <%= button_tag 'Reset', :type => 'reset', class: 'btn reset-btn' %>
+            </div>
+          <% end %>
+          <div class="control-group">
+            <%= button_tag 'Clear', :type => 'button', class: 'btn clear-btn' %>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="plbk-member-list col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Access</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row col-md-5">
+              <span><%= f.label :group_ids, 'Groups', class: "control-label" %></span>
+              <span><%= f.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true, class: "plbk_data form-control" %></span>
+              <div>
+                <!-- <span>Click to view all current access</span> -->
+              </div>
+            </div>
+            <div class="row col-md-8" style="overflow: auto;">
+              <span><%= f.label :group_ids, 'Current Access List', class: "control-label" %></span>
+              <table class="table table-striped table-condensed">
+                <tr>
+                  <th>Person</th>
+                  <th>Group(s) Granting Access</th>
+                </tr>
+                <%= current_auth_userlist_with_groups(@playbook) %>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+
+    </div>
+
+
+  </fieldset>
+
+<% end %>
+
+<%= javascript_include_tag 'playbook' %>

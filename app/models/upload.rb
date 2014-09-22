@@ -19,9 +19,14 @@ class Upload < ActiveRecord::Base
   		},
   :size => { :in => 0..2000.kilobytes }
 
+  acts_as_taggable
+  acts_as_taggable_on
+
   belongs_to :file_type
   has_many :upload_groups, autosave: :true, :dependent => :destroy
   has_many :groups, :through => :upload_groups
+  has_many :groups_users, :through => :groups
+  has_many :users, :through => :groups_users
   has_one :mime_type, :primary_key => :document_content_type, :foreign_key => :content_type
 
   scope :playbooks,    ->    {where(:file_type => FileType.find_by_name('playbook'))}
@@ -29,5 +34,10 @@ class Upload < ActiveRecord::Base
   scope :imports,    ->    {where(:file_type => FileType.find_by_name('import'))}
   scope :instructionals,    ->    {where(:file_type => FileType.find_by_name('instructional'))}
   scope :multimedias,    ->    {where(:file_type => FileType.find_by_name('multimedia'))}
+
+
+  # def upload_users
+  #   groups.users
+  # end
 
 end

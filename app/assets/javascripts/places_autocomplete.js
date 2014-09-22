@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
 });
 
 
-console.log(document.forms[0]);
+
 $('.clear-btn').click(function() {
 
 
