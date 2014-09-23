@@ -23,7 +23,7 @@ gem 'acts-as-taggable-on'
 
 
 #### Authentication
-gem 'devise', github: 'plataformatec/devise', :branch => 'lm-timeoutable-fix'
+gem 'devise'#, github: 'plataformatec/devise', :branch => 'lm-timeoutable-fix'
 gem "cancan"
 # gem 'certified', '~> 0.1.2' ## Not sure if needed
 # gem 'signet-rails', '>= 0.0.6' ## Not needed since 'signet' gem is installed by Google API

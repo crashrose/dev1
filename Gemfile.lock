@@ -16,18 +16,6 @@ GIT
       sass-rails
 
 GIT
-  remote: git://github.com/plataformatec/devise.git
-  revision: 526cc2cf745164805e20412971b65e3b6f70d437
-  branch: lm-timeoutable-fix
-  specs:
-    devise (3.2.4)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
-      thread_safe (~> 0.1)
-      warden (~> 1.2.3)
-
-GIT
   remote: git://github.com/thoughtbot/paperclip.git
   revision: d5268f153c40318ce7e2929ab0e50d1203ac83a8
   specs:
@@ -122,6 +110,12 @@ GEM
       debugger-ruby_core_source (~> 1.3.5)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.3.5)
+    devise (3.3.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     elif (0.1.0)
     erubis (2.7.0)
     execjs (2.2.1)
@@ -294,7 +288,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   country_select (~> 2.0.0)
   debugger
-  devise!
+  devise
   elif (~> 0.1.0)
   formtastic (~> 2.3.0.rc2)
   fullcalendar-rails (~> 1.6.4.0)
