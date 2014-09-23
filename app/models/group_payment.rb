@@ -1,4 +1,4 @@
-class GroupPayment < ActiveRecord::Base
+class GroupsPayment < ActiveRecord::Base
 
 
 	belongs_to :group
