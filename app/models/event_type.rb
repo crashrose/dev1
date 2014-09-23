@@ -7,7 +7,7 @@ class EventType < ActiveRecord::Base
 
 	acts_as_list
 
-	before_create :default_values
+	# before_create :default_values
 
 	private
 	def default_values
