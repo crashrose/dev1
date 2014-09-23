@@ -114,5 +114,5 @@ gem 'request-log-analyzer'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 # Use debugger
-gem 'debugger'#, group: [:development, :test]
+# gem 'debugger', group: [:production]
 
