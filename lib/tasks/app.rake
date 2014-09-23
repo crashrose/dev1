@@ -117,7 +117,7 @@ end
 [
 	{:id => 1, :group_id => 4, :payment_id => 1}
 ].each do |attributes|
-			GroupsPayment.where(group_id: attributes[:group_id], payment_id: attributes[:payment_id]).first_or_create(attributes)
+			GroupPayment.where(group_id: attributes[:group_id], payment_id: attributes[:payment_id]).first_or_create(attributes)
 		end
 
 
