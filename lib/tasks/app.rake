@@ -145,9 +145,9 @@ end
 
 
 [
-	{:id => 1, :name => "Unknown", :address1 => "", :address2 => "", :city => "", :state => "", :country => "", :phone => "", :note => "", :website => "", :maplink => "", :updated_at => "2014-06-12 18:45:34", :organization_id => 2},
-	{:id => 4, :name => "Test Location 1", :address1 => "", :address2 => "", :city => "", :state => "", :country => "", :phone => "", :note => "", :website => "", :maplink => "", :created_at => "2014-06-05 16:29:43", :updated_at => "2014-06-05 16:29:43", :organization_id => 2},
-	{:id => 5, :name => "Location Test 2", :address1 => "", :address2 => "", :city => "", :state => "", :country => "", :phone => "", :note => "", :website => "", :maplink => "", :created_at => "2014-06-12 18:26:09", :updated_at => "2014-06-12 18:26:09", :organization_id => 2}
+	{:id => 1, :name => "Unknown", :address => "", :address2 => "", :city => "", :state => "", :country => "", :phone => "", :note => "", :website => "", :maplink => "", :updated_at => "2014-06-12 18:45:34", :organization_id => 2},
+	{:id => 4, :name => "Test Location 1", :address => "", :address2 => "", :city => "", :state => "", :country => "", :phone => "", :note => "", :website => "", :maplink => "", :created_at => "2014-06-05 16:29:43", :updated_at => "2014-06-05 16:29:43", :organization_id => 2},
+	{:id => 5, :name => "Location Test 2", :address => "", :address2 => "", :city => "", :state => "", :country => "", :phone => "", :note => "", :website => "", :maplink => "", :created_at => "2014-06-12 18:26:09", :updated_at => "2014-06-12 18:26:09", :organization_id => 2}
 ].each do |attributes|
 			Location.where(id: attributes[:id], name: attributes[:name]).first_or_create(attributes)
 		end
