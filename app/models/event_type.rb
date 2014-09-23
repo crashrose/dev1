@@ -11,6 +11,10 @@ class EventType < ActiveRecord::Base
 
 	private
 	def default_values
-		self.position = EventType.all.maximum(:position) +1
+		if EventType.count > 0
+			self.position = EventType.all.maximum(:position) + 1
+		else
+			0
+		end
 	end
 end
