@@ -9,7 +9,8 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :registerable#, :omniauthable
 
 
-has_and_belongs_to_many :groups
+has_many :groups_users
+has_many :groups, :through => :groups_users, inverse_of: :users
 has_many :event_groups, :through => :groups
 has_many :upload_groups, :through => :groups
 has_many :ul_groups
@@ -19,6 +20,7 @@ has_one :person
 # has_many :o_auth2_credentials, dependent: :destroy
 
 scope :all_people,->  {where.not(person_id: nil)}
+# scope :in_groups,->
 # scope :upload_users,-> {where}
 
 	def name
@@ -42,6 +44,10 @@ scope :all_people,->  {where.not(person_id: nil)}
     self.groups.ul_groups(upload_id).map {|group| group.name}.to_sentence
   end
 
+
+  # def for_groups([])
+  #   User.joins.
+  # end
 
 end
 

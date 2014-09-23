@@ -20,6 +20,60 @@ navigation_menu :configure
         end
       end
 
+      def access_list
+        if params['p'] == ''
+          orig_groups = nil
+        else
+          @playbook = Upload.playbooks.find(params['p'])
+          orig_groups = @playbook.group_ids
+        end
+
+        if params['g'] == ''
+          sel_groups = nil
+        else
+          sel_groups = params['g'].split(",").map { |s| s.to_i }
+        end
+
+        respond_to do |format|
+          format.html { render :json => usergroup_table(orig_groups, sel_groups).to_json }
+          format.json { render :json => usergroup_table(orig_groups, sel_groups).to_json }
+        end
+      end
+
+
+  def usergroups_to_s(groups)
+    # User.select(:id).joins(:groups).includes(:groups, :person).merge(Group.select(:name).where(id: groups)).explain
+    User.joins(:groups, :person).where(groups: {id: groups})
+    .group('users.id', "people.first_name || ' ' || people.last_name")
+    .order("people.first_name || ' ' || people.last_name")
+    .pluck("people.first_name || ' ' || people.last_name as full_name", "string_agg(groups.name,', ') as group_list")
+    
+    # User.operation_over_aggregate_column(:id, )
+  end
+
+  def usergroup_table(orig_groups, new_groups=nil)
+    if !orig_groups && !new_groups
+      nil
+    elsif !orig_groups
+      new_list = usergroups_to_s(new_groups).map {|item| {:status => 'Added', :full_name => item[0], :group_list => item[1]}}
+    elsif !new_groups || orig_groups == new_groups
+      new_list = usergroups_to_s(orig_groups).map {|item| {:status => 'Saved', :full_name => item[0], :group_list => item[1]}}
+    else
+      orig_users = usergroups_to_s(orig_groups).map {|user| user[0]}
+      new_list = Hash[*usergroups_to_s(new_groups).flatten]
+      new_users = new_list.keys.flatten
+      removed_users = orig_users - new_users
+      added_users = new_users - orig_users
+      unchanged_users = new_users & orig_users
+      removed_list = removed_users.map {|item| {:status => 'Removed', :full_name => item, :group_list => ''}}
+      added_list = added_users.map {|item| {:status => 'Added', :full_name => item, :group_list => new_list[item]}}
+      unchanged_list = unchanged_users.map {|item| {:status => 'Unchanged', :full_name => item, :group_list => new_list[item]}}
+      @combined_list = removed_list + added_list + unchanged_list
+      # gebbb
+    end
+  end
+
+
       def show_params
         respond_to do |format|
           format.html { render json: params }

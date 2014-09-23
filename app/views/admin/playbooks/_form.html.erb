@@ -1,3 +1,5 @@
+
+<!-- action_path is required to have the form action route to the Playbooks Active Admin controller rather than Uploads AA controller -->
 <% action_path = resource.persisted? ? resource_path(resource) : collection_path %>
 <%= form_for [:admin, @playbook], url: action_path, html: { class: "form-horizontal", role: 'form' } do |f| %>
 
@@ -66,19 +68,21 @@
             <div class="row col-md-5">
               <span><%= f.label :group_ids, 'Groups', class: "control-label" %></span>
               <span><%= f.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true, class: "plbk_data form-control" %></span>
-              <div>
-                <!-- <span>Click to view all current access</span> -->
-              </div>
             </div>
             <div class="row col-md-8" style="overflow: auto;">
-              <span><%= f.label :group_ids, 'Current Access List', class: "control-label" %></span>
-              <table class="table table-striped table-condensed">
+              <span><%= f.label :group_ids, 'Access List', class: "control-label" %></span>
+              <table id="access_list_table" class="table table-striped table-condensed">
                 <tr>
+                  <th>Status</th>
                   <th>Person</th>
                   <th>Group(s) Granting Access</th>
                 </tr>
-                <%= current_auth_userlist_with_groups(@playbook) %>
+
+                <% usergroups_to_s(@playbook.group_ids).each do |user| %>
+                <%= "<tr><td>Saved</td><td>#{user[0]}</td><td>#{user[1]}</td></tr>".html_safe %>
+                <% end %>
               </table>
+              <div id="id_val" style="display:none;" data-id="<%= f.object.id %>"></div>
             </div>
           </div>
         </div>

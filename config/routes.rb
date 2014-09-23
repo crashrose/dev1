@@ -18,6 +18,10 @@ get '/admin/autocomplete_tags',
   to: 'admin/playbooks#autocomplete_tags',
   as: 'autocomplete_tags'
 
+get '/admin/access_list',
+  to: 'admin/playbooks#access_list',
+  as: 'access_list'
+
 post '/admin/playbooks/show_params',
   to: 'admin/playbooks#show_params',
   as: 'show_params'
