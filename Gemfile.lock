@@ -97,19 +97,12 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     colored (1.2)
-    columnize (0.8.9)
     countries (0.9.3)
       currencies (~> 0.4.2)
     country_select (2.0.1)
       countries (~> 0.9, >= 0.9.3)
     currencies (0.4.2)
     debug_inspector (0.0.2)
-    debugger (1.6.8)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.5)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.5)
     devise (3.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -287,7 +280,6 @@ DEPENDENCIES
   cancan
   coffee-rails (~> 4.0.0)
   country_select (~> 2.0.0)
-  debugger
   devise
   elif (~> 0.1.0)
   formtastic (~> 2.3.0.rc2)
