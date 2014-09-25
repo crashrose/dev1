@@ -22,7 +22,7 @@ class Upload < ActiveRecord::Base
   acts_as_taggable
   acts_as_taggable_on
 
-  belongs_to :file_type
+  has_one :file_type, :primary_key => :file_type_id, :foreign_key => :id
   has_many :upload_groups, autosave: :true, :dependent => :destroy
   has_many :groups, :through => :upload_groups
   has_many :groups_users, :through => :groups

@@ -2,7 +2,7 @@
 	<div class="upload">
 		<ul id="<%= upload.id %>">
 		<span><%= upload.name %></span>
-		<span><%= upload.file_type.name %></span>
+		<span><%= upload.file_type.name if (upload.file_type) %></span>
 		<span><%= list_icons(upload, [:edit, :delete, :show]) %></span>
 	</ul>
 </div>
