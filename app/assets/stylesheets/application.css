@@ -47,3 +47,17 @@ form input[type=text].form-control, form input[type=password].form-control, form
 #upload_document_file_name {
   margin-bottom: 5px;
 }
+
+.fc-event-skin {
+    background-color: #3366CC;
+    border-color: #3366CC;
+    color: #FFFFFF;
+}
+
+.fc-view-month {
+  background-color: #fff;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px; 
+}

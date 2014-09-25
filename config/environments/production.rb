@@ -31,6 +31,8 @@ Rails.application.configure do
 
   config.assets.precompile += %w(*.svg *.eot *.woff *.ttf *.gif *.png *.ico)
 config.assets.precompile << /\A(?!active_admin).*\.(js)\z/
+config.assets.precompile << 'application.css'
+config.assets.precompile << 'application.css.scss'
 
   # Generate digests for assets URLs.
   config.assets.digest = true
