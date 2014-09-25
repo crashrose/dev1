@@ -26,9 +26,13 @@ post '/admin/playbooks/show_params',
   to: 'admin/playbooks#show_params',
   as: 'show_params'
 
-post '/process_ipn',
+get '/process_ipn',
   to: 'payment_notifications#process_ipn',
   as: 'process_ipn'
+
+# post '/process_ipn',
+#   to: 'payment_notifications#process_ipn',
+#   as: 'process_ipn'
 
   resource :calendar, :only => [:show]
   resources :g_cal_events do
