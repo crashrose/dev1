@@ -30,7 +30,7 @@ Rails.application.configure do
   config.assets.compile = false
 
   config.assets.precompile += %w(*.svg *.eot *.woff *.ttf *.gif *.png *.ico)
-config.assets.precompile << /\A(?!active_admin).*\.(js|css)\z/
+config.assets.precompile << /\A(?!active_admin).*\.(js)\z/
 
   # Generate digests for assets URLs.
   config.assets.digest = true
