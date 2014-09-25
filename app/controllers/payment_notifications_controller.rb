@@ -21,11 +21,17 @@ class PaymentNotificationsController < ApplicationController
 
   def process_ipn
     # notify_params = payment_notification_params
+    # @request = request.raw_post
+
+
+
+        @ipn = PaymentNotification.new(:params => request.raw_post)
+        @ipn.save
+
         respond_to do |format|
-          format.html { render :json => params.to_json}
+          format.html { render :json => @ipn.to_json}
           format.json { render :json => params.to_json}
         end
-
         # PaymentNotification.create!(:params => notify_params,
         #   :status => notify_params[:payment_status],
         #   :transaction_id => notify_params[:txn_id],
