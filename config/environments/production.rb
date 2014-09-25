@@ -34,6 +34,8 @@ config.assets.precompile << /\A(?!active_admin).*\.(js)\z/
 config.assets.precompile << 'application.css'
 config.assets.precompile << 'application.css.scss'
 
+config.log_level = :debug
+
   # Generate digests for assets URLs.
   config.assets.digest = true
 
