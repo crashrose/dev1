@@ -16,15 +16,20 @@ gem 'rails_12factor' #required by Heroku
 
 
 #### Administration
-gem 'activeadmin', github: 'gregbell/active_admin'  ## Will reinstall
-gem 'activeadmin-sortable'
+# gem 'activeadmin', github: 'gregbell/active_admin'  ## Will reinstall
+# gem 'activeadmin'#, '~> 0.6.3'
+gem 'activeadmin', github: 'activeadmin'
+# gem 'activeadmin-sortable'
+gem 'activeadmin-sortable', '~> 0.0.3'
 gem 'acts_as_list'
 gem 'acts-as-taggable-on'
 
 
 #### Authentication
-gem 'devise'#, github: 'plataformatec/devise', :branch => 'lm-timeoutable-fix'
-gem "cancan"
+# gem 'devise'#, github: 'plataformatec/devise', :branch => 'lm-timeoutable-fix'
+gem 'devise', '~> 3.3.0'
+# gem "cancan"
+gem 'cancan', '~> 1.6.10'
 # gem 'certified', '~> 0.1.2' ## Not sure if needed
 # gem 'signet-rails', '>= 0.0.6' ## Not needed since 'signet' gem is installed by Google API
 # Use ActiveModel has_secure_password
@@ -33,7 +38,8 @@ gem "cancan"
 
 #### Formatting Tools
 gem 'json'
-gem 'formtastic', '~> 2.3.0.rc2'
+# gem 'formtastic', '~> 2.3.0.rc2'
+gem 'formtastic', '~> 3.0.0'
 gem 'bootstrap-sass'#, '~> 3.2.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -105,14 +111,14 @@ gem 'request-log-analyzer'
 
 
 #### Development Tools
-# group :development do
+group :development do
 	gem 'sextant'
 	gem 'better_errors', '~> 1.1.0'
 	gem "binding_of_caller"
 	gem 'meta_request'
-# end
+end
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 # Use debugger
-# gem 'debugger', group: [:production]
+gem 'debugger', group: [:development]
 
