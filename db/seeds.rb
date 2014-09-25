@@ -50,27 +50,27 @@ end
 
 
 [
-	{:content_type => "application/pdf", :file_type => "PDF Document"}, 
-	{:content_type => "image/jpeg", :file_type => "JPG Image"}, 
-	{:content_type => "image/gif", :file_type => "GIF Image"}, 
-	{:content_type => "image/png", :file_type => "PNG Image"}, 
-	{:content_type => "audio/mpeg", :file_type => "MPEG Audio"}, 
-	{:content_type => "text/csv", :file_type => "CSV File"}, 
-	{:content_type => "text/plain", :file_type => "Text File"}, 
-	{:content_type => "text/rtf", :file_type => "RTF File"}, 
-	{:content_type => "video/mp4", :file_type => "MP4 Video"}, 
-	{:content_type => "video/ogg", :file_type => "OGG Video"}, 
-	{:content_type => "video/mpeg", :file_type => "MPEG Video"}, 
-	{:content_type => "video/avi", :file_type => "AVI Video"}, 
-	{:content_type => "video/quicktime", :file_type => "Quicktime Video"}, 
-	{:content_type => "video/x-flv", :file_type => "Flash Video"}, 
-	{:content_type => "video/x-ms-wmv", :file_type => "Windows Media Video"}, 
-	{:content_type => "application/msword", :file_type => "Word Document"}, 
-	{:content_type => "application/vnd.openxmlformats-officedocument.wordprocessingml.document", :file_type => "Word Document"}, 
-	{:content_type => "application/vnd.ms-excel", :file_type => "Spreadsheet"}, 
-	{:content_type => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", :file_type => "Spreadsheet"}, 
-	{:content_type => "application/vnd.ms-powerpoint", :file_type => "Powerpoint"}, 
-	{:content_type => "application/vnd.openxmlformats-officedocument.presentationml.presentation", :file_type => "Powerpoint"}
+	{:content_type => "application/pdf", :title => "PDF Document"}, 
+	{:content_type => "image/jpeg", :title => "JPG Image"}, 
+	{:content_type => "image/gif", :title => "GIF Image"}, 
+	{:content_type => "image/png", :title => "PNG Image"}, 
+	{:content_type => "audio/mpeg", :title => "MPEG Audio"}, 
+	{:content_type => "text/csv", :title => "CSV File"}, 
+	{:content_type => "text/plain", :title => "Text File"}, 
+	{:content_type => "text/rtf", :title => "RTF File"}, 
+	{:content_type => "video/mp4", :title => "MP4 Video"}, 
+	{:content_type => "video/ogg", :title => "OGG Video"}, 
+	{:content_type => "video/mpeg", :title => "MPEG Video"}, 
+	{:content_type => "video/avi", :title => "AVI Video"}, 
+	{:content_type => "video/quicktime", :title => "Quicktime Video"}, 
+	{:content_type => "video/x-flv", :title => "Flash Video"}, 
+	{:content_type => "video/x-ms-wmv", :title => "Windows Media Video"}, 
+	{:content_type => "application/msword", :title => "Word Document"}, 
+	{:content_type => "application/vnd.openxmlformats-officedocument.wordprocessingml.document", :title => "Word Document"}, 
+	{:content_type => "application/vnd.ms-excel", :title => "Spreadsheet"}, 
+	{:content_type => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", :title => "Spreadsheet"}, 
+	{:content_type => "application/vnd.ms-powerpoint", :title => "Powerpoint"}, 
+	{:content_type => "application/vnd.openxmlformats-officedocument.presentationml.presentation", :title => "Powerpoint"}
 ].each do |attributes|
 	MimeType.where(content_type: attributes[:content_type]).first_or_create(attributes)
 end
