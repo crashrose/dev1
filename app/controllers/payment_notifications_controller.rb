@@ -26,7 +26,7 @@ class PaymentNotificationsController < ApplicationController
 require "net/http"
 require "uri"
 
-        @ipn = PaymentNotification.new(:params => request.original_url, :status => "Awaiting IPN Validation")
+        @ipn = PaymentNotification.new(:params => request.raw_post, :status => "Awaiting IPN Validation")
         @ipn.save
         incoming_uri = URI.parse(request.original_url)
 
