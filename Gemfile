@@ -12,7 +12,7 @@ gem 'sprockets-rails', '2.1.3'
 gem 'pg'
 gem "activerecord-tableless", "~> 1.0"
 gem "schema_plus"
-gem 'rails_12factor' #required by Heroku
+gem 'rails_12factor', group: [:production] #required by Heroku
 
 
 #### Administration

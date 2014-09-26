@@ -3,6 +3,7 @@ class PaymentRequest < ActiveRecord::Base
 	belongs_to :organization
 	belongs_to :owner, class_name: "Person", primary_key: "user_id"
 	has_and_belongs_to_many :groups
+	has_many :users, :through => :groups
 
 	attr_accessor :paypal_seller_id
 
@@ -28,6 +29,9 @@ class PaymentRequest < ActiveRecord::Base
 							# :org_id => self.organization_id,
 							:payment_request_id => self.id
 							}.to_json
+	end
+
+	def total_amount_requested
 	end
 
 	private

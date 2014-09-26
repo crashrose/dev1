@@ -18,6 +18,19 @@ permit_params :name, :description, user_ids: [], group_users_attributes: [ :user
   # end
 
 
+  index do
+    column :name, sortable: false
+    column :description, sortable: false
+    column "Members" do |group|
+      group.users.count
+    end
+
+
+    # column :owner, sortable: false
+    # column :status, sortable: false
+    actions
+  end
+
     form do |f|
 
     f.inputs "Details" do
