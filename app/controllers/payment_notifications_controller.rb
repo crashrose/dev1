@@ -23,14 +23,29 @@ class PaymentNotificationsController < ApplicationController
     # notify_params = payment_notification_params
     # @request = request.raw_post
 
+require "net/http"
+require "uri"
 
-
-        @ipn = PaymentNotification.new(:params => request.raw_post)
+        @ipn = PaymentNotification.new(:params => request.original_url, :status => "Awaiting IPN Validation", :transaction_id => ipn_params[:custom])
         @ipn.save
+        incoming_uri = URI.parse(request.original_url)
+
+
+outgoing_uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr' + '?cmd=_notify-validate')
+
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.open_timeout = 60
+    http.read_timeout = 60
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.use_ssl = true
+    response = http.post(outgoing_uri.request_uri, request.raw_post).body
+
+    @ipn.status = response
+
 
         respond_to do |format|
-          format.html { render :json => @ipn.to_json}
-          format.json { render :json => params.to_json}
+          format.html { render :text => response}
+          format.json { render :json => response}
         end
         # PaymentNotification.create!(:params => notify_params,
         #   :status => notify_params[:payment_status],
