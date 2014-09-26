@@ -33,14 +33,14 @@ require "uri"
 
 outgoing_uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr' + '?cmd=_notify-validate')
 
-    # http = Net::HTTP.new(uri.host, uri.port)
-    # http.open_timeout = 60
-    # http.read_timeout = 60
-    # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    # http.use_ssl = true
-    # response = http.post(outgoing_uri.request_uri, request.raw_post).body
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.open_timeout = 60
+    http.read_timeout = 60
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.use_ssl = true
+    response = http.post(outgoing_uri.request_uri, request.raw_post).body
 
-    @ipn.status = outgoing_uri
+    @ipn.status = response
     @ipn.save
 
 
