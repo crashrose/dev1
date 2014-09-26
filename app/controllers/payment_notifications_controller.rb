@@ -41,6 +41,7 @@ outgoing_uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr' + '?cmd
     response = http.post(outgoing_uri.request_uri, request.raw_post).body
 
     @ipn.status = response
+    @ipn.transaction_id = ipn_params[:custom]
     @ipn.save
 
 
