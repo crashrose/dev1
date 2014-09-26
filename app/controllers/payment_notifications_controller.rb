@@ -44,8 +44,8 @@ outgoing_uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr' + '?cmd
 
 
         respond_to do |format|
-          format.html { render :text => response}
-          format.json { render :json => response}
+          format.html { render :text => @ipn.inspect}
+          format.json { render :json => @ipn.inspect}
         end
         # PaymentNotification.create!(:params => notify_params,
         #   :status => notify_params[:payment_status],
