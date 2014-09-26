@@ -66,7 +66,7 @@ outgoing_uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr' + '?cmd
   # end
 
   def ipn_params
-      params.require(:custom).permit!
+      params.require(:custom)
       params.require(:txn_id, :payment_status)
   end
 
