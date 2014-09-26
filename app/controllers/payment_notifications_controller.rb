@@ -58,10 +58,10 @@ outgoing_uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr' + '?cmd
     # render params.to_json
   end
 
-  def index
-    @payment_notifications = PaymentNotifications.all
-    respond_with @payment_notifications
-  end
+  # def index
+  #   @payment_notifications = PaymentNotifications.all
+  #   respond_with @payment_notifications
+  # end
 
   def ipn_params
       params.require(:custom).permit!

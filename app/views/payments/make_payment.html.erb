@@ -15,7 +15,7 @@
 
 <!-- Identify your business so that you can collect the payments. -->
 <input type="hidden" name="business" value="<%= @payment.paypal_seller_id %>">
-<input type="hidden" name="shopping_url" value="<%= @payment.notify_url %>">
+<input type="hidden" name="notify_url" value="<%= @payment.notify_url %>">
 <!-- Specify a Buy Now button. -->
 <input type="hidden" name="cmd" value="_xclick">
 

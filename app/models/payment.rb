@@ -13,7 +13,7 @@ class Payment < ActiveRecord::Base
 	end
 
 	def notify_url
-		@notify_url = Rails.application.routes.url_helpers.payment_notifications_url
+		@notify_url = Rails.application.routes.url_helpers.process_ipn_url
 	end
 
 	def paypal_seller_id
@@ -22,7 +22,8 @@ class Payment < ActiveRecord::Base
 
 	def paypal_custom_code(user_id)
 		@paypal_custom_code = {:user_id => user_id,
-							:org_id => self.organization_id,
+							:org_id => 2,
+							# :org_id => self.organization_id,
 							:payment_id => self.id
 							}
 	end
