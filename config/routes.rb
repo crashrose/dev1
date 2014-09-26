@@ -26,7 +26,7 @@ post '/admin/playbooks/show_params',
   to: 'admin/playbooks#show_params',
   as: 'show_params'
 
-  match 'process_ipn', to: 'payment_notifications#process_ipn', via: :all, as: 'process_ipn'
+  match 'process_ipn', to: 'payment_transactions#process_ipn', via: :all, as: 'process_ipn'
 
   resource :calendar, :only => [:show]
   resources :g_cal_events do
@@ -35,8 +35,8 @@ post '/admin/playbooks/show_params',
     end
   end
   resources :event_types
-  resources :payment_notifications
-  resources :payments do
+  resources :payment_transactions
+  resources :payment_requests do
     # get '/:id/make_payment' => :make_payment,  :as => 'make_payment'
     get :make_payment, :key => :id
   end

@@ -1,0 +1,36 @@
+<div class = "<%= cycle('odd', 'even') %> item">
+	<div class="item-header">
+		<span class="item-header-title">Payment Request: </span>
+		<span class="item-header-val"><%= payment_request.name %></span>
+		<span class="item-header-icons"><%= list_icons(payment_request, [:edit, :delete, :show])  %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Description: </span>
+		<span class="payment_request-description item-attr-val"><%= payment_request.description %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Amount: </span>
+		<span class="payment_request-amount item-attr-val"><%= payment_request.amount %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Owner: </span>
+		<span class="payment_request-owner item-attr-val"><%= payment_request.owner.name %></span>
+	</div>
+	<% if controller.action_name == 'index' %>
+	<div class="item-attr">
+		<span class="item-attr-title">Assigned Groups: </span>
+		<span class="payment_request-groups item-attr-val"><%= payment_request.groups.map { |group| group.name }.to_sentence %></span>
+	</div>
+	<div class="item-attr">
+		<span class="item-attr-title">Assigned Users: </span>
+		<span class="payment_request-users item-attr-val"><%=
+		# payment_request.attendees.map { |attendee| attendee.name }.to_sentence
+		%></span>
+	</div>
+	<% end %>
+		
+
+
+		
+
+</div>

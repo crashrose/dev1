@@ -5,11 +5,11 @@ one:
   status: MyString
   transaction_id: MyString
   user_id: 1
-  payment_id: 1
+  payment_request_id: 1
 
 two:
   params: MyText
   status: MyString
   transaction_id: MyString
   user_id: 1
-  payment_id: 1
+  payment_request_id: 1

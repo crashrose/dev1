@@ -1,4 +1,4 @@
-class Payment < ActiveRecord::Base
+class PaymentRequest < ActiveRecord::Base
 
 	belongs_to :organization
 	belongs_to :owner, class_name: "Person", primary_key: "user_id"
@@ -11,7 +11,7 @@ class Payment < ActiveRecord::Base
 	acts_as_list
 
 	def return_url
-		@return_url = Rails.application.routes.url_helpers.payments_url
+		@return_url = Rails.application.routes.url_helpers.payment_requests_url
 	end
 
 	def notify_url
@@ -26,7 +26,7 @@ class Payment < ActiveRecord::Base
 		@paypal_custom_code = {:user_id => user_id,
 							:org_id => 2,
 							# :org_id => self.organization_id,
-							:payment_id => self.id
+							:payment_request_id => self.id
 							}.to_json
 	end
 

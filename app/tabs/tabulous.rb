@@ -18,12 +18,12 @@ Tabulous.setup do
       active_when   { in_action('any').of_controller('landing') }
     end
 
-    # payment_notifications_tab do
-    #   text          { 'Payment Notifications' }
-    #   link_path     { payment_notifications_path }
+    # payment_transactions_tab do
+    #   text          { 'Payment Transactions' }
+    #   link_path     { payment_transactions_path }
     #   visible_when  { true }
     #   enabled_when  { true }
-    #   active_when   { in_action('any').of_controller('payment_notifications') }
+    #   active_when   { in_action('any').of_controller('payment_transactions') }
     # end
 
 
@@ -85,12 +85,12 @@ Tabulous.setup do
       active_when   { in_action('any').of_controller('responses') }
     end
 
-    payments_tab do
-      text          { 'Payments' }
-      link_path     { payments_path }
+    payment_requests_tab do
+      text          { 'Payment Requests' }
+      link_path     { payment_requests_path }
       visible_when  { true }
       enabled_when  { true }
-      active_when   { in_action('any').of_controller('payments') }
+      active_when   { in_action('any').of_controller('payment_requests') }
     end
 
     people_tab do

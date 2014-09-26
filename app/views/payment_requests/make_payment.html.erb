@@ -1,9 +1,9 @@
 <header>
-  <p>Payment:
+  <p>Make a Payment:
 
 </p>
 </header>
-	<%= render @payment %>
+	<%= render @payment_request %>
 		<div class="item-subattr">
 			<div class="item-subattr-group">
 			</div>
@@ -14,19 +14,19 @@
 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 
 <!-- Identify your business so that you can collect the payments. -->
-<input type="hidden" name="business" value="<%= @payment.paypal_seller_id %>">
-<input type="hidden" name="notify_url" value="<%= @payment.notify_url %>">
+<input type="hidden" name="business" value="<%= @payment_request.paypal_seller_id %>">
+<input type="hidden" name="notify_url" value="<%= @payment_request.notify_url %>">
 <!-- Specify a Buy Now button. -->
 <input type="hidden" name="cmd" value="_xclick">
 
 <!-- Specify details about the item that buyers will purchase. -->
-<input type="hidden" name="item_name" value="<%= "Payment via TeamRockett: #{@payment.name}" %>">
-<input type="hidden" name="item_number" value="<%= "#{@payment.id}_4" %>">
-<input type="hidden" name="custom" value="<%= @payment.paypal_custom_code(4) %>">
-<input type="hidden" name="amount" value="<%= @payment.amount %>">
+<input type="hidden" name="item_name" value="<%= "Payment via TeamRockett: #{@payment_request.name}" %>">
+<input type="hidden" name="item_number" value="<%= "#{@payment_request.id}_4" %>">
+<input type="hidden" name="custom" value="<%= @payment_request.paypal_custom_code(4) %>">
+<input type="hidden" name="amount" value="<%= @payment_request.amount %>">
 <input type="hidden" name="currency_code" value="USD">
 
-<!-- Display the payment button. -->
+<!-- Display the Paypal button. -->
 <input type="image" name="submit" border="0"
 src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"
 alt="PayPal - The safer, easier way to pay online">
@@ -36,8 +36,5 @@ src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
 </form>
 
 
-<%=
- # link_to "Submit Payment", @payment.paypal_url(session[:organization_id], payments_url, payment_notifications_url)
- %>
 
-<%= link_to raw("&larr; Back to Payments"), payments_path %>
+<%= link_to raw("&larr; Back to Payment Requests"), payment_requests_path %>

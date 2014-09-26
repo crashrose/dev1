@@ -1,0 +1,18 @@
+
+<header>
+  <p>Payment Request:
+
+</p>
+</header>
+	<%= render @payment_request %>
+		<div class="item-subattr">
+			<div class="item-subattr-group">
+				<span class="item-subattr-title">Assigned Groups</span>
+				<%=
+				# render @payment_request.groups
+				%>
+			</div>
+		</div>
+<%= link_to raw("Make Payment"), payment_request_make_payment_path(@payment_request.id) %>
+
+<%= link_to raw("&larr; Back to Payment Requests"), payment_requests_path %>

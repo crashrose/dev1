@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919005113) do
+ActiveRecord::Schema.define(version: 20140926152253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,14 +175,14 @@ ActiveRecord::Schema.define(version: 20140919005113) do
   add_index "groups", ["id"], name: "index_groups_on_id", using: :btree
   add_index "groups", ["organization_id"], name: "index_groups_on_organization_id", using: :btree
 
-  create_table "groups_payments", force: true do |t|
+  create_table "groups_payment_requests", force: true do |t|
     t.integer "group_id"
-    t.integer "payment_id"
+    t.integer "payment_request_id"
   end
 
-  add_index "groups_payments", ["group_id"], name: "index_groups_payments_on_group_id", using: :btree
-  add_index "groups_payments", ["id"], name: "index_groups_payments_on_id", using: :btree
-  add_index "groups_payments", ["payment_id"], name: "index_groups_payments_on_payment_id", using: :btree
+  add_index "groups_payment_requests", ["group_id"], name: "index_groups_payment_requests_on_group_id", using: :btree
+  add_index "groups_payment_requests", ["id"], name: "index_groups_payment_requests_on_id", using: :btree
+  add_index "groups_payment_requests", ["payment_request_id"], name: "index_groups_payment_requests_on_payment_request_id", using: :btree
 
   create_table "groups_users", force: true do |t|
     t.integer  "user_id"
@@ -249,22 +249,7 @@ ActiveRecord::Schema.define(version: 20140919005113) do
   add_index "organizations", ["parent_id"], name: "index_organizations_on_parent_id", using: :btree
   add_index "organizations", ["paypal_seller_id"], name: "index_organizations_on_paypal_seller_id", using: :btree
 
-  create_table "payment_notifications", force: true do |t|
-    t.text     "params"
-    t.string   "status"
-    t.string   "transaction_id"
-    t.integer  "user_id"
-    t.integer  "payment_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "payment_notifications", ["id"], name: "index_payment_notifications_on_id", using: :btree
-  add_index "payment_notifications", ["payment_id"], name: "index_payment_notifications_on_payment_id", using: :btree
-  add_index "payment_notifications", ["transaction_id"], name: "index_payment_notifications_on_transaction_id", using: :btree
-  add_index "payment_notifications", ["user_id"], name: "index_payment_notifications_on_user_id", using: :btree
-
-  create_table "payments", force: true do |t|
+  create_table "payment_requests", force: true do |t|
     t.string   "name"
     t.integer  "owner_id"
     t.decimal  "amount",          precision: 10, scale: 2
@@ -274,11 +259,29 @@ ActiveRecord::Schema.define(version: 20140919005113) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "due_date"
   end
 
-  add_index "payments", ["id"], name: "index_payments_on_id", using: :btree
-  add_index "payments", ["organization_id"], name: "index_payments_on_organization_id", using: :btree
-  add_index "payments", ["owner_id"], name: "index_payments_on_owner_id", using: :btree
+  add_index "payment_requests", ["id"], name: "index_payment_requests_on_id", using: :btree
+  add_index "payment_requests", ["organization_id"], name: "index_payment_requests_on_organization_id", using: :btree
+  add_index "payment_requests", ["owner_id"], name: "index_payment_requests_on_owner_id", using: :btree
+
+  create_table "payment_transactions", force: true do |t|
+    t.text     "ipn_url"
+    t.string   "status"
+    t.string   "transaction_id"
+    t.integer  "user_id"
+    t.integer  "payment_request_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "transaction_type"
+    t.decimal  "amount",             precision: 5, scale: 2
+  end
+
+  add_index "payment_transactions", ["id"], name: "index_payment_transactions_on_id", using: :btree
+  add_index "payment_transactions", ["payment_request_id"], name: "index_payment_transactions_on_payment_request_id", using: :btree
+  add_index "payment_transactions", ["transaction_id"], name: "index_payment_transactions_on_transaction_id", using: :btree
+  add_index "payment_transactions", ["user_id"], name: "index_payment_transactions_on_user_id", using: :btree
 
   create_table "people", force: true do |t|
     t.integer  "user_id",    default: 0

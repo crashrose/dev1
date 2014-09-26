@@ -7,7 +7,8 @@ class Group < ActiveRecord::Base
 	has_many :events, :through => :event_groups
 	has_many :upload_groups
 	has_many :uploads, :through => :upload_groups
-	has_and_belongs_to_many :payments
+	has_many :groups_payment_requests
+	has_many :payment_requests, :through => :groups_payments, class_name: "PaymentRequest", :foreign_key => "payment_request_id"
 
 
 	# def ul_groups(upload_id)

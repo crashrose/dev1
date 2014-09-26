@@ -1,23 +1,19 @@
-ActiveAdmin.register Payment do
+ActiveAdmin.register PaymentRequest do
 
 navigation_menu :configure
 
-permit_params :name, :amount, :owner_id, :status, :position, :description, group_ids: [], payment_groups_attributes: [ :payment_id, :group_id ]
+permit_params :name, :amount, :owner_id, :status, :position, :description, group_ids: [], payment_groups_attributes: [ :payment_request_id, :group_id ]
 
 config.sort_order = 'position_asc'
 # config.sortable = false
 
-# menu_options = {
-#   :label => 'Payments',
-# }
-# menu menu_options
 
 sortable
   index do
     sortable_handle_column
     column 'Priority', :position
-    column "Name" do |payment|
-      link_to payment.name, edit_admin_payment_path(payment), title: payment.description
+    column "Name" do |payment_request|
+      link_to payment_request.name, edit_admin_payment_request_path(payment_request), title: payment_request.description
     end
     # link_to "Preview", admin_preview_post_path(post), class: "member_link"
     # column :name, sortable: false

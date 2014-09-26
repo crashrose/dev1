@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PaymentsControllerTest < ActionController::TestCase
+class PaymentTransactionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
