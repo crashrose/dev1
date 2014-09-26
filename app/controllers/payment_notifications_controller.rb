@@ -33,7 +33,7 @@ require "uri"
 
 outgoing_uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr' + '?cmd=_notify-validate')
 
-    http = Net::HTTP.new(uri.host, uri.port)
+    http = Net::HTTP.new(outgoing_uri.host, outgoing_uri.port)
     http.open_timeout = 60
     http.read_timeout = 60
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
