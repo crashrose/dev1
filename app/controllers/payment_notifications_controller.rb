@@ -42,7 +42,7 @@ outgoing_uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr' + '?cmd
     response = http.post(outgoing_uri.request_uri, request.raw_post).body
 
     @ipn.status = response
-    @ipn.transaction_id = @ipn_params
+    @ipn.transaction_id = params.require(:custom)
     @ipn.save
 
 
@@ -66,7 +66,7 @@ outgoing_uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr' + '?cmd
   # end
 
   def ipn_params
-      params.permit(:custom, :txn_id, :payment_status)
+      # params.permit(:custom, :txn_id, :payment_status)
       # params.require(:txn_id)
       # params.require(:payment_status)
   end
