@@ -26,7 +26,7 @@ class PaymentNotificationsController < ApplicationController
 require "net/http"
 require "uri"
 
-        @ipn = PaymentNotification.new(:params => request.original_url, :status => "Awaiting IPN Validation", :transaction_id => ipn_params[:custom])
+        @ipn = PaymentNotification.new(:params => request.original_url, :status => "Awaiting IPN Validation")
         @ipn.save
         incoming_uri = URI.parse(request.original_url)
 
@@ -58,7 +58,7 @@ outgoing_uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr' + '?cmd
   end
 
   def ipn_params
-      params.require(:custom).permit(:user_id, :org_id, :payment_id)
+      params.require(:custom).permit!
       params.require(:txn_id, :payment_status)
   end
 
