@@ -6,6 +6,8 @@ class Payment < ActiveRecord::Base
 
 	attr_accessor :paypal_seller_id
 
+	require 'json'
+
 	acts_as_list
 
 	def return_url
@@ -25,7 +27,7 @@ class Payment < ActiveRecord::Base
 							:org_id => 2,
 							# :org_id => self.organization_id,
 							:payment_id => self.id
-							}
+							}.to_json
 	end
 
 	private
