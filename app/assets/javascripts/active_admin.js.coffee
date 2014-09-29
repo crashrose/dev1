@@ -6,7 +6,4 @@
 #= require select2
 
 
-jQuery ->
-  $("a[rel=popover]").popover()
-  $(".tooltip").tooltip()
-  $("a[rel=tooltip]").tooltip()
+#= require aa_custom

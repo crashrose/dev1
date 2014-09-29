@@ -21,17 +21,18 @@ navigation_menu :configure
       end
 
       def access_list
-        if params['p'] == ''
+        if params['orig'] == ''
           orig_groups = nil
         else
-          @playbook = Upload.playbooks.find(params['p'])
-          orig_groups = @playbook.group_ids
+          orig_groups = params['orig'].split(",").map { |s| s.to_i }.sort
+          # @playbook = Upload.playbooks.find(params['p'])
+          # orig_groups = @playbook.group_ids
         end
 
-        if params['g'] == ''
+        if params['new'] == ''
           sel_groups = nil
         else
-          sel_groups = params['g'].split(",").map { |s| s.to_i }
+          sel_groups = params['new'].split(",").map { |s| s.to_i }.sort
         end
 
         respond_to do |format|

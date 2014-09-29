@@ -10,6 +10,8 @@ class PaymentRequest < ActiveRecord::Base
 	require 'json'
 
 	acts_as_list
+	acts_as_taggable
+	acts_as_taggable_on
 
 	def return_url
 		@return_url = Rails.application.routes.url_helpers.payment_requests_url

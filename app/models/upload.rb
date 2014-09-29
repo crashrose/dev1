@@ -22,18 +22,18 @@ class Upload < ActiveRecord::Base
   acts_as_taggable
   acts_as_taggable_on
 
-  has_one :file_type, :primary_key => :file_type_id, :foreign_key => :id
+  belongs_to :file_type, :foreign_key => :file_type_id, :primary_key => :id, inverse_of: :uploads
   has_many :upload_groups, autosave: :true, :dependent => :destroy
   has_many :groups, :through => :upload_groups
   has_many :groups_users, :through => :groups
   has_many :users, :through => :groups_users
   has_one :mime_type, :primary_key => :document_content_type, :foreign_key => :content_type
 
-  scope :playbooks,    ->    {where(:file_type => FileType.find_by_name('playbook'))}
-  scope :resources,    ->    {where(:file_type => FileType.find_by_name('resource'))}
-  scope :imports,    ->    {where(:file_type => FileType.find_by_name('import'))}
-  scope :instructionals,    ->    {where(:file_type => FileType.find_by_name('instructional'))}
-  scope :multimedias,    ->    {where(:file_type => FileType.find_by_name('multimedia'))}
+  scope :playbooks,       ->    {where(:file_type => FileType.playbook)}
+  scope :resources,       ->    {where(:file_type => FileType.resource)}
+  scope :imports,         ->    {where(:file_type => FileType.import)}
+  scope :instructionals,  ->    {where(:file_type => FileType.instructional)}
+  scope :multimedias,     ->    {where(:file_type => FileType.multimedia)}
 
 
   # def upload_users

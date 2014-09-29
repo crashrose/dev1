@@ -1,12 +1,12 @@
 
-<!-- action_path is required to have the form action route to the Playbooks Active Admin controller rather than Uploads AA controller -->
+<!-- action_path is required to have the form action route to the Payment Request Active Admin controller rather than Uploads AA controller -->
 <% action_path = resource.persisted? ? resource_path(resource) : collection_path %>
-<%= form_for [:admin, @playbook], url: action_path, html: { class: "form-horizontal", role: 'form' } do |f| %>
+<%= semantic_form_for [:admin, @payment_request], url: action_path, html: { class: "form-horizontal", role: 'form' } do |f| %>
 
   <fieldset>
     <div class="content-container col-md-12 form-group">
 
-      <div class="plbk-data col-md-4">
+      <div class="pmnt-req-data col-md-4">
 
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -14,40 +14,38 @@
           </div>
           <div class="panel-body">
             <div>
-              <span><%= f.label :name, 'Playbook Name', class: "control-label" %></span>
-              <span><%= f.text_field :name, class: "plbk_data form-control" %></span>
+              <span><%= f.label :name, 'Name', class: "control-label" %></span>
+              <span><%= f.text_field :name, class: "pmnt-req-data form-control" %></span>
             </div>
             <div>
               <span><%= f.label :description, class: "control-label" %></span>
-              <span><%= f.text_area :description, class: "plbk_data form-control", cols: 32 %></span>
+              <span><%= f.text_area :description, class: "pmnt-req-data form-control", cols: 32 %></span>
+            </div>
+            <div>
+              <span><%= f.label :owner_id, 'Owner', class: "control-label" %></span>
+              <span><%= f.select :owner_id, Person.all.collect {|x| [x.name, x.id]}, {prompt: '--Select--'}, :multiple => false, class: "pmnt-req-data form-control" %></span>
             </div>
             <div>
               <span><%= f.label :tag_list, "Tags", class: "control-label" %></span>
-              <span><%= f.text_field :tag_list, class: "plbk_data form-control"
-               f.text_field :tag_list, class: 'plbk_data tagselect form-control', data: {
+              <span><%= f.text_field :tag_list, class: "pmnt-req-data form-control"
+               f.text_field :tag_list, class: 'pmnt-req-data tagselect form-control', data: {
                           placeholder: "Enter tags",
                           saved: f.object.tags.map{|t| {id: t.name, name: t.name}}.to_json,
                           url: autocomplete_tags_path } 
                           %></span>
             </div>
             <div>
-              <% if (@playbook.id) %>
-                <span><%= f.label :document, "Current File", class: "control-label" %></span>
-                <span><p><%= f.text_field :document_file_name, class: "plbk_data form-control", "readonly" => true %></p></span>
-                <div id="select-file-btn"><%= button_tag 'Select New', :type => 'button', class: 'btn btn-xs btn-primary select-file-btn' %></div>
-              <% else %>
-                <span><%= f.label :document, "Select File", class: "control-label" %></span>
-                <span><%= f.file_field :document, class: "plbk_data form-control", size: 34 %></span>
-              <% end %>
+              <span><%= f.label :amount, 'Payment Amount', class: "control-label" %></span>
+              <span><%= f.text_field :amount, class: "pmnt-req-data form-control" %></span>
             </div>
           </div>
         </div>
 
         <div>
           <div class="control-group">
-            <%= f.submit "Save Playbook", class: 'btn submit-btn' %>
+            <%= f.submit "Save Payment Request", class: 'btn submit-btn' %>
           </div>
-          <% if (@playbook.id) %>
+          <% if (@payment_request.id) %>
             <div class="control-group">
               <%= button_tag 'Reset', :type => 'reset', class: 'btn reset-btn' %>
             </div>
@@ -59,7 +57,7 @@
 
       </div>
 
-      <div class="plbk-member-list col-md-8">
+      <div class="pmnt-req-member-list col-md-8">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">Access</h3>
@@ -67,7 +65,7 @@
           <div class="panel-body">
             <div class="row col-md-5">
               <span><%= f.label :group_ids, 'Groups', class: "control-label" %></span>
-              <span><%= f.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true, class: "plbk_data form-control group-list", data: {id: f.object.id, groups: f.object.group_ids} %></span>
+              <span><%= f.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true, class: "pmnt-req-data form-control group-list", data: {id: f.object.id, groups: f.object.group_ids} %></span>
             </div>
             <div class="row col-md-8" style="overflow: auto;">
               <span><%= f.label :group_ids, 'Access List', class: "control-label" %></span>
@@ -78,7 +76,7 @@
                   <th>Group(s) Granting Access</th>
                 </tr>
 
-                <% usergroups_to_s(@playbook.group_ids).each do |user| %>
+                <% usergroups_to_s(@payment_request.group_ids).each do |user| %>
                 <%= "<tr><td>Saved</td><td>#{user[0]}</td><td>#{user[1]}</td></tr>".html_safe %>
                 <% end %>
               </table>
@@ -98,4 +96,6 @@
   </fieldset>
 
 <% end %>
+
+
 

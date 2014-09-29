@@ -40,7 +40,7 @@
   box-shadow: 0px 0px 3px #ccc;
 }
 
-form input[type=text].form-control, form input[type=password].form-control, form input[type=email].form-control, form input[type=number].form-control, form input[type=url].form-control, form input[type=tel].form-control, form textarea.form-control {
+form input[type=text].form-control, form input[type=password].form-control, form input[type=select].form-control, form input[type=email].form-control, form input[type=number].form-control, form input[type=url].form-control, form input[type=tel].form-control, form textarea.form-control {
   width:100%;
 }
 

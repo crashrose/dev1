@@ -55,7 +55,7 @@ class PaymentRequestsController < ApplicationController
     respond_with [@payment_request] do |format|
       format.html{
         if new_was_successful
-            redirect_to(payment_requests_path, :notice => 'The Payment_request was created')
+            redirect_to(admin_payment_requests_path, :notice => 'The Payment_request was created')
         else
           render 'new', :notice => 'Some input was not valid.'
         end
@@ -69,7 +69,7 @@ class PaymentRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @payment_request.update(payment_request_params)
-        format.html { redirect_to @payment_request, :notice => 'Payment_request was successfully updated.' }
+        redirect_to(admin_payment_requests_path, :notice => 'Payment_request was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }
