@@ -19,7 +19,7 @@ get '/admin/autocomplete_tags',
   as: 'autocomplete_tags'
 
 get '/admin/access_list',
-  to: 'admin/playbooks#access_list',
+  to: 'admin/groups#access_list',
   as: 'access_list'
 
 post '/admin/playbooks/show_params',
