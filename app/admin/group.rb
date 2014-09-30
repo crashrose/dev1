@@ -13,16 +13,7 @@ ActiveAdmin.register Group, menu_name: :configure  do
     actions
   end
 
-  form do |f|
-    f.inputs "Details" do
-      f.input :name
-      f.input :description
-    end
-    f.inputs 'Members' do
-      f.select :user_ids, User.all_people.collect {|x| [x.name, x.id]}, {}, :multiple => true
-    end
-    f.actions
-  end
+form partial: 'form'
 
   controller do
 

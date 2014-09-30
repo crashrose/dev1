@@ -1,0 +1,82 @@
+
+<%= form_for [:admin, @group], html: { class: "form-horizontal", role: 'form' } do |f| %>
+
+  <fieldset>
+    <div class="content-container col-md-12 form-group">
+
+      <div class="group-data col-md-4">
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Details</h3>
+          </div>
+          <div class="panel-body">
+            <div>
+              <span><%= f.label :name, 'Group Name', class: "control-label" %></span>
+              <span><%= f.text_field :name, class: "group_data form-control" %></span>
+            </div>
+            <div>
+              <span><%= f.label :description, class: "control-label" %></span>
+              <span><%= f.text_area :description, class: "group_data form-control", cols: 32 %></span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="control-group">
+            <%= f.submit "Save Group", class: 'btn submit-btn' %>
+          </div>
+          <% if (@group.id) %>
+            <div class="control-group">
+              <%= button_tag 'Reset', :type => 'reset', class: 'btn reset-btn' %>
+            </div>
+          <% end %>
+          <div class="control-group">
+            <%= button_tag 'Clear', :type => 'button', class: 'btn clear-btn' %>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="group-member-list col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Group Membership</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row col-md-5">
+              <span><%= label_tag :non_user_ids, 'Users not in Group', class: "control-label" %></span>
+              <span>
+              	<%= select_tag :non_user_ids, options_for_select(f.object.non_users.collect {|x| [x.name, x.id]}), :multiple => true, class: "group_data form-control duallist-out" %>
+              </span>
+            </div>
+            <div class="row col-md-1">
+              <span><%= button_tag '->', :type => 'button', class: 'btn right-move-btn' %></span>
+              <BR>
+              <span><%= button_tag '<-', :type => 'button', class: 'btn left-move-btn' %></span>
+            </div>
+            <div class="row col-md-5">
+              <span><%= f.label :user_ids, 'Users in Group', class: "control-label" %></span>
+              <span>
+              	<%= f.select :user_ids, f.object.users.collect {|x| [x.name, x.id]}, {}, :multiple => true, :rows => 15, class: "group_data form-control duallist-in" %>
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+
+
+<%=
+ # javascript_include_tag 'jquery.duallistbox'
+ %>
+
+    </div>
+
+
+  </fieldset>
+
+<% end %>
+

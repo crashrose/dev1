@@ -17,10 +17,15 @@ class Group < ActiveRecord::Base
 
 	scope :ul_groups,->(org_id)    {where(:upload_groups => {:upload_id => org_id}).joins(:upload_groups)}
 
+
 	def groups_for_upload(upload_id)
 		Group.joins(:upload_groups).where('upload_groups.upload_id' => upload_id).map {|group| group.name}.to_sentence
 
 		# group.users.map {|user| user.name}.join("<BR />")
+	end
+
+	def non_users
+		User.joins(:person).where.not(:id => users)
 	end
 
 	# def ul_groups
