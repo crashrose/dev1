@@ -38,17 +38,21 @@ index do
     end
 end
 
+form_builder ||= SimpleForm::FormBuilder
 
-
- form do |f|
-    f.inputs 'Details'
-    f.inputs 'Fields' do
-      f.has_many :form_fields, sortable: :position, allow_destroy: true, new_record: true do |a|
+  form do |f|
+    f.inputs "Details", :class => 'col-md-4', :type => 'panel' do
+      f.input :name
+      f.input :publish_results
+      f.input :email_results
+      f.input :email_to_address
+    end
+    f.inputs "Fields", :class => 'col-md-4', :type => 'panel' do 
+      f.has_many :form_fields, sortable: :position, allow_destroy: true, new_record: true, :type => 'inner-panel' do |a|
         a.input :name
         a.input :field_type
       end
     end
-
     f.actions
   end
   # See permitted parameters documentation:

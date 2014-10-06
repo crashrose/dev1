@@ -39,7 +39,8 @@ gem 'cancan', '~> 1.6.10'
 #### Formatting Tools
 gem 'json'
 # gem 'formtastic', '~> 2.3.0.rc2'
-gem 'formtastic', '~> 3.0.0'
+# gem 'formtastic', '~> 3.0.0'
+gem 'simple_form'
 gem 'bootstrap-sass'#, '~> 3.2.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'

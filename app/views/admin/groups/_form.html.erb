@@ -1,5 +1,5 @@
 
-<%= form_for [:admin, @group], html: { class: "form-horizontal", role: 'form' } do |f| %>
+<%= simple_form_for [:admin, @group], html: { class: "form-horizontal", role: 'form' } do |f| %>
 
   <fieldset>
     <div class="content-container col-md-12 form-group">
@@ -13,7 +13,7 @@
           <div class="panel-body">
             <div>
               <span><%= f.label :name, 'Group Name', class: "control-label" %></span>
-              <span><%= f.text_field :name, class: "group_data form-control" %></span>
+              <span><%= f.input :name, class: "group_data form-control" %></span>
             </div>
             <div>
               <span><%= f.label :description, class: "control-label" %></span>

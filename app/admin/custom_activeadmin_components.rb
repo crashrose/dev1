@@ -1,4 +1,5 @@
 module ActiveAdmin
+  require 'simple_form'
   module Views
     class Header < Component
 
@@ -139,6 +140,34 @@ module ActiveAdmin
 
   end # end module Views
 
+
+  # class SFormBuilder  < SimpleForm::FormBuilder
+  # #   class SimpleForm < ::SimpleForm::FormBuilder
+  # #   end
+  # end
+
+
+  module ViewHelpers
+    module FormHelper
+
+      def active_admin_form_for(resource, options = {}, &block)
+        options = options.deep_dup
+        # options[:builder] ||= ActiveAdmin::SFormBuilder
+
+        # if options[:builder] == ActiveAdmin::FormBuilder
+        #   semantic_form_for resource, options, &block
+        # else
+        #   options.delete('builder')
+        #   simple_form_for resource, options, &block
+        # end
+        # options[:builder] ||= ActiveAdmin::FormBuilder
+        # semantic_form_for resource, options, &block
+
+        options[:builder] ||= ActiveAdmin::SFormBuilder
+        simple_form_for resource, options, &block
+      end
+    end
+  end
 
 end # end module ActiveAdmin
 
