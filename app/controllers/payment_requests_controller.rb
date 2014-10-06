@@ -69,7 +69,7 @@ class PaymentRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @payment_request.update(payment_request_params)
-        redirect_to(admin_payment_requests_path, :notice => 'Payment_request was successfully updated.' }
+        redirect_to(admin_payment_requests_path, :notice => 'Payment_request was successfully updated.' )
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }
