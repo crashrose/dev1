@@ -15,6 +15,10 @@ gem "schema_plus"
 gem 'rails_12factor', group: [:production] #required by Heroku
 
 
+### Multitenancy
+gem 'acts_as_tenant'
+
+
 #### Administration
 # gem 'activeadmin', github: 'gregbell/active_admin'  ## Will reinstall
 # gem 'activeadmin'#, '~> 0.6.3'

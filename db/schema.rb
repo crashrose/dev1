@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926173231) do
+ActiveRecord::Schema.define(version: 20141006185103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,12 +19,13 @@ ActiveRecord::Schema.define(version: 20140926173231) do
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
     t.text     "body"
-    t.string   "resource_id",   null: false
-    t.string   "resource_type", null: false
+    t.string   "resource_id",     null: false
+    t.string   "resource_type",   null: false
     t.integer  "author_id"
     t.string   "author_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
   end
 
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
@@ -97,6 +98,7 @@ ActiveRecord::Schema.define(version: 20140926173231) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
+    t.integer  "organization_id"
   end
 
   add_index "form_fields", ["form_id"], name: "index_form_fields_on_form_id", using: :btree
@@ -108,6 +110,7 @@ ActiveRecord::Schema.define(version: 20140926173231) do
     t.string   "form_field_value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
   end
 
   add_index "form_submission_items", ["form_field_id"], name: "index_form_submission_items_on_form_field_id", using: :btree
@@ -119,6 +122,7 @@ ActiveRecord::Schema.define(version: 20140926173231) do
     t.integer  "form_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
   end
 
   add_index "form_submissions", ["form_id"], name: "index_form_submissions_on_form_id", using: :btree
@@ -178,6 +182,7 @@ ActiveRecord::Schema.define(version: 20140926173231) do
   create_table "groups_payment_requests", force: true do |t|
     t.integer "group_id"
     t.integer "payment_request_id"
+    t.integer "organization_id"
   end
 
   add_index "groups_payment_requests", ["group_id"], name: "index_groups_payment_requests_on_group_id", using: :btree
@@ -276,6 +281,7 @@ ActiveRecord::Schema.define(version: 20140926173231) do
     t.datetime "updated_at"
     t.string   "transaction_type"
     t.decimal  "amount",             precision: 5, scale: 2
+    t.integer  "organization_id"
   end
 
   add_index "payment_transactions", ["id"], name: "index_payment_transactions_on_id", using: :btree
@@ -316,6 +322,7 @@ ActiveRecord::Schema.define(version: 20140926173231) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
   end
 
   create_table "response_reasons", force: true do |t|
@@ -335,6 +342,7 @@ ActiveRecord::Schema.define(version: 20140926173231) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
   end
 
   add_index "response_statuses", ["id"], name: "index_response_statuses_on_id", using: :btree
@@ -353,6 +361,7 @@ ActiveRecord::Schema.define(version: 20140926173231) do
     t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
   end
 
   add_index "responses", ["event_id"], name: "index_responses_on_event_id", using: :btree
@@ -369,6 +378,7 @@ ActiveRecord::Schema.define(version: 20140926173231) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
   end
 
   add_index "review_statuses", ["id"], name: "index_review_statuses_on_id", using: :btree
@@ -379,8 +389,9 @@ ActiveRecord::Schema.define(version: 20140926173231) do
     t.string   "taggable_type"
     t.integer  "tagger_id"
     t.string   "tagger_type"
-    t.string   "context",       limit: 128
+    t.string   "context",         limit: 128
     t.datetime "created_at"
+    t.integer  "organization_id"
   end
 
   add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
@@ -388,7 +399,8 @@ ActiveRecord::Schema.define(version: 20140926173231) do
 
   create_table "tags", force: true do |t|
     t.string  "name"
-    t.integer "taggings_count", default: 0
+    t.integer "taggings_count",  default: 0
+    t.integer "organization_id"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
