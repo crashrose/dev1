@@ -4,6 +4,10 @@ class PaymentTransaction < ActiveRecord::Base
 	belongs_to :payment_request
 	has_one :organization, :through => :payment_request
 
+  belongs_to :organization
+  acts_as_tenant(:organization)
+
+
 	serialize :params
 
 

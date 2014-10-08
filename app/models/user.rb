@@ -17,9 +17,12 @@ has_many :ul_groups
 has_many :uploads, :through => :upload_groups
 has_many :event_users, inverse_of: :user
 has_one :person
+  has_many :organization_users
+  has_many :organizations, :through => :organization_users
 # has_many :o_auth2_credentials, dependent: :destroy
 
 scope :all_people,->  {where.not(person_id: nil)}
+scope :org_users,->  {joins(:organization_users, :person).where(:organization_users => {:organization_id => ActsAsTenant.current_tenant.id})}
 # scope :in_groups,->
 # scope :upload_users,-> {where}
 
@@ -44,6 +47,14 @@ scope :all_people,->  {where.not(person_id: nil)}
     self.groups.ul_groups(upload_id).map {|group| group.name}.to_sentence
   end
 
+  # def non_groups(upload_id)
+  #   # self.name + ' == ' + self.groups.groups_for_upload(upload_id)
+  #   self.groups.ul_groups(upload_id).map {|group| group.name}.to_sentence
+  # end
+
+  def non_groups
+    Group.where.not(:id => groups)
+  end
 
   # def for_groups([])
   #   User.joins.

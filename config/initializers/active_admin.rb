@@ -148,7 +148,12 @@ ActiveAdmin.setup do |config|
   # You can add before, after and around filters to all of your
   # Active Admin resources and pages from here.
   #
-  # config.before_filter :do_something_awesome
+#   config.before_filter do 
+# set_current_tenant(Organization.find(2))
+
+  
+# end
+    # :do_something_awesome
 
 
   # == Setting a Favicon

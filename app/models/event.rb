@@ -12,6 +12,9 @@ class Event < ActiveRecord::Base
 	# , foreign_key: "user_id"
 	has_many :users, :through => :event_users
 	has_many :responses, :dependent => :destroy
+  
+  belongs_to :organization
+  acts_as_tenant(:organization)
 
 
   # has_one :g_cal_event

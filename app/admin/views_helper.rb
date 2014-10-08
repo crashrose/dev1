@@ -8,7 +8,7 @@ module ViewsHelper
 								 "data-toggle" => "popover", 
 								 "data-trigger" => "focus", 
 								 "data-html" => true, 
-								 "data-content" => group.users.map {|user| user.name}.join("<BR />")
+								 "data-content" => group.org_users.map {|user| user.name}.join("<BR />")
 								}
 	end
 
@@ -96,5 +96,29 @@ module ViewsHelper
 	def usergroup_list(user)
 
 	end
+
+	def delete_link(title, url)
+		link_to_icon('destroy', url, {data: {
+		:confirm => 'Are you sure?',
+		:method => :delete
+		}, title: title})
+	end
+
+	def link_to_icon(icon_name, url_or_object, data_options={})
+		# url_options = {}
+		link_to(image_tag("icons/#{icon_name}.png", title: data_options[:title]),
+		url_or_object,
+		class: "icon #{icon_name}",
+		data: data_options[:data] )
+	end
+
+
+# remove_from_team_admin_user_path
+
+# 	def remove_link(title="Remove", url, )
+# 		link_to("Remove")
+# 	end
+
+# link_to "Remove", approve_admin_attendance_approval_path(:id => response.id, :scope => params[:scope])
 
 end

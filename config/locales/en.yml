@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+  active_admin:
+    batch_actions:
+      labels:
+        add_u_to_group: "Add Users to Group..."
+        remove_u_from_group: "Remove Users from Group..."
+        remove_u_from_team: "Remove Users from Team"
+      action_label: "%{title}"

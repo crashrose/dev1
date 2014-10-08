@@ -10,6 +10,8 @@ class Group < ActiveRecord::Base
 	has_many :groups_payment_requests
 	has_many :payment_requests, :through => :groups_payment_requests, class_name: "PaymentRequest", :foreign_key => "payment_request_id"
 
+  belongs_to :organization
+  acts_as_tenant(:organization)
 
 	# def ul_groups(upload_id)
 	# 	@ul_groups = Groups.upload_groups.where(:upload_id = upload_id)
@@ -25,7 +27,11 @@ class Group < ActiveRecord::Base
 	end
 
 	def non_users
-		User.joins(:person).where.not(:id => users)
+		User.org_users.where.not(:id => users)
+	end
+
+	def org_users
+		users.joins(:organization_users).where(:organization_users => {:organization_id => ActsAsTenant.current_tenant.id})
 	end
 
 	# def ul_groups

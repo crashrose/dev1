@@ -5,6 +5,10 @@ class PaymentRequest < ActiveRecord::Base
 	has_and_belongs_to_many :groups
 	has_many :users, :through => :groups
 
+  belongs_to :organization
+  acts_as_tenant(:organization)
+
+
 	attr_accessor :paypal_seller_id
 
 	require 'json'

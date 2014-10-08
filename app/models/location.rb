@@ -2,6 +2,10 @@ class Location < ActiveRecord::Base
 
 	has_many :events
 
+  belongs_to :organization
+  acts_as_tenant(:organization)
+
+
 	validates :name,		:presence =>true
 
 	# attr_accessible :address, :latitude, :longitude

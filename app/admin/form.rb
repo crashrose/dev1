@@ -38,7 +38,7 @@ index do
     end
 end
 
-form_builder ||= SimpleForm::FormBuilder
+# form_builder ||= SimpleForm::FormBuilder
 
   form do |f|
     f.inputs "Details", :class => 'col-md-4', :type => 'panel' do
@@ -58,12 +58,15 @@ form_builder ||= SimpleForm::FormBuilder
   # See permitted parameters documentation:
   # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
-  # permit_params :list, :of, :attributes, :on, :model
+  permit_params :name, :publish_results, :email_results, :email_to_address,
+     :form_field_ids, form_field_ids: [],
+      form_fields_attributes: [:id, :name, :form_id, :max_length, :min_length, :required, :field_type, :position, :organization_id ]
+
   #
   # or
   #
   # permit_params do
-  #  permitted = [:permitted, :attributes]
+  #  permitted = [:name, :form_id, :max_length, :min_length, :required, :field_type]
   #  permitted << :other if resource.something?
   #  permitted
   # end

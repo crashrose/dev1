@@ -5,6 +5,9 @@ class EventType < ActiveRecord::Base
 	validates :title,		:presence =>true
 	# validates :position,	:presence =>true
 
+  belongs_to :organization
+  acts_as_tenant(:organization)
+
 	acts_as_list
 
 	# before_create :default_values

@@ -5,14 +5,13 @@ class ApplicationController < ActionController::Base
   # before_action :set_org
 
   set_current_tenant_through_filter
-  before_action :set_org
+  before_filter :set_org
 
 	private
 	def set_org
 		# session[:organization_id] = 2
 		current_org = Organization.find(2)
 		set_current_tenant(current_org)
-
 	end
 
 	# def your_method_that_finds_the_current_tenant

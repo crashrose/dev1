@@ -13,6 +13,10 @@ belongs_to :event#, :through => :event_user
 has_one :location, :through => :event
 has_one :event_type, :through => :event
 
+  belongs_to :organization
+  acts_as_tenant(:organization)
+
+
 
   scope :active, -> { where(active: true)}
   scope :all_not_attending,->  {active.where(response_status_id: 4)}

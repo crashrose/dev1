@@ -1,0 +1,82 @@
+
+<%= simple_form_for [:admin, @user], html: { class: "form-horizontal", role: 'form' } do |f| %>
+
+  <fieldset>
+    <div class="content-container col-md-12 form-group">
+
+      <div class="group-data col-md-4">
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Details</h3>
+          </div>
+          <div class="panel-body">
+            <div>
+              
+              <span><%= f.input :name, label: 'Full Name', disabled: true, class: "group_data form-control" %></span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="control-group">
+            <%= f.submit "Update User", class: 'btn submit-btn' %>
+          </div>
+
+            <div class="control-group">
+              <%= button_tag 'Reset', :type => 'reset', class: 'btn reset-btn' %>
+            </div>
+
+          <div class="control-group">
+            <%= button_tag 'Clear', :type => 'button', class: 'btn clear-btn' %>
+          </div>
+        </div>
+
+      </div>
+<% 
+# f.simple_fields_for :user do |user_form| 
+  %>
+      <div class="group-member-list col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Group Membership</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row col-md-5">
+              <span><%= label_tag :non_group_ids, 'Available Groups', class: "control-label" %></span>
+              <span>
+              	<%= select_tag :non_group_ids, options_for_select(f.object.non_groups.collect {|x| [x.name, x.id]}), :multiple => true, class: "org_user-data form-control duallist-out" %>
+              </span>
+            </div>
+            <div class="row col-md-1">
+              <span><%= button_tag '->', :type => 'button', class: 'btn right-move-btn' %></span>
+              <BR>
+              <span><%= button_tag '<-', :type => 'button', class: 'btn left-move-btn' %></span>
+            </div>
+            <div class="row col-md-5">
+              <span><%= f.label :group_ids, 'Current Groups', class: "control-label" %></span>
+              <span>
+              	<%= f.select :group_ids, f.object.groups.collect {|x| [x.name, x.id]}, {}, :multiple => true, :rows => 15, class: "org_user-data form-control duallist-in" %>
+              </span>
+            </div>
+
+          </div>
+        </div>
+<% 
+# end
+ %>
+      </div>
+
+
+
+<%=
+ # javascript_include_tag 'jquery.duallistbox'
+ %>
+
+    </div>
+
+
+  </fieldset>
+
+<% end %>
+

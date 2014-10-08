@@ -10,7 +10,10 @@ ActiveAdmin.register Group, menu_name: :configure  do
     column "Members" do |group|
       group.users.count
     end
-    actions
+    actions defaults: false do |item|
+      link_to('<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_admin_group_path(item.id)).html_safe  + ' ' +
+      link_to('<span class="glyphicon glyphicon-remove"></span>'.html_safe, admin_group_path(item.id), :method => :delete).html_safe
+    end
   end
 
 form partial: 'form'

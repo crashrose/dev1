@@ -104,19 +104,18 @@ $(document).ready(function() {
         form.reset();
         if ($('[id$=_tag_list]')) {$('[id$=_tag_list]').change();}
         if ($('[id$=_group_ids]')) {$('[id$=_group_ids]').change();}
-        if ($('[id$=_group_ids] .duallist-in')) {$('[id$=_group_ids]').reset();$('[id$=_group_ids]').change();}
+        // if ($('[id$=_group_ids] .duallist-in')) {$('[id$=_group_ids]').reset();$('[id$=_group_ids]').change();}
     })
 
 
     $('.right-move-btn').click(function() {
-        console.log($("#non_user_ids"));
-        var options = $("#non_user_ids option:selected");
-        $('#group_user_ids').append(options);
+        var options = $("[id$=_ids].duallist-out option:selected");
+        $('[id$=_ids].duallist-in').append(options);
     })
 
     $('.left-move-btn').click(function() {
-        var options = $("#group_user_ids option:selected");
-        $('#non_user_ids').append(options);
+        var options = $("[id$=_ids].duallist-in option:selected");
+        $('[id$=_ids].duallist-out').append(options);
     })
 
 });

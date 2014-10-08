@@ -29,6 +29,10 @@ class Upload < ActiveRecord::Base
   has_many :users, :through => :groups_users
   has_one :mime_type, :primary_key => :document_content_type, :foreign_key => :content_type
 
+  belongs_to :organization
+  acts_as_tenant(:organization)
+
+
   scope :playbooks,       ->    {where(:file_type => FileType.playbook)}
   scope :resources,       ->    {where(:file_type => FileType.resource)}
   scope :imports,         ->    {where(:file_type => FileType.import)}

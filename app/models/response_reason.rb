@@ -1,5 +1,9 @@
 class ResponseReason < ActiveRecord::Base
 
+  belongs_to :organization
+  acts_as_tenant(:organization)
+
+
 	acts_as_list
 
 	private
