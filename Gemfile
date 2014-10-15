@@ -31,7 +31,7 @@ gem 'acts-as-taggable-on'
 
 #### Authentication
 # gem 'devise'#, github: 'plataformatec/devise', :branch => 'lm-timeoutable-fix'
-gem 'devise', '~> 3.3.0'
+gem 'devise', '~> 3.4.0'
 # gem "cancan"
 gem 'cancan', '~> 1.6.10'
 # gem 'certified', '~> 0.1.2' ## Not sure if needed

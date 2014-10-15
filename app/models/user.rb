@@ -19,7 +19,8 @@ has_many :event_users, inverse_of: :user
 has_one :person
   has_many :organization_users
   has_many :organizations, :through => :organization_users
-# has_many :o_auth2_credentials, dependent: :destroy
+has_many :invitations, :class_name => "Invitation", :foreign_key => 'recipient_id'
+    has_many :sent_invites, :class_name => "Invitation", :foreign_key => 'sender_id'
 
 scope :all_people,->  {where.not(person_id: nil)}
 scope :org_users,->  {joins(:organization_users, :person).where(:organization_users => {:organization_id => ActsAsTenant.current_tenant.id})}

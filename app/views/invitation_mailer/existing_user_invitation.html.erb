@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>You've been invited to a new team on TeamRockett!</h1>
+    <p>
+       <%= @invitation.name %>,
+      You have been invited to join your team:<BR>
+      <h1>@invitation.organization.name</h1>
+      on TeamRockett.<br>
+    </p>
+    <p>
+      Since you are already a TeamRockett member, just click here <%= @reg_url %> to confirm your invitation and be added to your team.
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>

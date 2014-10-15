@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006221048) do
+ActiveRecord::Schema.define(version: 20141015161722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 20141006221048) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "campaigns", force: true do |t|
+    t.string   "name"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "event_groups", force: true do |t|
     t.integer  "event_id"
@@ -202,13 +211,15 @@ ActiveRecord::Schema.define(version: 20141006221048) do
 
   create_table "invitations", force: true do |t|
     t.integer  "organization_user_id"
-    t.string   "status"
+    t.string   "status",               default: "new"
     t.string   "name"
-    t.string   "code"
-    t.string   "email_address"
+    t.string   "token"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
+    t.integer  "recipient_id"
+    t.integer  "sender_id"
   end
 
   create_table "locations", force: true do |t|
@@ -252,7 +263,7 @@ ActiveRecord::Schema.define(version: 20141006221048) do
   create_table "organization_users", force: true do |t|
     t.integer  "user_id"
     t.integer  "organization_id"
-    t.boolean  "is_admin"
+    t.boolean  "is_admin",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

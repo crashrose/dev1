@@ -11,7 +11,18 @@ Rails.application.routes.draw do
 # get '/oauth2callback' => 'google_shared_calendars#show'
 # get '/oauth2authorize' => 'google_shared_calendars#oauth2authorize'
   ActiveAdmin.routes(self)
-  devise_for :users, ActiveAdmin::Devise.config
+  # devise_for :users, ActiveAdmin::Devise.config
+  # devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'passwords', confirmation: 'verification', unlock: 'unlock', registration: 'register', sign_up: 'cmon_let_me_in' }
+
+ Rails.application.routes.draw do
+   devise_for :users, controllers: {
+    sessions: "users/sessions",
+    passwords: "users/passwords",
+    unlocks: "users/unlocks",
+    registrations: "users/registrations",
+    confirmations: "users/confirmations"
+    }
+ end
 
 
 get '/admin/autocomplete_tags',
@@ -28,6 +39,7 @@ post '/admin/playbooks/show_params',
 
   match 'process_ipn', to: 'payment_transactions#process_ipn', via: :all, as: 'process_ipn'
 
+  resources :invitations
   resource :calendar, :only => [:show]
   resources :g_cal_events do
     collection do
