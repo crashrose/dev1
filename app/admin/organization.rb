@@ -1,6 +1,6 @@
 ActiveAdmin.register Organization  do
 
-navigation_menu :configure
+navigation_menu :organization
   # See permitted parameters documentation:
   # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #

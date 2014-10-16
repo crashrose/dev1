@@ -1,6 +1,6 @@
 ActiveAdmin.register PaymentRequest do
 
-navigation_menu :configure
+navigation_menu :organization
 
 permit_params :name, :amount, :owner_id, :status, :position, :tag_list, :description, group_ids: [], payment_groups_attributes: [ :payment_request_id, :group_id ]
 

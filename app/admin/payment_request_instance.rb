@@ -1,5 +1,5 @@
 ActiveAdmin.register PaymentRequestInstance  do
-	navigation_menu :configure
+	navigation_menu :organization
 
 	# index do
 	# 	column :person

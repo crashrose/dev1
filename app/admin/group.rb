@@ -1,6 +1,6 @@
 ActiveAdmin.register Group, menu_name: :configure  do
 
-  navigation_menu :configure
+  navigation_menu :organization
 
   permit_params :name, :description, user_ids: [], group_users_attributes: [ :user_id, :group_id ]
 

@@ -1,0 +1,134 @@
+<!-- form_for @campaign, :url => url_for(:controller => 'mycontroller', :action => 'myaction') -->
+
+<%= simple_form_for [:admin, @campaign], html: { class: "form-horizontal", role: 'form' } do |f| %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= @campaign.name %></h3>
+  </div>
+
+  <div class="panel-body">
+<%= @campaign.inspect %>
+  </div>
+</div>
+
+	  <div class="row col-md-7">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Players</h3>
+          </div>
+          <div class="panel-body">
+          	<div class="row">
+	            <div class="col-md-5">
+	              <span><%= label_tag :non_player_ids, 'Available', class: "control-label" %></span>
+	              <span>
+	              	<%= select_tag :non_player_ids, options_for_select(f.object.non_players.collect {|x| [x.name, x.id]}), :multiple => true, class: "roster_user_data form-control duallist-out" %>
+	              </span>
+	            </div>
+	            <div class="col-md-1">
+	              <span><%= button_tag '->', :type => 'button', class: 'btn right-mov-btn', :parent_box => 'player_ids'  %></span>
+	              <BR>
+	              <span><%= button_tag '<-', :type => 'button', class: 'btn left-mov-btn', :parent_box => 'player_ids' %></span>
+	            </div>
+	            <div class="col-md-5">
+	              <span><%= f.label :player_ids, 'Selected', class: "control-label" %></span>
+	              <span>
+	              	<%= f.select :player_ids, f.object.players.collect {|x| [x.name, x.id]}, {}, :multiple => true, :rows => 15, class: "roster_user_data form-control duallist-in" %>
+	              </span>
+	            </div>
+	        </div>
+          </div>
+        </div>
+      </div>
+
+	  <div class="row col-md-7">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Coaches</h3>
+          </div>
+          <div class="panel-body">
+          	<div class="row">
+	            <div class="col-md-5">
+	              <span><%= label_tag :non_coach_ids, 'Available', class: "control-label" %></span>
+	              <span>
+	              	<%= select_tag :non_coach_ids, options_for_select(f.object.non_coaches.collect {|x| [x.name, x.id]}), :multiple => true, class: "roster_user_data form-control duallist-out" %>
+	              </span>
+	            </div>
+	            <div class="col-md-1">
+	              <span><%= button_tag '->', :type => 'button', class: 'btn right-mov-btn', :parent_box => 'coach_ids'  %></span>
+	              <BR>
+	              <span><%= button_tag '<-', :type => 'button', class: 'btn left-mov-btn', :parent_box => 'coach_ids' %></span>
+	            </div>
+	            <div class="col-md-5">
+	              <span><%= f.label :coach_ids, 'Selected', class: "control-label" %></span>
+	              <span>
+	              	<%= f.select :coach_ids, f.object.coaches.collect {|x| [x.name, x.id]}, {}, :multiple => true, :rows => 15, class: "roster_user_data form-control duallist-in" %>
+	              </span>
+	            </div>
+	        </div>
+          </div>
+        </div>
+      </div>
+
+
+	  <div class="row col-md-7">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Administrative Staff</h3>
+          </div>
+          <div class="panel-body">
+          	<div class="row">
+	            <div class="col-md-5">
+	              <span><%= label_tag :non_admin_ids, 'Available', class: "control-label" %></span>
+	              <span>
+	              	<%= select_tag :non_admin_ids, options_for_select(f.object.non_admins.collect {|x| [x.name, x.id]}), :multiple => true, class: "roster_user_data form-control duallist-out" %>
+	              </span>
+	            </div>
+	            <div class="col-md-1">
+	              <span><%= button_tag '->', :type => 'button', class: 'btn right-mov-btn', :parent_box => 'admin_ids'  %></span>
+	              <BR>
+	              <span><%= button_tag '<-', :type => 'button', class: 'btn left-mov-btn', :parent_box => 'admin_ids' %></span>
+	            </div>
+	            <div class="col-md-5">
+	              <span><%= f.label :admin_ids, 'Selected', class: "control-label" %></span>
+	              <span>
+	              	<%= f.select :admin_ids, f.object.admins.collect {|x| [x.name, x.id]}, {}, :multiple => true, :rows => 15, class: "roster_user_data form-control duallist-in" %>
+	              </span>
+	            </div>
+	        </div>
+          </div>
+        </div>
+      </div>
+
+	  <div class="row col-md-7">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Other Team Members</h3>
+          </div>
+          <div class="panel-body">
+          	<div class="row">
+	            <div class="col-md-5">
+	              <span><%= label_tag :non_other_ids, 'Available', class: "control-label" %></span>
+	              <span>
+	              	<%= select_tag :non_other_ids, options_for_select(f.object.non_others.collect {|x| [x.name, x.id]}), :multiple => true, class: "roster_user_data form-control duallist-out" %>
+	              </span>
+	            </div>
+	            <div class="col-md-1">
+	              <span><%= button_tag '->', :type => 'button', class: 'btn right-mov-btn', :parent_box => 'other_ids'  %></span>
+	              <BR>
+	              <span><%= button_tag '<-', :type => 'button', class: 'btn left-mov-btn', :parent_box => 'other_ids' %></span>
+	            </div>
+	            <div class="col-md-5">
+	              <span><%= f.label :other_ids, 'Selected', class: "control-label" %></span>
+	              <span>
+	              	<%= f.select :other_ids, f.object.others.collect {|x| [x.name, x.id]}, {}, :multiple => true, :rows => 15, class: "roster_user_data form-control duallist-in" %>
+	              </span>
+	            </div>
+	        </div>
+          </div>
+        </div>
+      </div>
+
+          <div class="control-group">
+            <%= f.submit "Save Roster Memberships", class: 'btn submit-btn' %>
+          </div>
+        <% end %>

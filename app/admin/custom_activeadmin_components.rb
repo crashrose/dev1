@@ -60,11 +60,15 @@ module ActiveAdmin
                       div class: "content" do
                         build_left_nav(:approve)
                       end
-                      h4 text_node "Configure"
+                      h4 text_node "Organization"
                       div class: "content" do
-                        build_left_nav(:configure)
+                        build_left_nav(:organization)
                       end
-                      h4 text_node "Report"
+                      h4 text_node "Team"
+                      div class: "content" do
+                        build_left_nav(:team)
+                      end
+                      h4 text_node "Reporting"
                       div class: "content" do
                         build_left_nav(:reporting)
                       end

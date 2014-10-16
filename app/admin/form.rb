@@ -1,6 +1,6 @@
 ActiveAdmin.register Form, menu_name: :configure  do
 
-navigation_menu :configure
+navigation_menu :organization
 
 
   filter :name

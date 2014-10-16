@@ -1,6 +1,11 @@
 ActiveAdmin.register Upload, as: "Playbook"  do
 
-  navigation_menu :configure
+  menu_options = {
+    :label =>  'Playbooks',
+    :priority => 19
+  }
+  menu menu_options
+  navigation_menu :team
 
   controller do
 

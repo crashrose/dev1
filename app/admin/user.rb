@@ -1,6 +1,8 @@
 ActiveAdmin.register User  do
 
-navigation_menu :configure
+config.clear_action_items!
+
+navigation_menu :organization
 
 batch_action :destroy, false
 
@@ -110,5 +112,9 @@ end
 
   action_item only: :edit do
     delete_link("Remove User From Team", remove_from_team_admin_user_path(:id))
+  end
+
+  action_item only: :index do
+    link_to 'Invite New Team Member', new_admin_invitation_path
   end
 end

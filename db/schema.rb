@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141015161722) do
+ActiveRecord::Schema.define(version: 20141015204019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,10 +32,27 @@ ActiveRecord::Schema.define(version: 20141015161722) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
+  create_table "campaign_user_positions", force: true do |t|
+    t.integer  "campaign_user_id"
+    t.integer  "position_id"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "campaign_users", force: true do |t|
+    t.integer  "campaign_id"
+    t.integer  "user_id"
+    t.integer  "team_role_id"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "campaigns", force: true do |t|
     t.string   "name"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.date     "start_date"
+    t.date     "end_date"
     t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -347,6 +364,17 @@ ActiveRecord::Schema.define(version: 20141015161722) do
   add_index "permissions", ["organization_id"], name: "index_permissions_on_organization_id", using: :btree
   add_index "permissions", ["subject_class"], name: "index_permissions_on_subject_class", using: :btree
 
+  create_table "positions", force: true do |t|
+    t.string   "title"
+    t.string   "abbreviation", limit: 10
+    t.integer  "team_role_id"
+    t.integer  "parent_id"
+    t.integer  "sport_id"
+    t.integer  "order_pos"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "posts", force: true do |t|
     t.string   "title"
     t.text     "body"
@@ -413,6 +441,13 @@ ActiveRecord::Schema.define(version: 20141015161722) do
 
   add_index "review_statuses", ["id"], name: "index_review_statuses_on_id", using: :btree
 
+  create_table "sports", force: true do |t|
+    t.string   "title"
+    t.integer  "order_pos"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "taggings", force: true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -434,6 +469,12 @@ ActiveRecord::Schema.define(version: 20141015161722) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "team_roles", force: true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "upload_groups", force: true do |t|
     t.integer  "upload_id"

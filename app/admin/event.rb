@@ -6,7 +6,7 @@ menu_options = {
 }
 menu menu_options
 
-navigation_menu :configure
+navigation_menu :organization
 
   controller do
     def scoped_collection

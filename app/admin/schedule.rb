@@ -7,7 +7,7 @@ menu_options = {
 }
 menu menu_options
 
-navigation_menu :configure
+navigation_menu :organization
 
   content title: "Schedule Configuration" do
 

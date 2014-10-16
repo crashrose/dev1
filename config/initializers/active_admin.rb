@@ -225,7 +225,7 @@ ActiveAdmin.setup do |config|
   #   end
 
   config.namespace :admin do |admin|
-  admin.build_menu :configure do |menu|
+  admin.build_menu :organization do |menu|
     menu.add label: 'Schedule', id: 'sched'
   end
 end

@@ -1,6 +1,6 @@
 ActiveAdmin.register Invitation  do
 
-navigation_menu :configure
+navigation_menu :organization
 
   controller do
     def scoped_collection

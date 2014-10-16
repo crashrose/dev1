@@ -118,4 +118,26 @@ $(document).ready(function() {
         $('[id$=_ids].duallist-out').append(options);
     })
 
+    $('.right-mov-btn').click(function() {
+        var box_name = this.attributes['parent_box'].value;
+        // console.log($("[id$="+box_name+"]"));
+        var options = $("[id$="+box_name+"].duallist-out option:selected");
+        $("[id$="+box_name+"].duallist-in").append(options);
+    })
+
+    $('.left-mov-btn').click(function() {
+        var box_name = this.attributes['parent_box'].value;
+        var options = $("[id$="+box_name+"].duallist-in option:selected");
+        $("[id$="+box_name+"].duallist-out").append(options);
+        console.log($("[id$="+box_name+"].duallist-in"));
+    })
+
+    $(document.forms).submit(function( event ) {
+        // event.preventDefault();
+        $("select.duallist-in", this).each(function() {
+            $("option", this).prop('selected', true);
+        });
+
+    })
+
 });
