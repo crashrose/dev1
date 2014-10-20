@@ -1,7 +1,8 @@
 class Campaign < ActiveRecord::Base
 
-	has_many :roster_members, :foreign_key => :campaign_id, class_name: "CampaignUser"
+	has_many :roster_members, :foreign_key => :campaign_id, class_name: "CampaignUser", inverse_of: :campaign
 	has_many :users, :through => :roster_members
+	has_many :people, :through => :roster_members, foreign_key: "user_id", primary_key: "user_id"
 	has_many :roster_players, -> {where(:team_role_id => TeamRole.find_by_title("Players").id)}, :foreign_key => :campaign_id, class_name: "CampaignUser"
 	has_many :players, :through => :roster_players, :source => :user
 	has_many :roster_admins, -> {where(:team_role_id => TeamRole.find_by_title("Administrative Staff").id)}, :foreign_key => :campaign_id, class_name: "CampaignUser"

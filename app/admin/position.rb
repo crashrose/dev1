@@ -40,6 +40,9 @@ navigation_menu :team
     column :sport
     column :team_role
     column :order_pos
+    column 'Children' do |position|
+      position.children.map { |child| child.abbreviation }.to_sentence.html_safe
+    end
     actions
   end
 

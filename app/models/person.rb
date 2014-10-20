@@ -5,6 +5,10 @@ class Person < ActiveRecord::Base
 	has_and_belongs_to_many :groups	
 	has_many :event_users, :source => :attendee
 	has_many :events, :through => :event_users
+  has_many :campaign_users, foreign_key: "user_id", primary_key: "user_id", inverse_of: :person
+  has_many :campaigns, :through => :campaign_users
+  # has_many :campaign_user_positions, :through => :campaign_users#, inverse_of: :user
+  has_many :positions, :through => :campaign_users, inverse_of: :people
 
 	validates :first_name,	:presence =>true
 	validates :last_name,	:presence =>true

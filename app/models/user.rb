@@ -9,18 +9,24 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :registerable#, :omniauthable
 
 
-has_many :groups_users
-has_many :groups, :through => :groups_users, inverse_of: :users
-has_many :event_groups, :through => :groups
-has_many :upload_groups, :through => :groups
-has_many :ul_groups
-has_many :uploads, :through => :upload_groups
-has_many :event_users, inverse_of: :user
-has_one :person
+  has_many :groups_users
+  has_many :groups, :through => :groups_users, inverse_of: :users
+  has_many :event_groups, :through => :groups
+  has_many :upload_groups, :through => :groups
+  has_many :ul_groups
+  has_many :uploads, :through => :upload_groups
+  has_many :event_users, inverse_of: :user
+  has_one :person
   has_many :organization_users
   has_many :organizations, :through => :organization_users
-has_many :invitations, :class_name => "Invitation", :foreign_key => 'recipient_id'
-    has_many :sent_invites, :class_name => "Invitation", :foreign_key => 'sender_id'
+  has_many :invitations, :class_name => "Invitation", :foreign_key => 'recipient_id'
+  has_many :sent_invites, :class_name => "Invitation", :foreign_key => 'sender_id'
+  has_many :campaign_users#, inverse_of: :user
+  has_many :campaigns, :through => :campaign_users
+  # has_many :campaign_user_positions, :through => :campaign_users#, inverse_of: :user
+  has_many :positions, :through => :campaign_users, inverse_of: :users
+  # has_many :parent_positions, :through => :positions, :class_name => "Position"
+  # has_many :child_user_positions, :through => :campaign_user_positions, :inverse_of: 
 
 scope :all_people,->  {where.not(person_id: nil)}
 scope :org_users,->  {joins(:organization_users, :person).where(:organization_users => {:organization_id => ActsAsTenant.current_tenant.id})}

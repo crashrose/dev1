@@ -1,6 +1,6 @@
 class OrganizationUser < ActiveRecord::Base
 
-	belongs_to :user
+  belongs_to :user
   belongs_to :organization
   has_many :groups_users, :through => :user
   has_many :groups, :through => :groups_users

@@ -1,17 +1,17 @@
 class Response < ActiveRecord::Base
 
 
-belongs_to :attendee, :primary_key => :user_id, :foreign_key => :user_id, class_name: "Person"
+	belongs_to :attendee, :primary_key => :user_id, :foreign_key => :user_id, class_name: "Person"
 
-# has_one :updated_by, :primary_key => :updated_by
-# has_one :reviewed_user, :primary_key => :reviewed_user_id
-belongs_to :response_reason, :foreign_key => :response_reason_id
-belongs_to :response_status, :foreign_key => :response_status_id
-belongs_to :review_status, :foreign_key => :review_status_id
-belongs_to :event_user, :foreign_key => :event_user_id, class_name: "EventUser", inverse_of: :responses
-belongs_to :event#, :through => :event_user
-has_one :location, :through => :event
-has_one :event_type, :through => :event
+	# has_one :updated_by, :primary_key => :updated_by
+	# has_one :reviewed_user, :primary_key => :reviewed_user_id
+	belongs_to :response_reason, :foreign_key => :response_reason_id
+	belongs_to :response_status, :foreign_key => :response_status_id
+	belongs_to :review_status, :foreign_key => :review_status_id
+	belongs_to :event_user, :foreign_key => :event_user_id, class_name: "EventUser", inverse_of: :responses
+	belongs_to :event#, :through => :event_user
+	has_one :location, :through => :event
+	has_one :event_type, :through => :event
 
   belongs_to :organization
   acts_as_tenant(:organization)

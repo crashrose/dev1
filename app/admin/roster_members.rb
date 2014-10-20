@@ -2,23 +2,16 @@ ActiveAdmin.register CampaignUser, as: "RosterMember"  do
 
 ## Menu Options
   menu_options = {
-    :label =>  'Roster',
+    :label =>  'Team Members',
     :priority => 2
   }
   menu menu_options
 
   # @config.options = {:orig_scope => 'players'}
-
+config.clear_action_items!
   navigation_menu :team
 
   controller do
-        def curr_scope=(scope=nil)
-          @curr_scope = scope
-        end
-
-        def curr_scope
-          @curr_scope
-        end
     def scoped_collection
       # zzz
       #If the user has manually selected a campaign in the filters, clear the scope and set the campaign_id param to the filtered campaign
@@ -28,20 +21,18 @@ ActiveAdmin.register CampaignUser, as: "RosterMember"  do
       # else
         #otherwise, use the campaign_id param to set the scope of the collection
 
-        @curr_scope = params[:scope] != nil ? params[:scope] : 'players'
-        # zzzz
         if params[:q] != nil
           #if campaign_id
           if params[:q][:campaign_id_eq] != nil
-            CampaignUser.where(:campaign_id => params[:q][:campaign_id_eq])
+            CampaignUser.where(:campaign_id => params[:q][:campaign_id_eq]).includes(:positions, :campaign, :organization, :team_role, :person)
           else
             ####
             ####
             #### Be sure to update this to have the scope include the next or latest campaign
-            CampaignUser.current_campaign
+            CampaignUser.current_campaign.includes(:positions, :campaign, :organization, :team_role, :person)
           end
         else
-          CampaignUser.current_campaign
+          CampaignUser.current_campaign.includes( :positions, :campaign, :organization, :team_role, :person)
         end
       # end
     end
@@ -132,24 +123,25 @@ end
 
   index do
     selectable_column
-    column :user
-    column :team_role
-    column :campaign
+    column :person
+    column 'Position(s)' do |roster_member|
+      roster_member.positions.map { |position| position.abbreviation }.to_sentence.html_safe
+    end
     actions
   end
 
-  # filter :email
-  # filter :current_sign_in_at
-  # filter :sign_in_count
+  filter :campaign
+  filter :person
+  filter :positions
   # filter :created_at
 
-  form :options => {:orig_scope => proc { @current_scope.scope_method}} do |f|
-    f.inputs "Roster Member Details" do
-      f.input :name
-      f.input :start_date
-      f.input :end_date
-    end
-    f.actions
-  end
+  # form :options => {:orig_scope => proc { @current_scope.scope_method}} do |f|
+  #   f.inputs "Roster Member Details" do
+  #     f.input :name
+  #     f.input :start_date
+  #     f.input :end_date
+  #   end
+  #   f.actions
+  # end
 
 end
