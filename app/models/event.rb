@@ -1,6 +1,8 @@
 class Event < ActiveRecord::Base
 
-	belongs_to :event_type
+  # belongs_to :eventable, :polymorphic => true
+
+	belongs_to :event_type,-> {where('events.as_event_type = event_class')}
 	belongs_to :location
 	belongs_to :owner, class_name: "Person", primary_key: "user_id"
 
@@ -12,9 +14,12 @@ class Event < ActiveRecord::Base
 	# , foreign_key: "user_id"
 	has_many :users, :through => :event_users
 	has_many :responses, :dependent => :destroy
+  # has_one :competition
   
   belongs_to :organization
   acts_as_tenant(:organization)
+
+  acts_as_superclass# :as => :eventable
 
 
   # has_one :g_cal_event
@@ -26,6 +31,7 @@ class Event < ActiveRecord::Base
 
   scope :shared_g_cal_events, ->(g_cal_event_ids) { where(g_cal_event_id: g_cal_event_id)}
   scope :all_org_events,->(org_id)  {where(organization_id: org_id)}
+  scope :competitions,->  {joins(:event_type).where(:event_types => {:title => 'Competition'})}
   scope :all_org_gshared_events,->(org_id)  {where(organization_id: org_id).where.not(g_cal_event_id: nil)}
   scope :all_org_nativeonly_events,->(org_id)  {where(organization_id: org_id, g_cal_event_id: nil)}
   scope :by_g_cal_event,->(g_cal_event_id) {where(g_cal_event_id: g_cal_event_id)}

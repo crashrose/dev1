@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141015204019) do
+ActiveRecord::Schema.define(version: 20141020220646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,31 @@ ActiveRecord::Schema.define(version: 20141015204019) do
     t.datetime "updated_at"
   end
 
+  create_table "competition_types", force: true do |t|
+    t.string   "title"
+    t.integer  "sport_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "competitions", force: true do |t|
+    t.integer  "event_id"
+    t.integer  "lineup_id"
+    t.integer  "campaign_id"
+    t.boolean  "has_stats"
+    t.boolean  "stats_complete"
+    t.integer  "opponent_id"
+    t.integer  "uniform_id"
+    t.boolean  "is_home_game"
+    t.integer  "transport_plan_id"
+    t.datetime "arrival_time"
+    t.datetime "start_time"
+    t.integer  "expected_duration"
+    t.integer  "competition_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "event_groups", force: true do |t|
     t.integer  "event_id"
     t.integer  "group_id"
@@ -75,6 +100,8 @@ ActiveRecord::Schema.define(version: 20141015204019) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organization_id"
+    t.string   "event_class"
+    t.integer  "sports_id"
   end
 
   add_index "event_types", ["id"], name: "index_event_types_on_id", using: :btree
@@ -82,7 +109,6 @@ ActiveRecord::Schema.define(version: 20141015204019) do
   create_table "events", force: true do |t|
     t.string   "name"
     t.datetime "starts_at"
-    t.integer  "event_type_id"
     t.integer  "location_id"
     t.integer  "owner_id"
     t.datetime "respond_by"
@@ -96,9 +122,11 @@ ActiveRecord::Schema.define(version: 20141015204019) do
     t.string   "title"
     t.integer  "organization_id"
     t.string   "visibility"
+    t.integer  "as_event_id"
+    t.string   "as_event_type",   default: "other_event"
+    t.integer  "event_types"
   end
 
-  add_index "events", ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
   add_index "events", ["g_cal_event_id"], name: "index_events_on_g_cal_event_id", using: :btree
   add_index "events", ["g_cal_id"], name: "index_events_on_g_cal_id", using: :btree
   add_index "events", ["id"], name: "index_events_on_id", using: :btree
@@ -262,6 +290,13 @@ ActiveRecord::Schema.define(version: 20141015204019) do
   add_index "locations", ["id"], name: "index_locations_on_id", using: :btree
   add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree
 
+  create_table "meetings", force: true do |t|
+    t.integer  "event_id"
+    t.string   "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "mime_types", force: true do |t|
     t.string   "content_type"
     t.string   "title"
@@ -300,6 +335,13 @@ ActiveRecord::Schema.define(version: 20141015204019) do
   add_index "organizations", ["owner_id"], name: "index_organizations_on_owner_id", using: :btree
   add_index "organizations", ["parent_id"], name: "index_organizations_on_parent_id", using: :btree
   add_index "organizations", ["paypal_seller_id"], name: "index_organizations_on_paypal_seller_id", using: :btree
+
+  create_table "other_events", force: true do |t|
+    t.integer  "event_id"
+    t.integer  "event_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "payment_requests", force: true do |t|
     t.string   "name"
@@ -383,6 +425,15 @@ ActiveRecord::Schema.define(version: 20141015204019) do
     t.integer  "organization_id"
   end
 
+  create_table "practices", force: true do |t|
+    t.integer  "event_id"
+    t.string   "note"
+    t.integer  "practice_plan_id"
+    t.integer  "campaign_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "response_reasons", force: true do |t|
     t.string   "title"
     t.integer  "position"
@@ -444,6 +495,41 @@ ActiveRecord::Schema.define(version: 20141015204019) do
   create_table "sports", force: true do |t|
     t.string   "title"
     t.integer  "order_pos"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stat_line_entries", force: true do |t|
+    t.integer  "stat_line_id"
+    t.integer  "unit_id"
+    t.integer  "competition_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stat_line_item_entries", force: true do |t|
+    t.integer  "stat_line_item_id"
+    t.integer  "stat_line_entry_id"
+    t.decimal  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stat_line_items", force: true do |t|
+    t.string   "title"
+    t.string   "abbreviation"
+    t.integer  "stat_line_id"
+    t.integer  "order_pos"
+    t.boolean  "is_calc"
+    t.string   "calculation"
+    t.string   "agg_calculation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stat_lines", force: true do |t|
+    t.string   "title"
+    t.string   "unit_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

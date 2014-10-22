@@ -13,10 +13,13 @@ gem 'pg'
 gem "activerecord-tableless", "~> 1.0"
 gem "schema_plus"
 gem 'rails_12factor', group: [:production] #required by Heroku
+# gem 'active_record-acts_as'
+gem 'acts_as_relation', '~> 1.0'
 
 
 ### Multitenancy
 gem 'acts_as_tenant'
+
 
 
 #### Administration

@@ -10,7 +10,7 @@ navigation_menu :organization
 
   controller do
     def scoped_collection
-      Event.all.includes :owner, :location, :event_type
+      Event.all.includes :owner, :location#, :event_type
     end
     helper :views
   end
@@ -35,7 +35,7 @@ navigation_menu :organization
     column :starts_at, :as => :date_range
     column :ends_at, :as => :date_range
     column :all_day
-    column :event_type, sortable: 'event_types.title'
+    # column :event_type, sortable: 'event_types.title'
     column 'Location', sortable: 'locations.name' do |event|
       location_tooltip(event.location)
     end
@@ -51,7 +51,7 @@ navigation_menu :organization
       f.input :name
       f.input :description
       f.input :location
-      f.input :event_type
+      # f.input :event_type
       f.input :owner
       f.input :starts_at, :as => :datetime
       f.input :ends_at, :as => :datetime

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stat_line_id: 1
+  unit_id: 1
+  competition_id: 1
+
+two:
+  stat_line_id: 1
+  unit_id: 1
+  competition_id: 1
