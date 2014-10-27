@@ -281,3 +281,70 @@ end
 ].each do |attributes|
 	Competition.where(id: attributes[:id]).first_or_create(attributes)
 end
+
+
+[
+	{:id => 1, :stat_line_id => 4, :competition_id => 1},
+	{:id => 2, :stat_line_id => 7, :competition_id => 1},
+	{:id => 3, :stat_line_id => 6, :competition_id => 1},
+	{:id => 4, :stat_line_id => 17, :competition_id => 1}
+
+].each do |attributes|
+	StatLineEntry.where(id: attributes[:id]).first_or_create(attributes)
+end
+
+
+[
+	{:id => 1, :stat_line_item_id => 22, :stat_line_entry_unit_id => 3, :value => 2},
+	{:id => 2, :stat_line_item_id => 48, :stat_line_entry_unit_id => 4, :value => 3},
+	{:id => 3, :stat_line_item_id => 49, :stat_line_entry_unit_id => 4, :value => 4},
+	{:id => 4, :stat_line_item_id => 50, :stat_line_entry_unit_id => 4, :value => 32},
+	{:id => 5, :stat_line_item_id => 23, :stat_line_entry_unit_id => 2, :value => 1},
+	{:id => 6, :stat_line_item_id => 24, :stat_line_entry_unit_id => 2, :value => 22},
+	{:id => 7, :stat_line_item_id => 25, :stat_line_entry_unit_id => 2, :value => 22},
+	{:id => 8, :stat_line_item_id => 26, :stat_line_entry_unit_id => 2, :value => 0},
+	{:id => 9, :stat_line_item_id => 20, :stat_line_entry_unit_id => 1, :value => 8},
+	{:id => 10, :stat_line_item_id => 22, :stat_line_entry_unit_id => 5, :value => 4},
+	{:id => 11, :stat_line_item_id => 48, :stat_line_entry_unit_id => 6, :value => 2},
+	{:id => 12, :stat_line_item_id => 49, :stat_line_entry_unit_id => 6, :value => 2},
+	{:id => 13, :stat_line_item_id => 50, :stat_line_entry_unit_id => 6, :value => 17}
+].each do |attributes|
+	StatLineItemEntry.where(id: attributes[:id]).first_or_create(attributes)
+end
+
+
+# [
+# 	{:id => 1, :as_stat_line_unit_id => 1, :as_stat_line_unit_type => "StatUser"},
+# 	{:id => 2, :as_stat_line_unit_id => 2, :as_stat_line_unit_type => "StatUser"},
+# 	{:id => 3, :as_stat_line_unit_id => 1, :as_stat_line_unit_type => "StatTeam"}
+# ].each do |attributes|
+# 	StatLineUnit.where(id: attributes[:id]).first_or_create(attributes)
+# end
+
+
+
+[
+	{:id => 1, :stat_line_entry_id => 1, :stat_line_unit_id => 1},
+	{:id => 2, :stat_line_entry_id => 2, :stat_line_unit_id => 1},
+	{:id => 3, :stat_line_entry_id => 3, :stat_line_unit_id => 1},
+	{:id => 4, :stat_line_entry_id => 4, :stat_line_unit_id => 1},
+	{:id => 5, :stat_line_entry_id => 3, :stat_line_unit_id => 2},
+	{:id => 6, :stat_line_entry_id => 4, :stat_line_unit_id => 2}
+].each do |attributes|
+	StatLineEntryUnit.where(id: attributes[:id]).first_or_create(attributes)
+end
+
+
+[
+	{:id => 1, :unit_id => 2}
+].each do |attributes|
+	StatTeam.where(id: attributes[:id]).first_or_create(attributes)
+end
+
+
+[
+	{:id => 1, :unit_id => 7},
+	{:id => 2, :unit_id => 27}
+].each do |attributes|
+	StatUser.where(id: attributes[:id]).first_or_create(attributes)
+end

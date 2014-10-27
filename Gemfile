@@ -20,6 +20,8 @@ gem 'acts_as_relation', '~> 1.0'
 ### Multitenancy
 gem 'acts_as_tenant'
 
+gem "nested_form"
+
 
 
 #### Administration
@@ -47,13 +49,17 @@ gem 'cancan', '~> 1.6.10'
 gem 'json'
 # gem 'formtastic', '~> 2.3.0.rc2'
 # gem 'formtastic', '~> 3.0.0'
-gem 'simple_form'
+gem 'simple_form', '~> 3.1.0.rc2'
 gem 'bootstrap-sass'#, '~> 3.2.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # gem 'formtastic-bootstrap' ### Not sure if needed
 # gem 'compass-rails' ### Not sure if needed
 gem 'purecss'
+
+gem 'datetimepicker-rails', :git => 'git://github.com/zpaulovics/datetimepicker-rails.git', :branch => 'master', :submodules => true
+# gem 'simple_form', '>= 3.1.0.rc1'
+# gem 'momentjs-rails', '~> 2.8.1' - required by datetimepicker-rails
 
 
 #### JavaScript tools
@@ -62,7 +68,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-rest-rails'
 # Java date selection
-gem 'momentjs-rails', '~> 2.7.0'
+gem 'momentjs-rails', '~> 2.8.1'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
 gem "select2-rails"

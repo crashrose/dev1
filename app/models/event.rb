@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
 
   # belongs_to :eventable, :polymorphic => true
 
-	belongs_to :event_type,-> {where('events.as_event_type = event_class')}
+	belongs_to :event_type#, -> {where('event_types.event_class = events.as_event_type')}
 	belongs_to :location
 	belongs_to :owner, class_name: "Person", primary_key: "user_id"
 

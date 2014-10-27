@@ -10,10 +10,11 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// To add all files in assets/javascripts directory, add "require_tree ."
 
 //= require jquery
 
-//= require jquery-ui
+//= require jq-ui-includes
 
 
 //= require bootstrap-sprockets
@@ -28,6 +29,6 @@
 //= require jquery.rest
 //= require fullcalendar
 //= require gcal
-//= require_tree .
+
 
 

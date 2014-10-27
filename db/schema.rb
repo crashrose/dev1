@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020220646) do
+ActiveRecord::Schema.define(version: 20141023225946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 20141020220646) do
     t.string   "visibility"
     t.integer  "as_event_id"
     t.string   "as_event_type",   default: "other_event"
-    t.integer  "event_types"
+    t.integer  "event_type_id"
   end
 
   add_index "events", ["g_cal_event_id"], name: "index_events_on_g_cal_event_id", using: :btree
@@ -501,15 +501,23 @@ ActiveRecord::Schema.define(version: 20141020220646) do
 
   create_table "stat_line_entries", force: true do |t|
     t.integer  "stat_line_id"
-    t.integer  "unit_id"
     t.integer  "competition_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  create_table "stat_line_entry_units", force: true do |t|
+    t.integer  "stat_line_entry_id"
+    t.integer  "stat_line_unit_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "unit_id"
+    t.string   "unit_class"
+  end
+
   create_table "stat_line_item_entries", force: true do |t|
     t.integer  "stat_line_item_id"
-    t.integer  "stat_line_entry_id"
+    t.integer  "stat_line_entry_unit_id"
     t.decimal  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -527,9 +535,29 @@ ActiveRecord::Schema.define(version: 20141020220646) do
     t.datetime "updated_at"
   end
 
+  create_table "stat_line_units", force: true do |t|
+    t.integer  "as_stat_line_unit_id"
+    t.string   "as_stat_line_unit_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "unit_id"
+  end
+
   create_table "stat_lines", force: true do |t|
     t.string   "title"
     t.string   "unit_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stat_teams", force: true do |t|
+    t.integer  "unit_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stat_users", force: true do |t|
+    t.integer  "unit_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

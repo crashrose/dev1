@@ -28,3 +28,10 @@ en:
         remove_u_from_group: "Remove Users from Group..."
         remove_u_from_team: "Remove Users from Team"
       action_label: "%{title}"
+  datepicker:
+    dformat: '%m/%d/%Y'        # display format of the date (this is the default, can be ommited)
+    pformat: 'MM/DD/YYYY'      # picking format of the date (this is the default, can be ommited)
+    weekstart: 0               # the week starts on Sunday (this is the default, can be ommited)
+  timepicker:
+    dformat: '%R'              # display format of the time (this is the default, can be ommited)
+    pformat: 'HH:mm'           # picking format of the time (this is the default, can be ommited)
