@@ -18,9 +18,10 @@ ActiveAdmin.register StatLineEntryUnit do
 
   index do
     # column :competition
-    column :person
+    column :unit
     column :competition
     column :stat_line
+    column :stat_line_entry
     # column :value
     # column :starts_at, :as => :date_range
     # # column :ends_at, :as => :date_range

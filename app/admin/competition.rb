@@ -63,7 +63,11 @@ permit_params :has_stats,
   end
 
   member_action :add_stat_lines, method: :get, :title => "Enter/Edit Statistics for #{@resource.name}" do
-    @competition = Competition.where(:id => resource.id).includes( {stat_line_entries: [ { stat_line_entry_units: [:stat_line_item_entries, :unit] } ] } ).first
+    # @competition = Competition.where(:id => resource.id).includes( {stat_line_entries: [:stat_line_item_entries, :person] } ).first
+    # @competition = Competition.where(:id => resource.id).includes(:stat_lines, {stat_line_entries: [:stat_line_item_entries, :person] } ).first#.group_by(&:stat_lines)
+    @competition = Competition.find(resource.id)
+    @competition.load_statistics
+    # Competition.where(:id => 1).includes(:stat_lines, {stat_line_entries: [:stat_line_item_entries, :person] } ).group_by(&:stat_lines)
     # zzzz
     respond_with @competition
   end
@@ -109,25 +113,25 @@ permit_params :has_stats,
     #   end
     # end
 
+form partial: 'form'
 
-
-  form do |f|
-    f.inputs "Details", :class => 'col-md-4', :type => 'panel' do
-      f.input :name
-      f.input :description
-      f.input :location
-      f.input :event_type
-    end
-    f.inputs "Fields", :class => 'col-md-4', :type => 'panel' do 
-      f.has_many :stat_line_entries, sortable: false, allow_destroy: true, new_record: true, :type => 'inner-panel' do |a|
-        a.association :stat_line
-        # a.has_many :stat_line_entries, sortable: false, allow_destroy: true, new_record: true, :type => 'inner-panel' do |b|
-        #   b.input :stat_line
-        # end
-      end
-    end
-    f.actions
-  end
+  # form do |f|
+  #   f.inputs "Details", :class => 'col-md-4', :type => 'panel' do
+  #     f.input :name
+  #     f.input :description
+  #     f.input :location
+  #     f.input :event_type
+  #   end
+  #   f.inputs "Fields", :class => 'col-md-4', :type => 'panel' do 
+  #     f.has_many :stat_line_entries, sortable: false, allow_destroy: true, new_record: true, :type => 'inner-panel' do |a|
+  #       a.association :stat_line
+  #       # a.has_many :stat_line_entries, sortable: false, allow_destroy: true, new_record: true, :type => 'inner-panel' do |b|
+  #       #   b.input :stat_line
+  #       # end
+  #     end
+  #   end
+  #   f.actions
+  # end
 #     f.inputs "Game Details", :class => 'col-md-8', :type => 'panel' do
 # # f.input :lineup_id, 
 # f.association :campaign

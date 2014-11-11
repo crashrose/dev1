@@ -1,0 +1,15 @@
+<%= simple_nested_form_for [:admin, @competition] do |f| %>
+  <%= 
+  # f.error_messages
+   %>
+  <p>
+    <h2>
+      <%= "#{@competition.event_type.title} on #{@competition.starts_at.strftime("%m/%d/%Y at %I:%M %p")}" %>
+    </h2>
+
+  </p>
+  <%= f.fields_for :stat_line_entries %>
+
+  <p><%= f.link_to_add "Add Statistic", :stat_line_entries %></p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>

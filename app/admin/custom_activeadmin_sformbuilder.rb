@@ -471,3 +471,29 @@ zzzzz
 
   end
 end
+
+
+# module SimpleForm
+#   class FormBuilder
+#     def association(association, options = {}, &block)
+#       options = options.dup
+
+#       return simple_fields_for(*[association,
+#         options.delete(:collection), options].compact, &block) if block_given?
+
+#       raise ArgumentError, "Association cannot be used in forms not associated with an object" unless @object
+
+#       reflection = find_association_reflection(association)
+#       raise "Association #{association.inspect} not found" unless reflection
+
+#       options[:as] ||= :select
+#       options[:collection] ||= fetch_association_collection(reflection, options)
+
+#       attribute = build_association_attribute(reflection, association, options)
+#     # if association == :person
+#     # zzzz
+#     # end
+#       input(attribute, options.merge(reflection: reflection))
+#     end
+#   end
+# end

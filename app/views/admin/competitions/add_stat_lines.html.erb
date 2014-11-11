@@ -1,130 +1,39 @@
-
-<%= simple_nested_form_for [:admin, @competition],  html: { class: "form-horizontal", role: 'form' } do |f| %>
-
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
-        </div>
-        <div class="modal-body">
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div>
-
-  <fieldset>
-    <div class="content-container col-md-12 form-group">
-      <div class="plbk_data col-md-4">
+  <%= simple_form_for [:admin, @competition] do |f| %>
+    <div class="panel-group" id="stat_entry" role="tablist" aria-multiselectable="true">
+      <%= f.simple_fields_for :stat_line_entries do |s_l_e| %>
+        <% entry_panel_id = s_l_e.object.stat_line_id.to_s %>
         <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><%= "#{@competition.event_type.title} on #{@competition.starts_at.strftime("%m/%d/%Y at %I:%M %p")}" %></h3>
+          <div class="panel-heading" role="tab" id="heading<%= entry_panel_id %>">
+            <h3 class="panel-title">
+              <a data-toggle="collapse" data-parent="#stat_entry"
+              href="#collapse<%= entry_panel_id %>" aria-expanded="false"
+              aria-controls="collapse<%= entry_panel_id %>">
+                <%= s_l_e.object.stat_line.title %>
+              </a>
+            </h3>
           </div>
-          <div class="panel-body">
-            <div>
-              <%= f.input :has_stats, :boolean_style => :inline, :input_html => {:data => {:toggle => "toggle", :on => 'Yes', :off => 'No', :size  => 'small'}} %>
-            </div>
-            <div>
-              <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" type="button">
-                Add Statistic(s)
-              </button>
+          <div id="collapse<%= entry_panel_id %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= entry_panel_id %>">
+            <div class="panel-body">
+              <%= s_l_e.input :id, :as => :hidden %>
+              <%= s_l_e.input :stat_line_id, :as => :hidden %>
+              <table id=<%= s_l_e.object.stat_line.title.parameterize %>>
+                <tr>
+                  <th>Person</th>
+                  <%= s_l_e.object.stat_line_items.sort_by{|item| item.order_pos}.map {|item| "<th>#{item.abbreviation}</th>"}.join.html_safe %>
+                </tr>
+                <%= s_l_e.simple_fields_for :stat_line_entry_units do |s_l_e_u| %>
+                  <%= render 'stat_line_entry_unit_fields', f: s_l_e_u %>
+                <% end %>
+              </table>
+              <%= link_to_add_association 'add line', s_l_e, :stat_line_entry_units, 
+              :data => {"association-insertion-method" => "append",
+              "association-insertion-method" => "append",
+              "association-insertion-node" => '#' + s_l_e.object.stat_line.title.parameterize}, 
+              :wrap_object => Proc.new { |s_l_e_unit| StatLineEntryUnit.build_lines(s_l_e.object.stat_line.stat_line_items)} %>
             </div>
           </div>
         </div>
-
-        <div>
-          <div class="control-group">
-            <%= f.submit "Save Competition Statistics", class: 'btn submit-btn' %>
-          </div>
-          <div class="control-group">
-            <%= button_tag 'Clear', :type => 'button', class: 'btn clear-btn' %>
-          </div>
-        </div>
-
-      </div>
-    
-      <div class="plbk_data col-md-9">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><%= "Manage Stats" %></h3>
-          </div>
-          <div class="panel-body">
-            <%= select_tag :add_stat, options_for_select(StatLine.all.collect {|x| [x.title, x.id]}), :multiple => false %>
-            <%= f.link_to_add "Add a Statistic", :stat_line_entries %> 
-<BR><BR><BR>
-
-            <!-- StatLineEntries begin -->
-            <%= f.fields_for :stat_line_entries do |stat_line_entry| %>
-            <div>
-              <% @s_l_entry_units = stat_line_entry.object.stat_line_entry_units.all %>
-              <% line_items = stat_line_entry.object.stat_line_items.order(:order_pos) %>
-              <%= stat_line_entry.input :id, :as => :hidden %>
-              <%= stat_line_entry.association :stat_line, :label => 'Statistic' %>
-              <%= stat_line_entry.object.inspect %>
-                <table class="testing">
-                  <tr>
-                    <th>Entry</th>
-                    <% line_items.each do |line_item| %>
-                      <th><%= line_item.abbreviation %></th>
-                    <% end %>
-                    <th></th>
-                  </tr>
-
-                  <!-- StatLineEntryUnits begin -->
-                  <!-- Add this after building the default record method:   , :model_object => StatLineEntryUnit.default -->
-                  <%= stat_line_entry.fields_for :stat_line_entry_units, @s_l_entry_units, :wrapper => false do |stat_line_entry_unit| %>
-                    <tr>
-                      <td><%= stat_line_entry_unit.association :unit, :label => false %>
-<BR>
-  <%=
-  stat_line_entry_unit.input :stat_line, :label => false 
-  # stat_line_entry_unit.options[:parent_builder].object.inspect
-  %>
-                      </td>
-                      <%= stat_line_entry_unit.input :id, :as => :hidden, :label => false %>
-                      <% @s_l_item_entries = stat_line_entry_unit.object.stat_line_item_entries.all.sort_by(&:order_pos) %>
-
-                      <!-- StatLineItemEntries begin -->
-                      <%= stat_line_entry_unit.fields_for :stat_line_item_entries, @s_l_item_entries, :wrapper => false do |stat_line_item_entry| %>
-                        <td>
-                          <%= stat_line_item_entry.input :value, :label => false  %>
-                          <%= stat_line_item_entry.input :id, :as => :hidden, :label => false %>
-
-                        </td>
-                      <% end %>
-                      <!-- StatLineItemEntries end -->
-
-                      <td><%= stat_line_entry_unit.link_to_remove "Remove" %></td>
-                    </tr><% colspan = line_items.count + 2 %>
-                  <% end %>
-                  <!-- StatLineEntryUnits end -->
-
-                  <p>
-                </table><%= stat_line_entry.link_to_add "Add a Stat Line", :stat_line_entry_units %>
-              </div><BR><BR>
-            <% end %>
-            <!-- StatLineEntries end -->
-
-
-            <p>To add a new statistic for this competition, choose one from the dropdown and click "Add"
-               
-                
-                <p>Select a statistic to add:</p>
-          
-            </p>
-          </div>
-        </div>
-      </div>
+      <% end %>
     </div>
-  </fieldset>
-
-
-<% end %>
-
+    <div><%= f.submit %></div>
+  <% end %>

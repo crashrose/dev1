@@ -21,6 +21,7 @@ gem 'acts_as_relation', '~> 1.0'
 gem 'acts_as_tenant'
 
 gem "nested_form"
+gem "cocoon"
 
 
 

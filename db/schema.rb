@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141023225946) do
+ActiveRecord::Schema.define(version: 20141104194947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -328,6 +328,7 @@ ActiveRecord::Schema.define(version: 20141023225946) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "paypal_seller_id"
+    t.integer  "sport_id"
   end
 
   add_index "organizations", ["id"], name: "index_organizations_on_id", using: :btree
@@ -504,6 +505,8 @@ ActiveRecord::Schema.define(version: 20141023225946) do
     t.integer  "competition_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "person_id"
+    t.integer  "team_id"
   end
 
   create_table "stat_line_entry_units", force: true do |t|
@@ -548,6 +551,7 @@ ActiveRecord::Schema.define(version: 20141023225946) do
     t.string   "unit_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sport_id"
   end
 
   create_table "stat_teams", force: true do |t|

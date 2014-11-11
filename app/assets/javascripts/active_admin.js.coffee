@@ -43,5 +43,8 @@
 #= require bootstrap-datetimepicker
 #= require pickers
 
+
+#= require cocoon
+
 window.ActiveAdmin = {}
 window.AA = window.ActiveAdmin unless window.AA

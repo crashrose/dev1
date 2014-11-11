@@ -1,28 +1,33 @@
-ActiveAdmin.register StatLineItemEntry do
+ActiveAdmin.register StatLineEntry do
 
 # config.clear_action_items!
 
 	  menu_options = {
-    :priority => 15
+    :priority => 14
   }
   menu menu_options
   navigation_menu :team
 
   controller do
-    def scoped_collection
-      StatLineItemEntry.all.includes(:stat_line_entry_unit, :stat_line, :competition)
-    end
+    # def scoped_collection
+    #   StatLineEntry.all.includes(:stat_line_unit, :stat_line, :competition)
+    # end
 
     helper :views
   end
 
   index do
     column :competition
-    column :unit
     column :stat_line
-    column :stat_line_item
-    column :value
-    column :stat_line_entry_unit
+    column 'Units' do |stat_line_entry|
+      stat_line_entry.stat_line_entry_units.map { |stat_line_entry_unit| stat_line_entry_unit.unit.name}.to_sentence.html_safe
+    end
+    column 'Line Items' do |stat_line_entry|
+      stat_line_entry.stat_line.stat_line_items.map { |stat_line_item| stat_line_item.abbreviation}.to_sentence.html_safe
+    end
+    # column :stat_line_item
+    # column :value
+    # column :stat_line_entry_unit
     # column :starts_at, :as => :date_range
     # # column :ends_at, :as => :date_range
     # column :arrival_time
@@ -42,9 +47,9 @@ ActiveAdmin.register StatLineItemEntry do
   form  do |f|
 
     f.inputs "Details", :class => 'col-md-8', :type => 'panel' do
-      f.input :stat_line_item
-      f.input :stat_line_entry
-      f.input :value
+      f.input :stat_line
+      # f.input :stat_line_entry
+      # f.input :value
     end
 
   end
