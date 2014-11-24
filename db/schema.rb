@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141104194947) do
+ActiveRecord::Schema.define(version: 20141124171856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -500,6 +500,13 @@ ActiveRecord::Schema.define(version: 20141104194947) do
     t.datetime "updated_at"
   end
 
+  create_table "stat_categories", force: true do |t|
+    t.string   "name"
+    t.integer  "order_pos"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "stat_line_entries", force: true do |t|
     t.integer  "stat_line_id"
     t.integer  "competition_id"
@@ -509,18 +516,9 @@ ActiveRecord::Schema.define(version: 20141104194947) do
     t.integer  "team_id"
   end
 
-  create_table "stat_line_entry_units", force: true do |t|
-    t.integer  "stat_line_entry_id"
-    t.integer  "stat_line_unit_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "unit_id"
-    t.string   "unit_class"
-  end
-
   create_table "stat_line_item_entries", force: true do |t|
     t.integer  "stat_line_item_id"
-    t.integer  "stat_line_entry_unit_id"
+    t.integer  "stat_line_entry_id"
     t.decimal  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -538,32 +536,15 @@ ActiveRecord::Schema.define(version: 20141104194947) do
     t.datetime "updated_at"
   end
 
-  create_table "stat_line_units", force: true do |t|
-    t.integer  "as_stat_line_unit_id"
-    t.string   "as_stat_line_unit_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "unit_id"
-  end
-
   create_table "stat_lines", force: true do |t|
     t.string   "title"
     t.string   "unit_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sport_id"
-  end
-
-  create_table "stat_teams", force: true do |t|
-    t.integer  "unit_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "stat_users", force: true do |t|
-    t.integer  "unit_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.boolean  "is_calc_only"
+    t.integer  "order_pos"
+    t.integer  "stat_category_id"
   end
 
   create_table "taggings", force: true do |t|

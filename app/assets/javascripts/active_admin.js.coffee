@@ -21,20 +21,20 @@
 #= require active_admin/ext/jquery
 #  dont require active_admin/application -- replaced with aa_monkey_patch which excludes jQuery UI datepicker code
 #= require aa_monkey_patch
-
+#= require bootstrap
 
 #= require jquery_nested_form
 
 #= require activeadmin-sortable
 
-#= require bootstrap
+
 
 #= require select2
 
 
 #= require aa_custom
 
-#= require jquery_nested_form
+# dont require jquery_nested_form
 
 
 #= require bootstrap-toggle.min
@@ -44,7 +44,7 @@
 #= require pickers
 
 
-#= require cocoon
+#= require cocoon_custom
 
 window.ActiveAdmin = {}
 window.AA = window.ActiveAdmin unless window.AA

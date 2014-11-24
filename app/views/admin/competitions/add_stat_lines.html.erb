@@ -1,39 +1,72 @@
-  <%= simple_form_for [:admin, @competition] do |f| %>
-    <div class="panel-group" id="stat_entry" role="tablist" aria-multiselectable="true">
-      <%= f.simple_fields_for :stat_line_entries do |s_l_e| %>
-        <% entry_panel_id = s_l_e.object.stat_line_id.to_s %>
-        <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="heading<%= entry_panel_id %>">
-            <h3 class="panel-title">
-              <a data-toggle="collapse" data-parent="#stat_entry"
-              href="#collapse<%= entry_panel_id %>" aria-expanded="false"
-              aria-controls="collapse<%= entry_panel_id %>">
-                <%= s_l_e.object.stat_line.title %>
-              </a>
-            </h3>
-          </div>
-          <div id="collapse<%= entry_panel_id %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= entry_panel_id %>">
-            <div class="panel-body">
-              <%= s_l_e.input :id, :as => :hidden %>
-              <%= s_l_e.input :stat_line_id, :as => :hidden %>
-              <table id=<%= s_l_e.object.stat_line.title.parameterize %>>
+<script>
+  $(function() {
+    $('body').scrollspy({ target: '#navbar' });
+  });
+</script>
+
+<%= simple_form_for [:admin, @competition], html: { class: "form-inline"}, defaults: { input_html: { class: 'form-control stat-form' }, label_html: { class: 'sr-only' } } do |f| %>
+  <% @affix_hash = {} %>
+  <div class="col-md-8 row">
+    <% @saved_stat_line_entries = @competition.stat_line_entries %>
+    <% @competition.stat_lines.group_by(&:stat_category).sort_by{|cat,val| cat.order_pos}.each do |category, cat_stat_lines| %>
+      <% @affix_hash[category.name] = {} %>
+      <div class="row">
+        <h3 id="<%= category.name.parameterize %>"><%= category.name %></h3>
+        <% cat_stat_lines.sort_by{|stat| stat.order_pos}.each do |stat_line| %>
+          <% @stat_line_entries = @saved_stat_line_entries.select{|entry| entry.stat_line == stat_line} %>
+          <% @entry_panel_id = stat_line.id.to_s %>
+          <div class="col-md-12">
+            <h4 id="<%= "#{category.name.parameterize}-#{@entry_panel_id}" %>"><%= stat_line.title.html_safe %></h4>
+            <% @affix_hash[category.name][stat_line.title] = {:target => '#' + "#{category.name.parameterize}-#{@entry_panel_id}", :entry_count => @stat_line_entries.count.to_s} %>
+            <% @stat_line_items = stat_line.stat_line_items.select{|item| item.is_calc == false} %>
+            <div class="col-md-<%= (4 + @stat_line_items.count).to_s.html_safe %>">
+              <% width_unit = (100/(4.0 + @stat_line_items.count)) %>
+              <table class="table table-condensed table-striped stat-container" id="<%= stat_line.title.parameterize %>-container">
                 <tr>
-                  <th>Person</th>
-                  <%= s_l_e.object.stat_line_items.sort_by{|item| item.order_pos}.map {|item| "<th>#{item.abbreviation}</th>"}.join.html_safe %>
+                  <th style="width: <%= (2.8 * width_unit).to_s %>%;">Person</th>
+                  <%= @stat_line_items.sort_by{|item| item.order_pos}.map {|item| "<th style=\"width: #{width_unit}%\">#{item.abbreviation}</th>"}.join.html_safe %>
+                  <th class= "remove-link" style="width: <%= (1.2 * width_unit)%>%;"></th>
                 </tr>
-                <%= s_l_e.simple_fields_for :stat_line_entry_units do |s_l_e_u| %>
-                  <%= render 'stat_line_entry_unit_fields', f: s_l_e_u %>
+                <% if @stat_line_entries.count <= 0 %>
+                  <tr class="empty-data"><td colspan="<%= (2 + @stat_line_items.count).to_s %>">No data currently entered for this statistic.</td></tr>
                 <% end %>
+                <%= f.simple_fields_for :stat_line_entries, @stat_line_entries do |s_l_e| %>
+                  <%= render 'stat_line_entry_fields', f: s_l_e %>
+                <% end %>
+                <tr id="add_<%= stat_line.title.parameterize %>">
+                  <td colspan="<%= (@stat_line_items.count + 2).to_s.html_safe %>">
+                    <%= 
+                    link_to_add_association 'Click Here to Add', f, :stat_line_entries, 
+                      :data => {"association-insertion-method" => "before",
+                      "association-insertion-node" => '#add_' + stat_line.title.parameterize}, 
+                      :wrap_object => Proc.new { |s_l_entry| StatLineEntry.build_lines(@stat_line_items)},
+                      :render_options => {:wrapper => 'bootstrap' } 
+                      %>
+                  </td>
+                </tr>
               </table>
-              <%= link_to_add_association 'add line', s_l_e, :stat_line_entry_units, 
-              :data => {"association-insertion-method" => "append",
-              "association-insertion-method" => "append",
-              "association-insertion-node" => '#' + s_l_e.object.stat_line.title.parameterize}, 
-              :wrap_object => Proc.new { |s_l_e_unit| StatLineEntryUnit.build_lines(s_l_e.object.stat_line.stat_line_items)} %>
+            </div>
+            <div class="col-md-<%= (8 - @stat_line_items.count).to_s.html_safe %>">
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" data-spy="affix" data-offset-top="207" id="navbar" role="complimentary">
+      <ul class="nav bs-docs-sidenav">
+        <% @affix_hash.each do |category, cat_stat_lines| %>
+          <li>
+            <a href="#<%= category.parameterize %>"><%= category %></a>
+            <ul class="nav">
+              <%= cat_stat_lines.map {|stat, data| "<li><a href=\"#{data[:target]}\">#{stat} <span class=\"badge\">#{data[:entry_count]}</span></a></li>" }.join.html_safe %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+      <a class="back-to-top" href="#top">Back to top</a>
+      <div class="row"><%= f.submit %></div>
     </div>
-    <div><%= f.submit %></div>
-  <% end %>
+  </div>
+<% end %>

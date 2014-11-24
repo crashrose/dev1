@@ -4,4 +4,7 @@ class StatLineItem < ActiveRecord::Base
 	has_many :stat_line_entries, :through => :stat_line_item_entries
 
 	# delegate :order_pos, to: :stat_line_item_entries
+	scope :non_calc, -> { where(is_calc: false)}
+
+	# delegate :order_pos, :to => :stat_line_item_entries
 end

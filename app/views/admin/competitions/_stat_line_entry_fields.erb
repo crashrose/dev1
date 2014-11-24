@@ -1,0 +1,26 @@
+
+<tr class="stat-line-entry-row">
+  <td>
+    <%= f.association :person %>
+    <%= f.input :id, :as => :hidden %>
+    <%= f.input :stat_line_id, :as => :hidden, :input_html => { :value => @entry_panel_id.to_s } %>
+    <%= f.input :team_id, :as => :hidden, :input_html => { :value => @competition.organization_id.to_s } %>
+  </td>
+  <!-- persisted? -->
+  <% if f.object.persisted? %>
+  <% @item_entries = f.object.stat_line_item_entries.sort_by{|item| item.stat_line_item.order_pos} %>
+  <% else %>
+  <% @item_entries = f.object.stat_line_item_entries.sort_by{|item| item.order_pos} %>
+  <% end %>
+  <%= f.simple_fields_for :stat_line_item_entries, @item_entries do |s_l_i_e| %>
+    <td>
+      <%= s_l_i_e.input :value %>
+      <%= s_l_i_e.input :id, :as => :hidden %>
+      <%= s_l_i_e.input :stat_line_item_id, :as => :hidden %>
+    </td>
+    
+  <% end %>
+  <td class="remove-link"><div>
+    <%= link_to_remove_association('Remove', f, { 'data-wrapper-class' => 'stat-line-entry-row' }) %></div>
+  </td>
+</tr>

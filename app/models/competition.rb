@@ -9,8 +9,9 @@ class Competition < ActiveRecord::Base
 	acts_as :event#, :as => :eventable
 
 	has_many :stat_line_entries
+	# has_many :manual_stat_line_entries, class_name: "StatLineEntry", :conditions => { :stat_line => {:is_calc_only => false}}
 	has_many :stat_line_item_entries, :through => :stat_line_entries
-	accepts_nested_attributes_for :stat_line_entries, :allow_destroy => true, :reject_if => :all_blank
+	accepts_nested_attributes_for :stat_line_entries, :allow_destroy => true, reject_if: proc { |attributes| attributes['person_id'].blank? }
 	# accepts_nested_attributes_for :stat_line_item_entries, :allow_destroy => true
 	belongs_to :event_type#, -> {where('event_types.event_class = events.as_event_type')}
 	belongs_to :location

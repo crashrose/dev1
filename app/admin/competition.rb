@@ -14,23 +14,15 @@ permit_params :has_stats,
               stat_line_entries_attributes: [:_destroy, 
                 :id,
                 :stat_line_id,
-                :ccompetition_id,
-                :stat_line_entry_unit_ids,
-                stat_line_entry_unit_ids: [],
-                stat_line_entry_units_attributes:[:_destroy, 
+                :competition_id,
+                :person_id,
+                :stat_line_item_entry_ids,
+                stat_line_item_entry_ids: [],
+                stat_line_item_entries_attributes:[
                   :id,
-                  :stat_line_entry_id,
-                  :stat_line_unit_id,
-                  :unit_id,
-                  :unit_class,
-                  :stat_line_item_entry_ids,
-                  stat_line_item_entry_ids: [],
-                  stat_line_item_entries_attributes:[
-                    :id,
-                    :stat_line_item_id,
-                    :stat_line_entry_unit_id,
-                    :value
-                  ]
+                  :stat_line_item_id,
+                  :stat_line_entry_unit_id,
+                  :value
                 ]
               ]
                 # , 
@@ -65,8 +57,8 @@ permit_params :has_stats,
   member_action :add_stat_lines, method: :get, :title => "Enter/Edit Statistics for #{@resource.name}" do
     # @competition = Competition.where(:id => resource.id).includes( {stat_line_entries: [:stat_line_item_entries, :person] } ).first
     # @competition = Competition.where(:id => resource.id).includes(:stat_lines, {stat_line_entries: [:stat_line_item_entries, :person] } ).first#.group_by(&:stat_lines)
-    @competition = Competition.find(resource.id)
-    @competition.load_statistics
+    @competition = Competition.includes(:stat_lines => :stat_line_items, :stat_line_entries => [:person, :stat_line, :stat_line_items, {:stat_line_item_entries => :stat_line_item}]).where(:id => resource.id, :stat_lines => {:is_calc_only => false}).first
+    # @competition.load_statistics
     # Competition.where(:id => 1).includes(:stat_lines, {stat_line_entries: [:stat_line_item_entries, :person] } ).group_by(&:stat_lines)
     # zzzz
     respond_with @competition

@@ -53,6 +53,7 @@ development:
 
   # The password associated with the postgres role (username).
   password: 1234
+  pool: 10
 
 
 
