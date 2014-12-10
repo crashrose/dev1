@@ -1,0 +1,72 @@
+<script>
+  $(function() {
+    $('body').scrollspy({ target: '#navbar' });
+  });
+</script>
+
+<%= simple_form_for [:admin, @competition], html: { class: "form-inline"}, defaults: { input_html: { class: 'form-control stat-form' }, label_html: { class: 'sr-only' } } do |f| %>
+  <% @affix_hash = {} %>
+  <div class="col-md-8 row">
+    <% @saved_stat_line_entries = @competition.stat_line_entries %>
+    <% @competition.stat_lines.group_by(&:stat_category).sort_by{|cat,val| cat.order_pos}.each do |category, cat_stat_lines| %>
+      <% @affix_hash[category.name] = {} %>
+      <div class="row">
+        <h3 id="<%= category.name.parameterize %>"><%= category.name %></h3>
+        <% cat_stat_lines.sort_by{|stat| stat.order_pos}.each do |stat_line| %>
+          <% @stat_line_entries = @saved_stat_line_entries.select{|entry| entry.stat_line == stat_line} %>
+          <% @entry_panel_id = stat_line.id.to_s %>
+          <div class="col-md-12">
+            <h4 id="<%= "#{category.name.parameterize}-#{@entry_panel_id}" %>"><%= stat_line.title.html_safe %></h4>
+            <% @affix_hash[category.name][stat_line.title] = {:target => '#' + "#{category.name.parameterize}-#{@entry_panel_id}", :entry_count => @stat_line_entries.count.to_s} %>
+            <% @stat_line_items = stat_line.stat_line_items.select{|item| item.is_calc == false} %>
+            <div class="col-md-<%= (4 + @stat_line_items.count).to_s.html_safe %>">
+              <% width_unit = (100/(4.0 + @stat_line_items.count)) %>
+              <table class="table table-condensed table-striped stat-container" id="<%= stat_line.title.parameterize %>-container">
+                <tr>
+                  <th style="width: <%= (2.8 * width_unit).to_s %>%;">Person</th>
+                  <%= @stat_line_items.sort_by{|item| item.order_pos}.map {|item| "<th style=\"width: #{width_unit}%\">#{item.abbreviation}</th>"}.join.html_safe %>
+                  <th class= "remove-link" style="width: <%= (1.2 * width_unit)%>%;"></th>
+                </tr>
+                <% if @stat_line_entries.count <= 0 %>
+                  <tr class="empty-data"><td colspan="<%= (2 + @stat_line_items.count).to_s %>">No data currently entered for this statistic.</td></tr>
+                <% end %>
+                <%= f.simple_fields_for :stat_line_entries, @stat_line_entries do |s_l_e| %>
+                  <%= render 'stat_line_entry_fields', f: s_l_e %>
+                <% end %>
+                <tr id="add_<%= stat_line.title.parameterize %>">
+                  <td colspan="<%= (@stat_line_items.count + 2).to_s.html_safe %>">
+                    <%= 
+                    link_to_add_association 'Click Here to Add', f, :stat_line_entries, 
+                      :data => {"association-insertion-method" => "before",
+                      "association-insertion-node" => '#add_' + stat_line.title.parameterize}, 
+                      :wrap_object => Proc.new { |s_l_entry| StatLineEntry.build_lines(@stat_line_items)},
+                      :render_options => {:wrapper => 'bootstrap' } 
+                      %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-<%= (8 - @stat_line_items.count).to_s.html_safe %>">
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" data-spy="affix" data-offset-top="207" id="navbar" role="complimentary">
+      <ul class="nav bs-docs-sidenav">
+        <% @affix_hash.each do |category, cat_stat_lines| %>
+          <li>
+            <a href="#<%= category.parameterize %>"><%= category %></a>
+            <ul class="nav">
+              <%= cat_stat_lines.map {|stat, data| "<li><a href=\"#{data[:target]}\">#{stat} <span class=\"badge\">#{data[:entry_count]}</span></a></li>" }.join.html_safe %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+      <a class="back-to-top" href="#top">Back to top</a>
+      <div class="row"><%= f.submit %></div>
+    </div>
+  </div>
+<% end %>

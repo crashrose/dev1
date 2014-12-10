@@ -13,7 +13,10 @@ config.paginate = false
   scope :players, :default => true, :show_count => false
   scope :coaches, :show_count => false
   scope :admins, :show_count => false
-  scope :others, :show_count => false
+  scope :operational, :show_count => false
+  scope :support, :show_count => false
+  scope :leadership, :show_count => false
+
 
   controller do
     def scoped_collection

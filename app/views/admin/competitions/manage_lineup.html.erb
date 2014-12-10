@@ -1,0 +1,53 @@
+<script>
+  $(function() {
+    $('body').scrollspy({ target: '#navbar' });
+  });
+</script>
+
+
+  <% @affix_hash = {} %>
+  <% @competition.platoons.each do |platoon| %>
+
+    <%= platoon.team_role.title %><BR>
+    <% 
+    # lineup_positions = platoon.starting_lineup_formation.lineup_players.group_by(&:formation_position_id) 
+    %>
+    <% filled_pos_count = platoon.starting_lineup_formation.lineup_players.pluck(:formation_position_id).uniq.count %>
+    <% if filled_pos_count == 0 %>
+      <% @affix_hash[platoon.team_role.title] = {:target => '#' + platoon.team_role.title.parameterize, 
+        :label_text => "Empty", 
+        :label_class => "label label-danger"} %>
+    <% else %>
+      <% if filled_pos_count == platoon.starting_lineup_formation.formation.formation_positions.count %>
+        <% @affix_hash[platoon.team_role.title] = {:target => '#' + platoon.team_role.title.parameterize, 
+          :label_text => "Complete", 
+          :label_class => "label label-success"} %>
+      <% else %>
+        <% @affix_hash[platoon.team_role.title] = {:target => '#' + platoon.team_role.title.parameterize, 
+          :label_text => "Incomplete", 
+          :label_class => "label label-warning"} %>
+      <% end %>
+    <% end %>
+
+    <%=
+     filled_pos_count
+    # bbbbb 
+    %>
+<BR>
+  <% end %>
+  <div class="col-md-8 row">
+
+
+
+
+
+  </div>
+  <div class="col-md-4">
+    <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" data-spy="affix" data-offset-top="207" id="navbar" role="complimentary">
+      <ul class="nav bs-docs-sidenav">
+              <%= @affix_hash.map {|team_role, data| "<li><a href=\"#{data[:target]}\">#{team_role} <span class=\"#{data[:label_class]}\">#{data[:label_text]}</span></a></li>" }.join.html_safe %>
+      </ul>
+      <a class="back-to-top" href="#top">Back to top</a>
+
+    </div>
+  </div>

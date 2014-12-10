@@ -7,6 +7,7 @@ ActiveAdmin.register Competition do
   }
   menu menu_options
   navigation_menu :team
+config.batch_actions = false
 
 permit_params :has_stats, 
               :stat_line_entry_ids,
@@ -33,7 +34,13 @@ permit_params :has_stats,
 
 
   controller do
-    def add_stat_lines(competition_id)
+    # def add_stat_lines(competition_id)
+    #   @competition = Competition.find(competition_id).includes( {stat_line_entries: [ { stat_line_entry_units: [:stat_line_item_entries] } ] } )
+    #   # zzzz
+    #   @page_title = "Enter/Edit Statistics for #{@competition.name}"
+    # end
+
+    def add_stats_by_person(person_id, competition_id)
       @competition = Competition.find(competition_id).includes( {stat_line_entries: [ { stat_line_entry_units: [:stat_line_item_entries] } ] } )
       # zzzz
       @page_title = "Enter/Edit Statistics for #{@competition.name}"
@@ -64,24 +71,179 @@ permit_params :has_stats,
     respond_with @competition
   end
 
-  index do
-    column :name
-    column :event_type
-    column :starts_at, :as => :date_range
-    # column :ends_at, :as => :date_range
-    column :arrival_time
-    # column :event_type, sortable: 'event_types.title'
-    column 'Location', sortable: 'locations.name' do |competition|
-      location_tooltip(competition.location)
-    end
-    ## TODO Sorting on Owner needs to be fixed because it's only runnning as desc order
-    actions do |competition|
-      link_to "Add Stats", add_stat_lines_admin_competition_path(competition)
+  member_action :manage_lineup, method: :get, :title => "Manage Lineups for #{@resource.name}" do
+    @competition = Competition.where(:id => resource.id).first
+    respond_with @competition
+  end
+
+  member_action :add_stats_by_person, method: :get, :title => "Enter/Edit Statistics for #{@resource.name}" do
+    @competition = Competition.includes(:stat_lines => :stat_line_items, :stat_line_entries => [:person, :stat_line, :stat_line_items, {:stat_line_item_entries => :stat_line_item}]).where(:id => resource.id).first
+    
+    # xxxxx
+    respond_with @competition
+  end
+
+# index :as => :block do |competition|
+#     div :for => competition do
+#       div class: "col-md-12" do
+#         div class: "row" do
+#           div class: "col-md-4" do
+#             h2 auto_link(competition.name)
+#           end
+#           div class: "col-md-4" do
+#             h2 ".vs Opponent"
+#           div class: "col-md-4" do
+#             h2 "Date"
+#             h2 "Location"
+#           end
+#         end
+#         div class: "row" do
+#         end
+#       end
+#     end
+#   end
+# end
+# index 
+
+  index :as => :block, download_links: false do |competition|
+    div :for => competition do
+
+        div class: "col-md-7" do
+          div class: "row" do
+            div class: "show-borders col-md-3 " do
+              # div class: "row" do
+                div class: "col-md-12" do
+                  h3 class: "block-text" do
+                    text_node competition.starts_at.strftime("%A").upcase
+                  end
+                end
+              # end
+              # div class: "row container-fluid" do
+                div class: "date-float" do
+                  h1 class: "competition-month" do
+                    competition.starts_at.strftime("%b").upcase
+                  end
+                  h1 class: "competition-date" do
+                    competition.starts_at.strftime("%d").upcase
+                  end
+                end
+                # div class: "year-float" do
+                  div class: "rotation-outer" do
+                    div class: "rotation-inner rotate" do
+                      h1 class: "vertical-text backup" do
+                        competition.starts_at.strftime("%Y").upcase
+                      end
+                    end
+                  # end
+                end
+              # end
+              # div class: "row" do
+                div class: "col-md-12 trim-h" do
+                  h2 class: "competition-time" do
+                    # text_node "<small>at </small>".html_safe
+                    # text_node "12:59p"
+                    text_node competition.starts_at.strftime("%l:%M %P").gsub(' pm', 'p').gsub(' am', 'a')
+                    text_node "<small> #{competition.starts_at.strftime('%Z')}</small>".html_safe
+                  end
+                end
+              # end
+              # h2 auto_link(competition.name)
+            end
+
+            # @ / .vs  -- home/away indicator
+            div class: "col-md-2 competition-versus" do
+              if competition.is_home_game != true
+                div class: "col-md-12" do
+                  h2 class: "trim-h" do
+                      text_node "@"
+                  end
+                end
+                div class: "col-md-12" do
+                  h4 class: "trim-h" do
+                    span class: "label label-primary" do
+                      text_node "AWAY"
+                    end
+                  end
+                end
+              else
+                div class: "col-md-12" do
+                  h1 class: "trim-h" do
+                      text_node "vs."
+                  end
+                end
+                div class: "col-md-12" do
+                  h4 class: "trim-h" do
+                    span class: "label label-success" do
+                      text_node "HOME"
+                    end
+                  end
+                end
+              end
+            end
+
+            # Opponent Details
+            div class: "col-md-7" do
+              h2 text_node competition.opponent.name
+            end
+
+          end
+
+          div class: "row" do
+            div class: "col-md-4" do
+              h3 text_node "Competition Details"
+            end
+            div class: "col-md-4" do
+              h3 text_node "Lineup"
+              competition.platoons.each do |platoon|
+                div class: "row single-border" do
+                  div class: "col-md-4" do
+                    h4 class: "temp" do 
+                      text_node platoon.team_role.title
+                    end
+                    text_node link_to "Manage", manage_lineup_admin_competition_path(competition, anchor: platoon.team_role.title.parameterize)
+                  end
+                  div class: "col-md-8" do
+                    h5 text_node "Starting Formation:" 
+                    h4 class: "temp" do
+                      text_node  platoon.starting_lineup_formation.name
+                    end
+                    text_node platoon.starting_lineup_formation.lineup_players.count.to_s + '/' +
+                      platoon.starting_lineup_formation.formation.formation_positions.count.to_s + ' positions filled. '
+                  end
+                end
+              end
+            end
+            div class: "col-md-4" do
+              h4 text_node "Manage Statistics"
+              # h5 text_node 
+              text_node link_to "Enter/Edit All Stats", add_stat_lines_admin_competition_path(competition)
+              
+              h5 text_node "Enter Stats by Player"
+              render partial: 'stats_player_select', locals: {competition: competition}
+            end
+          end
+        end
+
     end
   end
 
-    filter :event_type
-  filter :location
+
+
+  # index do
+  #   column :name
+  #   column :event_type
+  #   column :starts_at, :as => :date_range
+  #   column :arrival_time
+  #   column 'Location', sortable: 'locations.name' do |competition|
+  #     location_tooltip(competition.location)
+  #   end
+  #   ## TODO Sorting on Owner needs to be fixed because it's only runnning as desc order
+  #   actions do |competition|
+  #     link_to "Add Stats", add_stat_lines_admin_competition_path(competition)
+  #   end
+  # end
+
+config.filters = false
 
   # form  do |f|
 

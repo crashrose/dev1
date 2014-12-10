@@ -24,15 +24,15 @@ config.clear_action_items!
         if params[:q] != nil
           #if campaign_id
           if params[:q][:campaign_id_eq] != nil
-            CampaignUser.where(:campaign_id => params[:q][:campaign_id_eq]).includes(:positions, :campaign, :organization, :team_role, :person)
+            CampaignUser.where(:campaign_id => params[:q][:campaign_id_eq]).includes(:positions, :campaign, :organization, :team_role_type, :person)
           else
             ####
             ####
             #### Be sure to update this to have the scope include the next or latest campaign
-            CampaignUser.current_campaign.includes(:positions, :campaign, :organization, :team_role, :person)
+            CampaignUser.current_campaign.includes(:positions, :campaign, :organization, :team_role_type, :person)
           end
         else
-          CampaignUser.current_campaign.includes( :positions, :campaign, :organization, :team_role, :person)
+          CampaignUser.current_campaign.includes( :positions, :campaign, :organization, :team_role_type, :person)
         end
       # end
     end
@@ -94,7 +94,7 @@ batch_action :set_position_for_coaches, if: proc { @current_scope.scope_method =
 end
 
 
-batch_action :set_position_for_others, if: proc { @current_scope.scope_method == :other_team_members }, form: ->{{position: Position.others.pluck(:title, :id)}} do |ids, inputs|
+batch_action :set_position_for_leadership, if: proc { @current_scope.scope_method == :leadership }, form: ->{{position: Position.leadership.pluck(:title, :id)}} do |ids, inputs|
   ids = ids.map(&:to_i)
   campaign_users_to_add = ids - CampaignUserPosition.joins(:campaign_user).where(:campaign_user_id => ids, :position_id => inputs[:position]).pluck(:campaign_user_id)
   campaign_user_position_hash = campaign_users_to_add.map {|campaign_user_id| {:campaign_user_id => campaign_user_id, :position_id => inputs[:position]}}.flatten
@@ -102,7 +102,21 @@ batch_action :set_position_for_others, if: proc { @current_scope.scope_method ==
   redirect_to collection_url, :notice => "Positions were successfully updated."
 end
 
+batch_action :set_position_for_operational, if: proc { @current_scope.scope_method == :operational_staff }, form: ->{{position: Position.operational.pluck(:title, :id)}} do |ids, inputs|
+  ids = ids.map(&:to_i)
+  campaign_users_to_add = ids - CampaignUserPosition.joins(:campaign_user).where(:campaign_user_id => ids, :position_id => inputs[:position]).pluck(:campaign_user_id)
+  campaign_user_position_hash = campaign_users_to_add.map {|campaign_user_id| {:campaign_user_id => campaign_user_id, :position_id => inputs[:position]}}.flatten
+  CampaignUserPosition.create([campaign_user_position_hash])
+  redirect_to collection_url, :notice => "Positions were successfully updated."
+end
 
+batch_action :set_position_for_support, if: proc { @current_scope.scope_method == :support_staff }, form: ->{{position: Position.support.pluck(:title, :id)}} do |ids, inputs|
+  ids = ids.map(&:to_i)
+  campaign_users_to_add = ids - CampaignUserPosition.joins(:campaign_user).where(:campaign_user_id => ids, :position_id => inputs[:position]).pluck(:campaign_user_id)
+  campaign_user_position_hash = campaign_users_to_add.map {|campaign_user_id| {:campaign_user_id => campaign_user_id, :position_id => inputs[:position]}}.flatten
+  CampaignUserPosition.create([campaign_user_position_hash])
+  redirect_to collection_url, :notice => "Positions were successfully updated."
+end
 
 
   permit_params  :name, :start_date, :end_date
@@ -115,9 +129,11 @@ end
   # end
 
   scope :players, :default => true
-  scope :coaching_staff
+  scope :coaches
   scope :administrative_staff
-  scope :other_team_members
+  scope :leadership
+  scope :operational_staff
+  scope :support_staff
   # scope "All", :all_roster_members
 
 

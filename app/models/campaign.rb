@@ -3,13 +3,13 @@ class Campaign < ActiveRecord::Base
 	has_many :roster_members, :foreign_key => :campaign_id, class_name: "CampaignUser", inverse_of: :campaign
 	has_many :users, :through => :roster_members
 	has_many :people, :through => :roster_members, foreign_key: "user_id", primary_key: "user_id"
-	has_many :roster_players, -> {where(:team_role_id => TeamRole.find_by_title("Players").id)}, :foreign_key => :campaign_id, class_name: "CampaignUser"
+	has_many :roster_players, -> {where(:team_role_type_id => TeamRoleType.find_by_title("Player").id)}, :foreign_key => :campaign_id, class_name: "CampaignUser"
 	has_many :players, :through => :roster_players, :source => :user
-	has_many :roster_admins, -> {where(:team_role_id => TeamRole.find_by_title("Administrative Staff").id)}, :foreign_key => :campaign_id, class_name: "CampaignUser"
+	has_many :roster_admins, -> {where(:team_role_type_id => TeamRoleType.find_by_title("Administrative").id)}, :foreign_key => :campaign_id, class_name: "CampaignUser"
 	has_many :admins, :through => :roster_admins, :source => :user
-	has_many :roster_coaches, -> {where(:team_role_id => TeamRole.find_by_title("Coaching Staff").id)}, :foreign_key => :campaign_id, class_name: "CampaignUser"
+	has_many :roster_coaches, -> {where(:team_role_type_id => TeamRoleType.find_by_title("Coaching Staff").id)}, :foreign_key => :campaign_id, class_name: "CampaignUser"
 	has_many :coaches, :through => :roster_coaches, :source => :user
-	has_many :roster_others, -> {where(:team_role_id => TeamRole.find_by_title("Other Team Members").id)}, :foreign_key => :campaign_id, class_name: "CampaignUser"
+	has_many :roster_others, -> {where(:team_role_type_id => TeamRoleType.find_by_title("Operational").id)}, :foreign_key => :campaign_id, class_name: "CampaignUser"
 	has_many :others, :through => :roster_others, :source => :user
 	belongs_to :organization
 

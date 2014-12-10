@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124171856) do
+ActiveRecord::Schema.define(version: 20141210025040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20141124171856) do
   create_table "campaign_users", force: true do |t|
     t.integer  "campaign_id"
     t.integer  "user_id"
-    t.integer  "team_role_id"
+    t.integer  "team_role_type_id"
     t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -183,6 +183,25 @@ ActiveRecord::Schema.define(version: 20141124171856) do
   add_index "form_submissions", ["id"], name: "index_form_submissions_on_id", using: :btree
   add_index "form_submissions", ["user_id"], name: "index_form_submissions_on_user_id", using: :btree
 
+  create_table "formation_positions", force: true do |t|
+    t.integer  "position_id"
+    t.integer  "formation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "formation_positions", ["formation_id"], name: "index_formation_positions_on_formation_id", using: :btree
+  add_index "formation_positions", ["position_id"], name: "index_formation_positions_on_position_id", using: :btree
+
+  create_table "formations", force: true do |t|
+    t.string   "name"
+    t.integer  "team_role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "formations", ["team_role_id"], name: "index_formations_on_team_role_id", using: :btree
+
   create_table "forms", force: true do |t|
     t.string   "name"
     t.integer  "organization_id"
@@ -266,6 +285,28 @@ ActiveRecord::Schema.define(version: 20141124171856) do
     t.integer  "recipient_id"
     t.integer  "sender_id"
   end
+
+  create_table "lineup_formations", force: true do |t|
+    t.integer  "formation_id"
+    t.integer  "platoon_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lineup_formations", ["formation_id"], name: "index_lineup_formations_on_formation_id", using: :btree
+  add_index "lineup_formations", ["platoon_id"], name: "index_lineup_formations_on_platoon_id", using: :btree
+
+  create_table "lineup_players", force: true do |t|
+    t.integer  "lineup_formation_id"
+    t.integer  "formation_position_id"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lineup_players", ["formation_position_id"], name: "index_lineup_players_on_formation_position_id", using: :btree
+  add_index "lineup_players", ["lineup_formation_id"], name: "index_lineup_players_on_lineup_formation_id", using: :btree
+  add_index "lineup_players", ["person_id"], name: "index_lineup_players_on_person_id", using: :btree
 
   create_table "locations", force: true do |t|
     t.string   "name"
@@ -407,12 +448,22 @@ ActiveRecord::Schema.define(version: 20141124171856) do
   add_index "permissions", ["organization_id"], name: "index_permissions_on_organization_id", using: :btree
   add_index "permissions", ["subject_class"], name: "index_permissions_on_subject_class", using: :btree
 
+  create_table "platoons", force: true do |t|
+    t.integer  "team_role_id"
+    t.integer  "competition_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "starting_lineup_formation_id"
+  end
+
+  add_index "platoons", ["competition_id"], name: "index_platoons_on_competition_id", using: :btree
+  add_index "platoons", ["team_role_id"], name: "index_platoons_on_team_role_id", using: :btree
+
   create_table "positions", force: true do |t|
     t.string   "title"
     t.string   "abbreviation", limit: 10
     t.integer  "team_role_id"
     t.integer  "parent_id"
-    t.integer  "sport_id"
     t.integer  "order_pos"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -569,10 +620,18 @@ ActiveRecord::Schema.define(version: 20141124171856) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "team_role_types", force: true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "team_roles", force: true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sport_id"
+    t.integer  "team_role_type_id"
   end
 
   create_table "upload_groups", force: true do |t|

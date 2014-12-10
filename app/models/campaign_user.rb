@@ -1,6 +1,6 @@
 class CampaignUser < ActiveRecord::Base
 
-	belongs_to :team_role
+	belongs_to :team_role_type
 	belongs_to :user, inverse_of: :campaign_users
   
   belongs_to :person, foreign_key: "user_id", primary_key: "user_id"
@@ -14,10 +14,12 @@ class CampaignUser < ActiveRecord::Base
 
   acts_as_tenant(:organization)
 
-  scope :players, -> {joins(:team_role).where(:team_roles => {:title => 'Players'})}
-  scope :coaching_staff,->  {joins(:team_role).where(:team_roles => {:title => 'Coaching Staff'})}
-  scope :administrative_staff,->  {joins(:team_role).where(:team_roles => {:title => 'Administrative Staff'})}
-  scope :other_team_members,->  {joins(:team_role).where(:team_roles => {:title => 'Other Team Members'})}
+  scope :players, -> {joins(:team_role_type).where(:team_role_types => {:title => 'Player'})}
+  scope :coaches,->  {joins(:team_role_type).where(:team_role_types => {:title => 'Coaching Staff'})}
+  scope :administrative_staff,->  {joins(:team_role_type).where(:team_role_types => {:title => 'Administrative'})}
+  scope :operational_staff,-> {joins(:team_role_type).where(:team_role_types => {:title => 'Operational'})}
+  scope :support_staff,-> {joins(:team_role_type).where(:team_role_types => {:title => 'Support'})}
+  scope :leadership,-> {joins(:team_role_type).where(:team_role_types => {:title => 'Leadership'})}
   scope :current_campaign, -> {where(:campaign => Campaign.current)}
 
   # def current_campaign
