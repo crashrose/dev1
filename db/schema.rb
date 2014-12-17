@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216182049) do
+ActiveRecord::Schema.define(version: 20141210025040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,7 +188,6 @@ ActiveRecord::Schema.define(version: 20141216182049) do
     t.integer  "formation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "num_required"
   end
 
   add_index "formation_positions", ["formation_id"], name: "index_formation_positions_on_formation_id", using: :btree
@@ -196,12 +195,12 @@ ActiveRecord::Schema.define(version: 20141216182049) do
 
   create_table "formations", force: true do |t|
     t.string   "name"
-    t.integer  "sport_platoon_id"
+    t.integer  "team_role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "formations", ["sport_platoon_id"], name: "index_formations_on_sport_platoon_id", using: :btree
+  add_index "formations", ["team_role_id"], name: "index_formations_on_team_role_id", using: :btree
 
   create_table "forms", force: true do |t|
     t.string   "name"
@@ -289,24 +288,13 @@ ActiveRecord::Schema.define(version: 20141216182049) do
 
   create_table "lineup_formations", force: true do |t|
     t.integer  "formation_id"
-    t.integer  "lineup_platoon_id"
+    t.integer  "platoon_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "lineup_formations", ["formation_id"], name: "index_lineup_formations_on_formation_id", using: :btree
-  add_index "lineup_formations", ["lineup_platoon_id"], name: "index_lineup_formations_on_lineup_platoon_id", using: :btree
-
-  create_table "lineup_platoons", force: true do |t|
-    t.integer  "sport_platoon_id"
-    t.integer  "competition_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "starting_lineup_formation_id"
-  end
-
-  add_index "lineup_platoons", ["competition_id"], name: "index_lineup_platoons_on_competition_id", using: :btree
-  add_index "lineup_platoons", ["sport_platoon_id"], name: "index_lineup_platoons_on_sport_platoon_id", using: :btree
+  add_index "lineup_formations", ["platoon_id"], name: "index_lineup_formations_on_platoon_id", using: :btree
 
   create_table "lineup_players", force: true do |t|
     t.integer  "lineup_formation_id"
@@ -314,8 +302,6 @@ ActiveRecord::Schema.define(version: 20141216182049) do
     t.integer  "person_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "pos_rank"
-    t.boolean  "is_starter"
   end
 
   add_index "lineup_players", ["formation_position_id"], name: "index_lineup_players_on_formation_position_id", using: :btree
@@ -462,15 +448,25 @@ ActiveRecord::Schema.define(version: 20141216182049) do
   add_index "permissions", ["organization_id"], name: "index_permissions_on_organization_id", using: :btree
   add_index "permissions", ["subject_class"], name: "index_permissions_on_subject_class", using: :btree
 
+  create_table "platoons", force: true do |t|
+    t.integer  "team_role_id"
+    t.integer  "competition_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "starting_lineup_formation_id"
+  end
+
+  add_index "platoons", ["competition_id"], name: "index_platoons_on_competition_id", using: :btree
+  add_index "platoons", ["team_role_id"], name: "index_platoons_on_team_role_id", using: :btree
+
   create_table "positions", force: true do |t|
     t.string   "title"
-    t.string   "abbreviation",     limit: 10
-    t.integer  "sport_platoon_id"
+    t.string   "abbreviation", limit: 10
+    t.integer  "team_role_id"
     t.integer  "parent_id"
     t.integer  "order_pos"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "team_role_id"
   end
 
   create_table "posts", force: true do |t|
@@ -547,20 +543,6 @@ ActiveRecord::Schema.define(version: 20141216182049) do
   end
 
   add_index "review_statuses", ["id"], name: "index_review_statuses_on_id", using: :btree
-
-  create_table "sport_platoons", force: true do |t|
-    t.string   "name"
-    t.integer  "sport_id"
-    t.integer  "required_players"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "parent_id"
-    t.boolean  "requires_lineup"
-    t.integer  "full_platoon_id"
-  end
-
-  add_index "sport_platoons", ["required_players"], name: "index_sport_platoons_on_required_players", using: :btree
-  add_index "sport_platoons", ["sport_id"], name: "index_sport_platoons_on_sport_id", using: :btree
 
   create_table "sports", force: true do |t|
     t.string   "title"

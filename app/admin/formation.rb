@@ -32,19 +32,19 @@ navigation_menu :team
 
 
 
-  index do
-    selectable_column
-    column :name
-    column :platoon_area
-    # column :parent
-    # column :sport
-    # column :team_role
-    # column :order_pos
-    # column 'Children' do |position|
-    #   Formation.children.map { |child| child.abbreviation }.to_sentence.html_safe
-    # end
-    actions
-  end
+  # index do
+  #   selectable_column
+  #   column :title
+  #   column :abbreviation
+  #   column :parent
+  #   column :sport
+  #   column :team_role
+  #   column :order_pos
+  #   column 'Children' do |position|
+  #     Formation.children.map { |child| child.abbreviation }.to_sentence.html_safe
+  #   end
+  #   actions
+  # end
 
   # filter :email
   # filter :current_sign_in_at

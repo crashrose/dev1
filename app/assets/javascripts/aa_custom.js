@@ -35,27 +35,6 @@ $(document).ready(function() {
         });
     });
 
-    //Radial Progress Bar
-
-    $('.radial-progress').each(function() {
-        var $this = $(this);
-        var $circle_text = '<div class="circle"><div class="mask full"><div class="fill"></div></div><div class="mask half"><div class="fill"></div><div class="fill fix"></div></div></div>';
-        var $border_text = '<div class="circle-border"></div>';
-        var $pct_text = '<div class="percentage"><span>' + $this.data('progress') + '</span></div>';
-        $this.append($circle_text);
-        if($this.data('showborder') == true ) {$this.append($border_text);}
-        if($this.data('showpct') == true ) {$this.append($pct_text);}
-        if($this.data('progress') <= 25) {$this.addClass("circle-red");}
-        else if($this.data('progress') < 100) {$this.addClass("circle-yellow");}
-        else {$this.addClass("circle-green");}
-    });
-
-    $('.progress-bar').each(function() {
-        var $this = $(this);
-        if($this.attr('aria-valuenow') <= 25) {$this.addClass("progress-red");}
-        else if($this.attr('aria-valuenow') < 100) {$this.addClass("progress-yellow");}
-        else {$this.addClass("progress-green");}
-    });
 
     if ($("[id$=_group_ids]").hasClass('group-list')) {
         $("[id$=_group_ids]").change(function() {

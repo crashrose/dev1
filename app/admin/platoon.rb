@@ -1,7 +1,7 @@
-ActiveAdmin.register LineupFormation  do
+ActiveAdmin.register Platoon  do
 
   menu_options = {
-    :label =>  'LineupFormations',
+    :label =>  'Platoons',
     :priority =>  18
   }
   menu menu_options
@@ -9,7 +9,7 @@ navigation_menu :team
 
   controller do
     def scoped_collection
-      LineupFormation.all.includes(:lineup_platoon)
+      Platoon.all
     end
 
     helper :views
@@ -33,24 +33,21 @@ navigation_menu :team
 
 
   index do
-    column :id
-    column :formation
-    # column :competition
-    # column :platoon
-
+    column :team_role
+    column :starting_lineup_formation
+    column 'Completion' do |platoon|
+      platoon.starting_lineup_formation.lineup_players.count.to_s + '/' +
+      platoon.starting_lineup_formation.formation.formation_positions.count.to_s + ' positions filled.'
+    end
+    column 'Pos Needed' do |platoon|
+      
+    end
     # column :sport
     # column :team_role
     # column :order_pos
-    column 'Competition' do |lineup_formation|
-      lineup_formation.lineup_platoon.competition.name
-    end
-    # column 'Lineup Platoon' do |lineup_formation|
-    #   lineup_formation.lineup_platoon.sport_platoon.parent_id
+    # column 'Children' do |position|
+    #   Platoon.children.map { |child| child.abbreviation }.to_sentence.html_safe
     # end
-    column 'Team Area' do |lineup_formation|
-      lineup_formation.platoon_area.name if lineup_formation.platoon_area
-    end
-
     actions
   end
 
@@ -59,13 +56,13 @@ navigation_menu :team
   # filter :sign_in_count
   # filter :created_at
 
-  # form do |f|
-  #   f.inputs "LineupFormation Details" do
-  #     f.association :team_role
-  #     f.association :competition
-  #     f.association :starting_lineup_formation, collection: LineupFormation.by_team_role(f.object.team_role_id), include_blank: false
-  #   end
-  #   f.actions
-  # end
+  form do |f|
+    f.inputs "Platoon Details" do
+      f.association :team_role
+      f.association :competition
+      f.association :starting_lineup_formation, collection: LineupFormation.by_team_role(f.object.team_role_id), include_blank: false
+    end
+    f.actions
+  end
 
 end

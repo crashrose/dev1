@@ -17,7 +17,7 @@ class Competition < ActiveRecord::Base
 	belongs_to :event_type#, -> {where('event_types.event_class = events.as_event_type')}
 	belongs_to :location
 	belongs_to :owner, class_name: "Person", primary_key: "user_id"
-	has_many :lineup_platoons, inverse_of: :competition
+	has_many :platoons, inverse_of: :competition
 
 	# belongs_to :event, :as => :eventable#, :foreign_key => :id, :primary_key => :event_id
 
