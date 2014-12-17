@@ -321,7 +321,7 @@ div.rotation-inner {
 }
 
 
-h1.vertical-text {
+h1.vertical-text-year {
   margin: 0px;
   padding-bottom: 3px;
   font-weight: bolder;
@@ -346,4 +346,21 @@ div.single-border {
 
 h4.temp {
   margin-bottom: .2em;
+}
+
+p.vertical-lineup-text {
+  text-align: center;
+  line-height: .8;
+  margin: 0px;
+  /*padding-bottom: 3px;*/
+  font-weight: bold;
+  font-size: 1em;
+  line-height: .9;
+  color: white;
+
+}
+
+div.lineup-rotate{
+  background-color: gray;
+  padding: 2px;
 }
