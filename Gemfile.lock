@@ -299,15 +299,15 @@ DEPENDENCIES
   activeadmin!
   activeadmin-sortable (~> 0.0.3)
   activerecord-tableless (~> 1.0)
-  acts-as-taggable-on
-  acts_as_list
+  acts-as-taggable-on (~> 3.4.1)
+  acts_as_list (~> 0.4.0)
   acts_as_relation (~> 1.0)
-  acts_as_tenant
+  acts_as_tenant (~> 0.3.6)
   better_errors (~> 1.1.0)
-  binding_of_caller
-  bootstrap-sass
+  binding_of_caller (~> 0.7.2)
+  bootstrap-sass (~> 3.2.0.2)
   cancan (~> 1.6.10)
-  cocoon
+  cocoon (~> 1.2.0)
   coffee-rails (~> 4.0.0)
   country_select (~> 2.0.0)
   datetimepicker-rails!
@@ -315,30 +315,30 @@ DEPENDENCIES
   devise (~> 3.4.0)
   elif (~> 0.1.0)
   fullcalendar-rails (~> 1.6.4.0)
-  google-api-client
+  google-api-client (~> 0.7.1)
   jbuilder (~> 2.0)
-  jquery-rails
-  jquery-rest-rails
-  jquery-ui-rails
-  json
-  meta_request
+  jquery-rails (~> 3.1.2)
+  jquery-rest-rails (~> 1.0.0)
+  jquery-ui-rails (~> 5.0.0)
+  json (~> 1.8.1)
+  meta_request (~> 0.3.4)
   momentjs-rails (~> 2.8.1)
-  nested_form
+  nested_form (~> 0.3.2)
   paperclip!
-  pg
-  purecss
+  pg (~> 0.17.1)
+  purecss (~> 0.5.0.1)
   rails (= 4.1.1)
-  rails-file-icons
+  rails-file-icons (~> 0.0.1)
   rails_12factor
-  request-log-analyzer
+  request-log-analyzer (~> 1.13.0)
   sass-rails (~> 4.0.3)
-  schema_plus
+  schema_plus (~> 1.5.3)
   sdoc (~> 0.4.0)
-  select2-rails
-  sextant
+  select2-rails (~> 3.5.9.1)
+  sextant (~> 0.2.4)
   simple_form (~> 3.1.0.rc2)
   sprockets-rails (= 2.1.3)
-  tabulous
-  turbolinks
-  tzinfo-data
+  tabulous (~> 2.1.1)
+  turbolinks (~> 2.3.0)
+  tzinfo-data (~> 1.2014.7)
   uglifier (>= 1.3.0)
