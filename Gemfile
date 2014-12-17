@@ -86,7 +86,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 ### APIs
 # Google API
-gem 'google-api-client', , '~> 0.7.1', :require => 'google/api_client'
+gem 'google-api-client', '~> 0.7.1', :require => 'google/api_client'
 # PayPal API
 # gem 'paypal-sdk-rest' ## Not currently needed - may be useful in later features
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
