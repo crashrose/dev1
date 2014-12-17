@@ -130,7 +130,7 @@ permit_params :has_stats,
                 # div class: "year-float" do
                   div class: "rotation-outer" do
                     div class: "rotation-inner rotate" do
-                      h1 class: "vertical-text backup" do
+                      h1 class: "vertical-text-year backup" do
                         competition.starts_at.strftime("%Y").upcase
                       end
                     end
@@ -194,21 +194,21 @@ permit_params :has_stats,
             end
             div class: "col-md-4" do
               h3 text_node "Lineup"
-              competition.platoons.each do |platoon|
+              competition.lineup_platoons.each do |lineup_platoon|
                 div class: "row single-border" do
                   div class: "col-md-4" do
                     h4 class: "temp" do 
-                      text_node platoon.team_role.title
+                      text_node lineup_platoon.platoon_area.name
                     end
-                    text_node link_to "Manage", manage_lineup_admin_competition_path(competition, anchor: platoon.team_role.title.parameterize)
+                    text_node link_to "Manage", manage_lineup_admin_competition_path(competition, anchor: lineup_platoon.platoon_area.name.parameterize)
                   end
                   div class: "col-md-8" do
                     h5 text_node "Starting Formation:" 
                     h4 class: "temp" do
-                      text_node  platoon.starting_lineup_formation.name
+                      text_node  lineup_platoon.starting_lineup_formation.name
                     end
-                    text_node platoon.starting_lineup_formation.lineup_players.count.to_s + '/' +
-                      platoon.starting_lineup_formation.formation.formation_positions.count.to_s + ' positions filled. '
+                    text_node lineup_platoon.starting_lineup_formation.lineup_players.count.to_s + '/' +
+                      lineup_platoon.starting_lineup_formation.formation.formation_positions.count.to_s + ' positions filled. '
                   end
                 end
               end
