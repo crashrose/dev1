@@ -27,8 +27,8 @@ gem "cocoon", '~> 1.2.0'
 
 #### Administration
 # gem 'activeadmin', github: 'gregbell/active_admin'  ## Will reinstall
-# gem 'activeadmin'#, '~> 0.6.3'
-gem 'activeadmin', github: 'activeadmin'#, branch: 'master'
+# gem 'activeadmin'#, '~> 0.6.3' 40ac6655d67e   40ac6655d67eece5f43f72ff6137db1ba34aa711
+gem 'activeadmin', github: 'activeadmin', :ref => '40ac6655d67eece5f43f72ff6137db1ba34aa711'#, branch: 'master'
 # gem 'activeadmin-sortable'
 gem 'activeadmin-sortable', '~> 0.0.3'
 gem 'acts_as_list', '~> 0.4.0'
